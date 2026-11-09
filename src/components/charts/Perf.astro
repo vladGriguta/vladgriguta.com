@@ -1,0 +1,28 @@
+---
+interface Props { lang?: 'ro' | 'en' }
+const { lang = 'ro' } = Astro.props;
+const t = lang === 'ro'
+  ? { title: 'Diferența de randament: 50/50 minus VWCE', a: '50/50 înainte', b: 'VWCE înainte', sub: 'Fiecare bară este un an calendaristic, în puncte procentuale. Deasupra liniei, anii în care 50/50 a câștigat mai mult; dedesubt, anii în care a rămas în urmă.', hz: 'Măsurat pe', y1: '1 an', y3: '3 ani', y5: '5 ani', y10: '10 ani', aria: 'Grafic interactiv pe ani. Săgețile trec de la un an la altul.' }
+  : { title: 'Return gap: 50/50 minus VWCE', a: '50/50 ahead', b: 'VWCE ahead', sub: 'Each bar is a calendar year, in percentage points. Above the line, years when 50/50 earned more; below, years when it fell behind.', hz: 'Measured over', y1: '1 year', y3: '3 years', y5: '5 years', y10: '10 years', aria: 'Interactive chart by year. Arrow keys step from one year to the next.' };
+---
+<figure class="fig wide card" data-chart="perf">
+  <div class="fig-head">
+    <h3>{t.title}</h3>
+    <div class="legend"><span><i class="sw k2"></i>{t.a}</span><span><i class="sw"></i>{t.b}</span></div>
+  </div>
+  <p class="fig-sub">{t.sub}</p>
+  <fieldset class="seg">
+    <legend>{t.hz}</legend>
+    <div class="opts">
+      <input type="radio" name="hz" id="hz-1" value="1" checked /><label for="hz-1">{t.y1}</label>
+      <input type="radio" name="hz" id="hz-3" value="3" /><label for="hz-3">{t.y3}</label>
+      <input type="radio" name="hz" id="hz-5" value="5" /><label for="hz-5">{t.y5}</label>
+      <input type="radio" name="hz" id="hz-10" value="10" /><label for="hz-10">{t.y10}</label>
+    </div>
+  </fieldset>
+  <div class="plot-wrap" tabindex="0" role="group" aria-label={t.aria}>
+    <div class="plot"></div>
+    <div class="tip" hidden></div>
+  </div>
+</figure>
+<script src="../../scripts/charts.js"></script>

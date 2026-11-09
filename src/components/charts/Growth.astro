@@ -1,0 +1,19 @@
+---
+interface Props { lang?: 'ro' | 'en' }
+const { lang = 'ro' } = Astro.props;
+const t = lang === 'ro'
+  ? { a: 'VWCE (piața globală)', b: '50% Value + 50% Quality', sub: 'Randament total, dividende reinvestite, scară logaritmică. Benzile gri sunt crizele, de la vârful pieței până la minim.', aria: 'Grafic interactiv. Săgețile mută cursorul cu o lună, cu Shift cu un an.' }
+  : { a: 'VWCE (global market)', b: '50% Value + 50% Quality', sub: 'Total return, dividends reinvested, log scale. Grey bands are crises, from the market peak to the low.', aria: 'Interactive chart. Arrow keys move the cursor by one month, with Shift by one year.' };
+---
+<figure class="fig wide card" data-chart="growth">
+  <div class="fig-head">
+    <h3 data-title></h3>
+    <div class="legend"><span><i class="key"></i>{t.a}</span><span><i class="key k2"></i>{t.b}</span></div>
+  </div>
+  <p class="fig-sub">{t.sub}</p>
+  <div class="plot-wrap" tabindex="0" role="group" aria-label={t.aria}>
+    <div class="plot"></div>
+    <div class="tip" hidden></div>
+  </div>
+</figure>
+<script src="../../scripts/charts.js"></script>

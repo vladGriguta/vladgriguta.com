@@ -1,0 +1,19 @@
+---
+interface Props { lang?: 'ro' | 'en' }
+const { lang = 'ro' } = Astro.props;
+const t = lang === 'ro'
+  ? { title: 'Fiecare criză, de la vârf până la revenire', a: 'VWCE (piața globală)', b: '50% Value + 50% Quality', sub: 'Fiecare linie pornește din luna vârfului dinaintea crizei și se oprește când portofoliul revine la acel nivel. Pe verticală, cât a pierdut; pe orizontală, câți ani au trecut. Indică o linie ca să o evidențiezi.', aria: 'Grafic interactiv al crizelor. Săgețile trec de la o criză la alta.' }
+  : { title: 'Every crisis, from peak to recovery', a: 'VWCE (global market)', b: '50% Value + 50% Quality', sub: 'Each line starts at the pre-crisis peak and ends when the portfolio is back at that level. Vertical: how much it lost; horizontal: how many years passed. Point at a line to highlight it.', aria: 'Interactive chart of crises. Arrow keys step from one crisis to the next.' };
+---
+<figure class="fig wide card" data-chart="recovery">
+  <div class="fig-head">
+    <h3>{t.title}</h3>
+    <div class="legend"><span><i class="key"></i>{t.a}</span><span><i class="key k2"></i>{t.b}</span></div>
+  </div>
+  <p class="fig-sub">{t.sub}</p>
+  <div class="plot-wrap" tabindex="0" role="group" aria-label={t.aria}>
+    <div class="plot"></div>
+    <div class="tip" hidden></div>
+  </div>
+</figure>
+<script src="../../scripts/charts.js"></script>

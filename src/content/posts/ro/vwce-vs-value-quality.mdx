@@ -1,0 +1,72 @@
+---
+title: "VWCE sau Value + Quality? Ce spun 56 de ani de crize"
+description: "Un portofoliu pe factori nu te ferește de crize. Te poate face însă să stai ani în urma pieței. Datele, din 1970 până azi."
+date: 2026-11-09
+lang: ro
+---
+import Controls from '../../../components/charts/Controls.astro';
+import Growth from '../../../components/charts/Growth.astro';
+import Recovery from '../../../components/charts/Recovery.astro';
+import Perf from '../../../components/charts/Perf.astro';
+import CrisisTable from '../../../components/charts/CrisisTable.astro';
+
+<div class="col">
+
+Îmi re-evaluam portofoliul și voiam un răspuns simplu: dacă în loc de VWCE aș ține jumătate într-un ETF Value (IS3S) și jumătate într-unul Quality (IS3Q), aș pierde mai puțin în crize? Și cât de mult m-ar costa pariul ăsta când nu iese?
+
+ETF-urile există abia din 2014, așa că am reconstruit cele două portofolii din indicii MSCI pe care îi urmăresc și, înainte de 1999, din portofoliile academice ale lui Kenneth French. Rezultatul, pe scurt: pe termen lung 50/50 a câștigat mai mult, cu 11,1% pe an față de 9,1%. Dar aproape tot avantajul vine din date reconstituite, nu din perioada în care ETF-urile au existat cu adevărat.
+
+</div>
+
+<Controls lang="ro" threshold />
+<Growth lang="ro" />
+
+<div class="col">
+
+## În crizele mari, nu te ferește de nimic
+
+Criza financiară din 2007-09: VWCE a pierdut 54,9%, 50/50 a pierdut 54,5%. Pandemia din 2020: 21,4% față de 22,9%. Anul 2022: 25,6% față de 24,9%. Liniile de mai jos sunt aproape suprapuse.
+
+Singurele dăți când 50/50 a scăzut vizibil mai puțin au fost cele două bule ale acțiunilor scumpe: 1973-74 și dot-com. În 2000-03, VWCE a căzut 46,6% și a avut nevoie de aproape 6 ani să revină. 50/50 a căzut 31,7% și a revenit în 4.
+
+</div>
+
+<Recovery lang="ro" />
+<CrisisTable lang="ro" />
+
+<div class="col">
+
+## Prețul real: anii în care rămâi în urmă
+
+În 15 din ultimii 57 de ani, 50/50 a câștigat mai puțin decât piața. În medie cu 2,6 puncte procentuale, dar în 2020 cu 10,7. Cea mai lungă serie a fost 2016-2020, cinci ani la rând, la capătul cărora aveai cu 13,6% mai puțini bani decât cu VWCE. Exact perioada în care ETF-urile au existat.
+
+Abia în 2025 și 2026 Value a recuperat decalajul. Dacă ai fi renunțat la strategie în 2020, când era cel mai greu de ținut, ai fi plecat cu pierderea și fără revenirea de după.
+
+</div>
+
+<Perf lang="ro" />
+
+<div class="col">
+
+## Ce fac eu cu asta
+
+Argumentul „pierzi mai puțin în crize” nu stă în picioare. Argumentul pentru factori rămâne randamentul pe termen lung, iar acela cere să accepți ani în șir de rezultate sub piață, fără să schimbi strategia la mijloc. Dacă nu ești sigur că poți face asta, VWCE e alegerea mai sigură, pentru că e singura pe care n-o vei abandona.
+
+<details>
+<summary>Cum am calculat</summary>
+
+**Piața globală (VWCE).** MSCI ACWI net total return din ianuarie 2001; piața dezvoltată din datele French pentru iulie 1990 - decembrie 2000; piața SUA pentru 1970 - iunie 1990.
+
+**Value (IS3S) și Quality (IS3Q).** Indicii MSCI World Enhanced Value și MSCI World Sector Neutral Quality, net, din ianuarie 1999. Înainte, portofoliile French „Big HiBM” și „Big HiOP”, adică firme mari cu valoare contabilă ridicată față de preț, respectiv cu profitabilitate operațională ridicată. 50/50 este reechilibrat anual.
+
+**Limite.** Înainte de 1990 totul este doar SUA. Indicii MSCI sunt calculați retroactiv pentru 1999-2014. Minimele sunt pe închideri lunare, deci mai blânde decât cele zilnice. Randamentele sunt nominale, fără comisioane și impozite. Nu sunt consultant financiar și asta nu e o recomandare.
+
+</details>
+
+<ul class="sources">
+  <li><a href="https://www.msci.com/indexes/index/705130">MSCI World Enhanced Value Index</a>, <a href="https://www.msci.com/indexes/index/705169">MSCI World Sector Neutral Quality Index</a>, MSCI ACWI, MSCI World</li>
+  <li><a href="https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html">Kenneth R. French Data Library</a>: factorii de piață și portofoliile 2x3, SUA și piețe dezvoltate</li>
+  <li>Fama și French (1992, 2015); Novy-Marx (2013); Asness, Frazzini și Pedersen (2019)</li>
+</ul>
+
+</div>

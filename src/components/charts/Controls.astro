@@ -1,0 +1,27 @@
+---
+// Currency and crisis-threshold toggles. One set per page; they drive every chart on it.
+interface Props { lang?: 'ro' | 'en'; threshold?: boolean }
+const { lang = 'ro', threshold = false } = Astro.props;
+const t = lang === 'ro'
+  ? { cur: 'Monedă și perioadă', usd: 'USD · din 1970', eur: 'EUR · din 1999', th: 'Criză = scădere a pieței de cel puțin' }
+  : { cur: 'Currency and period', usd: 'USD · since 1970', eur: 'EUR · since 1999', th: 'Crisis = market fall of at least' };
+---
+<form class="controls" onsubmit="return false">
+  <fieldset class="seg">
+    <legend>{t.cur}</legend>
+    <div class="opts">
+      <input type="radio" name="currency" id="cur-usd" value="usd" checked /><label for="cur-usd">{t.usd}</label>
+      <input type="radio" name="currency" id="cur-eur" value="eur" /><label for="cur-eur">{t.eur}</label>
+    </div>
+  </fieldset>
+  {threshold && (
+    <fieldset class="seg">
+      <legend>{t.th}</legend>
+      <div class="opts">
+        <input type="radio" name="threshold" id="th-10" value="10" /><label for="th-10">10%</label>
+        <input type="radio" name="threshold" id="th-15" value="15" checked /><label for="th-15">15%</label>
+        <input type="radio" name="threshold" id="th-20" value="20" /><label for="th-20">20%</label>
+      </div>
+    </fieldset>
+  )}
+</form>
