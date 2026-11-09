@@ -1,0 +1,13 @@
+---
+interface Props { lang?: 'ro' | 'en' }
+const { lang = 'ro' } = Astro.props;
+const t = lang === 'ro'
+  ? { sum: 'Tabelul crizelor', note: 'Coborâre = luni de la vârf la minim. Revenire = luni de la minim până la vârf. Diferența e în puncte procentuale; plus înseamnă că 50/50 a scăzut mai puțin.' }
+  : { sum: 'Crisis table', note: 'Decline = months from peak to low. Recovery = months from the low back to the peak. The difference is in percentage points; positive means 50/50 fell less.' };
+---
+<details data-chart="table">
+  <summary>{t.sum}</summary>
+  <p class="note" style="margin-top:10px">{t.note}</p>
+  <div class="tbl-wrap"><table></table></div>
+</details>
+<script src="../../scripts/charts.js"></script>

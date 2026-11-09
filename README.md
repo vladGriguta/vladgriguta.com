@@ -1,16 +1,25 @@
 # vladgriguta.com
 
-Site personal, static, găzduit pe Cloudflare Workers (static assets, configurat în `wrangler.jsonc`). Fiecare commit pe `main` publică automat.
+Site personal construit cu Astro, găzduit pe Cloudflare Workers (static assets). Fiecare commit pe `main` publică automat.
+
+## Lucru local
+
+```bash
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # generează ./dist
+```
 
 ## Structură
 
-- `public/index.html` – pagina de start
-- `public/vwce-vs-value-quality/index.html` – VWCE față de 50% Value + 50% Quality: scăderile din crize și duratele de recuperare, 1970-2026
+- `src/content/posts/ro|en/*.mdx`: articolele, câte un fișier pe limbă, cu același nume
+- `src/components/charts/`: componentele de grafice folosite în articole
+- `src/scripts/charts.js` și `src/data/charts.json`: logica și datele graficelor
+- `src/layouts/Base.astro`, `src/styles/global.css`: layout și stil
+- `wrangler.jsonc`: configurația Cloudflare (servește `./dist`, domeniile proprii)
 
-## Surse de date
+## Articol nou
 
-- Niveluri lunare ale indicilor MSCI (net total return): MSCI World Enhanced Value, MSCI World Sector Neutral Quality, MSCI ACWI, MSCI World
-- Kenneth R. French Data Library: factorii de piață și portofoliile 2x3 pentru SUA și piețele dezvoltate
-- Curs EUR/USD 1999-2000: FRED
+Creează `src/content/posts/ro/nume-articol.mdx` (și opțional varianta din `en/`) cu `title`, `description`, `date`, `lang` în frontmatter.
 
 Analizele sunt reconstituiri istorice, nu recomandări de investiții.

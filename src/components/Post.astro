@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import type { CollectionEntry } from 'astro:content';
+import { render, getCollection } from 'astro:content';
+interface Props { post: CollectionEntry<'posts'> }
+const { post } = Astro.props;
+const { Content } = await render(post);
+const lang = post.data.lang;
+const other = (await getCollection('posts', (p) => p.id.split('/').pop() === post.id.split('/').pop() && p.data.lang !== lang))[0];
+const alt = other ? (other.data.lang === 'ro' ? `/${other.id.split('/').pop()}/` : `/en/${other.id.split('/').pop()}/`) : undefined;
+const fmt = new Intl.DateTimeFormat(lang === 'ro' ? 'ro-RO' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<Base title={post.data.title} description={post.data.description} lang={lang} alt={alt}>
+  <article class="article" style="padding-top:48px">
+    <header class="col">
+      <h1>{post.data.title}</h1>
+      <p class="lede">{post.data.description}</p>
+      <p class="meta">{fmt.format(post.data.date)}</p>
+    </header>
+    <Content />
+  </article>
+</Base>

@@ -1,0 +1,72 @@
+---
+title: "VWCE or Value + Quality? What 56 years of crises say"
+description: "A factor portfolio does not protect you in a crash. It can, however, leave you trailing the market for years. The data, from 1970 to today."
+date: 2026-11-09
+lang: en
+---
+import Controls from '../../../components/charts/Controls.astro';
+import Growth from '../../../components/charts/Growth.astro';
+import Recovery from '../../../components/charts/Recovery.astro';
+import Perf from '../../../components/charts/Perf.astro';
+import CrisisTable from '../../../components/charts/CrisisTable.astro';
+
+<div class="col">
+
+I was reviewing my portfolio and wanted a simple answer: if, instead of VWCE, I held half in a Value ETF (IS3S) and half in a Quality ETF (IS3Q), would I lose less in a crash? And how much would that bet cost me when it does not work?
+
+The ETFs only exist since 2014, so I rebuilt both portfolios from the MSCI indices they track and, before 1999, from Kenneth French's academic portfolios. The short version: over the long run 50/50 earned more, 11.1% a year against 9.1%. But almost all of that edge comes from reconstructed data, not from the years the ETFs actually existed.
+
+</div>
+
+<Controls lang="en" threshold />
+<Growth lang="en" />
+
+<div class="col">
+
+## In the big crashes, it protects you from nothing
+
+The 2007-09 financial crisis: VWCE lost 54.9%, 50/50 lost 54.5%. The 2020 pandemic: 21.4% against 22.9%. The year 2022: 25.6% against 24.9%. The lines below sit almost on top of each other.
+
+The only times 50/50 fell clearly less were the two bubbles in expensive stocks: 1973-74 and the dot-com bust. In 2000-03, VWCE fell 46.6% and needed almost 6 years to recover. 50/50 fell 31.7% and was back in 4.
+
+</div>
+
+<Recovery lang="en" />
+<CrisisTable lang="en" />
+
+<div class="col">
+
+## The real price: the years you fall behind
+
+In 15 of the last 57 years, 50/50 earned less than the market. On average by 2.6 percentage points, but in 2020 by 10.7. The longest streak was 2016-2020, five years in a row, at the end of which you had 13.6% less money than with VWCE. Exactly the period in which the ETFs existed.
+
+Only in 2025 and 2026 did Value close the gap. Had you given up on the strategy in 2020, when it was hardest to hold, you would have left with the loss and without the rebound.
+
+</div>
+
+<Perf lang="en" />
+
+<div class="col">
+
+## What I do with this
+
+The "you lose less in crashes" argument does not hold. The case for factors remains the long-run return, and that requires sitting through years of below-market results without changing course halfway. If you are not sure you can do that, VWCE is the safer choice, because it is the one you will not abandon.
+
+<details>
+<summary>How I calculated this</summary>
+
+**Global market (VWCE).** MSCI ACWI net total return from January 2001; the developed-market return from French's data for July 1990 - December 2000; the US market for 1970 - June 1990.
+
+**Value (IS3S) and Quality (IS3Q).** The MSCI World Enhanced Value and MSCI World Sector Neutral Quality indices, net, from January 1999. Before that, French's "Big HiBM" and "Big HiOP" portfolios: large firms with high book-to-market and with high operating profitability. 50/50 is rebalanced annually.
+
+**Limits.** Before 1990 everything is US only. The MSCI indices are back-tested for 1999-2014. Lows are month-end closes, so milder than daily ones. Returns are nominal, before fees and taxes. I am not a financial adviser and this is not a recommendation.
+
+</details>
+
+<ul class="sources">
+  <li><a href="https://www.msci.com/indexes/index/705130">MSCI World Enhanced Value Index</a>, <a href="https://www.msci.com/indexes/index/705169">MSCI World Sector Neutral Quality Index</a>, MSCI ACWI, MSCI World</li>
+  <li><a href="https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html">Kenneth R. French Data Library</a>: market factors and 2x3 portfolios, US and developed markets</li>
+  <li>Fama and French (1992, 2015); Novy-Marx (2013); Asness, Frazzini and Pedersen (2019)</li>
+</ul>
+
+</div>
