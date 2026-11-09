@@ -1,0 +1,941 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Cât au scăzut în crize un portofoliu 100% piață globală (VWCE) și unul 50% Value + 50% Quality (IS3S + IS3Q), și cât a durat revenirea, din 1970 până în 2026.">
+<style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>VWCE vs Value + Quality</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600&display=swap">
+<style>
+/* Layout: one reading column; the three charts share a time axis and sit together on one surface. */
+:root {
+  --plane: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #7a7873;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,.12); --band: rgba(11,11,11,.06);
+  --wash: rgba(11,11,11,.045); --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a;
+  --font: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-c: "IBM Plex Sans Condensed", "IBM Plex Sans", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --plane: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #98968f;
+    --grid: #2c2c2a; --axis: #45453f; --border: rgba(255,255,255,.14); --band: rgba(255,255,255,.075);
+    --wash: rgba(255,255,255,.06); --s1: #3987e5; --s2: #d95926; --s3: #199e70; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --plane: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #98968f;
+  --grid: #2c2c2a; --axis: #45453f; --border: rgba(255,255,255,.14); --band: rgba(255,255,255,.075);
+  --wash: rgba(255,255,255,.06); --s1: #3987e5; --s2: #d95926; --s3: #199e70; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--plane); color: var(--ink); font-family: var(--font); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 1040px; margin: 0 auto; padding-block: 36px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 36px; }
+.eyebrow { font-family: var(--font-c); font-weight: 600; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 10px; }
+h1 { font-size: clamp(26px, 4.4vw, 38px); line-height: 1.12; font-weight: 600; letter-spacing: -.015em; margin: 0 0 14px; text-wrap: balance; }
+h2 { font-size: 20px; line-height: 1.25; font-weight: 600; letter-spacing: -.01em; margin: 0 0 6px; text-wrap: balance; }
+h3 { font-size: 15px; font-weight: 600; margin: 0 0 2px; text-wrap: balance; }
+p { margin: 0; }
+.lede { font-size: 17px; color: var(--ink-2); max-width: 68ch; }
+.prose { max-width: 70ch; display: flex; flex-direction: column; gap: 10px; }
+.note { color: var(--ink-2); font-size: 13px; max-width: 78ch; }
+a { color: inherit; text-decoration-color: var(--axis); text-underline-offset: 3px; }
+a:hover { text-decoration-color: var(--ink); }
+:focus-visible { outline: 2px solid var(--s1); outline-offset: 2px; border-radius: 4px; }
+
+.findings { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--grid); }
+.findings li { padding: 14px 0; border-bottom: 1px solid var(--grid); display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 6px 28px; }
+.findings strong { font-weight: 600; }
+.findings span { color: var(--ink-2); }
+@media (max-width: 720px) { .findings li { grid-template-columns: minmax(0, 1fr); } }
+
+.controls { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: end; }
+.seg { border: 0; margin: 0; padding: 0; min-width: 0; }
+.seg legend { font-family: var(--font-c); font-weight: 600; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); padding: 0; margin-bottom: 6px; }
+.seg .opts { display: inline-flex; flex-wrap: wrap; background: var(--wash); border-radius: 8px; padding: 3px; gap: 2px; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label { display: block; padding: 6px 12px; border-radius: 6px; font-size: 14px; font-weight: 500; color: var(--ink-2); cursor: pointer; white-space: nowrap; }
+.seg label:hover { color: var(--ink); }
+.seg input:checked + label { background: var(--surface); color: var(--ink); box-shadow: 0 0 0 1px var(--border); }
+.seg input:focus-visible + label { outline: 2px solid var(--s1); outline-offset: 2px; }
+
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--grid); border-bottom: 1px solid var(--grid); }
+.tile { padding: 16px 18px 16px 0; min-width: 0; }
+.tile + .tile { padding-left: 18px; border-left: 1px solid var(--grid); }
+.tile .lab { font-size: 13px; color: var(--ink-2); margin-bottom: 8px; min-height: 2.9em; }
+.tile .row { display: flex; align-items: baseline; gap: 8px; }
+.tile .row + .row { margin-top: 4px; }
+.tile .who { font-size: 13px; color: var(--ink-2); width: 68px; flex: none; display: flex; align-items: center; gap: 6px; }
+.tile .val { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.15; }
+.tile .sub { font-size: 12px; color: var(--ink-2); margin-top: 8px; }
+.key { display: inline-block; width: 14px; height: 0; border-top: 2px solid var(--s1); border-radius: 2px; flex: none; }
+.key.k2 { border-top-color: var(--s2); } .key.k3 { border-top-color: var(--s3); }
+.sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: var(--s1); flex: none; }
+.sw.k2 { background: var(--s2); }
+.seg.in { margin: 8px 0 10px; }
+.seg.in legend { margin-bottom: 5px; }
+@media (max-width: 860px) {
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tile { padding: 14px 14px 14px 0; }
+  .tile:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .tile:nth-child(n+3) { border-top: 1px solid var(--grid); }
+  .tile .lab { min-height: 0; }
+}
+@media (max-width: 420px) { .tile .val { font-size: 20px; } }
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 18px 10px; }
+#charts, #rec, #perf { position: relative; touch-action: pan-y; outline: none; }
+#perf:focus-visible { outline: 2px solid var(--s1); outline-offset: 6px; border-radius: 6px; }
+#p-perf text.lb { fill: var(--ink); font-family: var(--font); font-size: 12px; font-weight: 600; paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; }
+#p-perf text.ax { fill: var(--ink-2); }
+#rec:focus-visible { outline: 2px solid var(--s1); outline-offset: 6px; border-radius: 6px; }
+#p-rec text.lb { fill: var(--ink-2); paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; }
+#p-rec text.ax { fill: var(--ink-2); }
+#p-rec [data-ci] { transition: opacity .12s; }
+#crises tbody tr.on td { background: var(--wash); }
+.tip.mini { min-width: 0; }
+.tip .r3 { display: grid; grid-template-columns: 16px auto auto; gap: 2px 9px; align-items: baseline; }
+.tip .r3 + .r3 { margin-top: 5px; }
+.tip .r3 .key { align-self: center; }
+#charts:focus-visible { outline: 2px solid var(--s1); outline-offset: 6px; border-radius: 6px; }
+.fig { margin: 0; padding: 0 0 6px; }
+.fig + .fig { border-top: 1px solid var(--grid); padding-top: 16px; }
+.fig-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 20px; margin-bottom: 2px; }
+.fig-sub { color: var(--ink-2); font-size: 13px; max-width: 86ch; margin-bottom: 4px; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.plot { display: block; width: 100%; }
+.plot svg { display: block; width: 100%; height: auto; overflow: visible; }
+.plot text { font-family: var(--font-c); font-size: 11.5px; fill: var(--muted); font-variant-numeric: tabular-nums; }
+.plot text.end { font-family: var(--font); font-size: 12px; font-weight: 600; fill: var(--ink); }
+.plot text.bl { fill: var(--ink-2); }
+.tip { position: absolute; z-index: 5; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--border); border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.14); padding: 9px 11px; font-size: 13px; line-height: 1.35; min-width: 190px; max-width: 250px; }
+.tip .d { font-family: var(--font-c); font-weight: 600; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 6px; }
+.tip .r { display: grid; grid-template-columns: 16px minmax(0, 1fr) auto; gap: 2px 7px; align-items: baseline; }
+.tip .r + .r { margin-top: 5px; }
+.tip .r .key { align-self: center; }
+.tip .n { color: var(--ink-2); }
+.tip .v { font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+.tip .s { grid-column: 2 / 4; color: var(--ink-2); font-size: 12px; font-variant-numeric: tabular-nums; }
+
+.tbl-wrap { overflow-x: auto; margin-top: 12px; border-top: 1px solid var(--axis); }
+table { border-collapse: collapse; width: 100%; font-size: 13px; font-variant-numeric: tabular-nums; }
+.nb { white-space: nowrap; }
+th, td { padding: 8px 7px; text-align: right; vertical-align: top; border-bottom: 1px solid var(--grid); white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; padding-left: 0; white-space: normal; min-width: 150px; }
+td.txt, th.txt { text-align: left; white-space: normal; min-width: 220px; }
+thead th { font-family: var(--font-c); font-weight: 600; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-2); vertical-align: bottom; }
+thead tr.grp th { border-bottom: 0; padding-bottom: 0; text-align: left; }
+thead tr.grp th .g { display: flex; align-items: center; gap: 7px; border-bottom: 1px solid var(--axis); padding-bottom: 5px; }
+td .small { display: block; font-size: 12px; color: var(--ink-2); white-space: nowrap; }
+td .tag { display: inline-block; font-family: var(--font-c); font-weight: 600; font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2); border: 1px solid var(--border); border-radius: 4px; padding: 0 5px; margin-top: 3px; }
+td.depth { min-width: 84px; }
+td.depth b { font-weight: 600; font-size: 14px; }
+.bar { display: block; height: 5px; margin-top: 5px; margin-left: auto; border-radius: 3px 0 0 3px; background: var(--s1); }
+.bar.b2 { background: var(--s2); }
+td.sep, th.sep { border-left: 1px solid var(--grid); }
+tfoot td { font-weight: 600; border-bottom: 0; border-top: 1px solid var(--axis); }
+details { border-top: 1px solid var(--grid); padding-top: 10px; }
+summary { cursor: pointer; font-weight: 500; color: var(--ink-2); }
+summary:hover { color: var(--ink); }
+.cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 40px; }
+@media (max-width: 760px) { .cols { grid-template-columns: minmax(0, 1fr); } }
+.cols ul { margin: 8px 0 0; padding-left: 18px; display: flex; flex-direction: column; gap: 8px; color: var(--ink-2); font-size: 14px; }
+.cols ul b { color: var(--ink); font-weight: 600; }
+.src { margin: 8px 0 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; color: var(--ink-2); max-width: 90ch; }
+.sec { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.foot { color: var(--ink-2); font-size: 13px; border-top: 1px solid var(--grid); padding-top: 14px; max-width: 86ch; }
+@media (prefers-reduced-motion: no-preference) { .seg label { transition: background-color .12s, color .12s; } }
+</style>
+</head>
+<body>
+
+
+<main class="wrap">
+  <header>
+    <p class="eyebrow">Analiză istorică · ianuarie 1970 - octombrie 2026</p>
+    <h1>VWCE față de 50% Value + 50% Quality</h1>
+    <p class="lede">Cât au scăzut în crize un portofoliu pus integral pe piața globală și unul împărțit egal între IS3S (Value) și IS3Q (Quality), și cât a durat până au revenit la vârful anterior. ETF-urile există doar din 2014, așa că seriile sunt reconstruite din indicii MSCI pe care îi urmăresc și, înainte de 1999, din portofolii academice.</p>
+  </header>
+
+  <section class="sec" aria-labelledby="h-short">
+    <h2 id="h-short">Pe scurt</h2>
+    <p class="note">Cifre în USD, pe închideri lunare. „50/50” este portofoliul Value + Quality, „VWCE” este piața globală.</p>
+    <ul class="findings">
+      <li><strong>În crizele mari, 50/50 a scăzut cam cât piața.</strong><span>Criza financiară: −54,5% față de −54,9%, cu revenire în 50 luni față de 55. Pandemia din 2020: −22,9% față de −21,4%. Anul 2022: −24,9% față de −25,6%.</span></li>
+      <li><strong>A rezistat mai bine când s-a spart o bulă a acțiunilor scumpe.</strong><span>În 1973-74: −37,8% față de −46,4%, cu revenire în 16 luni față de 27. În 2000-03: −31,7% față de −46,6%, cu revenire în 9 luni față de 40. În ambele cazuri partea Value a limitat pierderea.</span></li>
+      <li><strong>Avantajul de randament vine din date academice și din backtest.</strong><span>50/50 a bătut piața cu +2,4 puncte pe an în 1970-1990 și cu +2,9 în 1999-2014, perioadă în care indicii MSCI sunt calculați retroactiv. De când există ETF-urile, din noiembrie 2014 până în octombrie 2026, diferența a fost de +0,3 puncte pe an.</span></li>
+      <li><strong>Riscul practic este să rămâi ani întregi în urma pieței.</strong><span>Din decembrie 2015 până în iunie 2026, adică 126 luni, 50/50 a fost în urma VWCE, cu un decalaj maxim de 14,5% în octombrie 2020. L-a recuperat odată cu saltul acțiunilor Value din 2025-2026.</span></li>
+      <li><strong>An cu an, 50/50 a rămas în urma pieței în 15 din 57 de ani.</strong><span>În acei ani a pierdut în medie 2,6 puncte față de VWCE, iar în ceilalți a câștigat în medie 3,6. Cel mai slab an a fost 2020, cu 10,7 puncte sub piață. Cea mai lungă serie a fost 2016-2020, 5 ani la rând, la capătul căreia averea era cu 13,6% sub cea din VWCE.</span></li>
+      <li><strong>În EUR, bula dot-com a ținut mult mai mult.</strong><span>Pentru un investitor în euro, piața a scăzut cu 54,3% între august 2000 și martie 2003 și a revenit la vârf abia în octombrie 2013. 50/50 a scăzut cu 43,8% și a revenit în septembrie 2005. Comută pe EUR mai jos.</span></li>
+    </ul>
+  </section>
+
+  <section class="sec" aria-label="Grafice și crize">
+    <form class="controls" id="controls" onsubmit="return false">
+      <fieldset class="seg">
+        <legend>Monedă și perioadă</legend>
+        <div class="opts">
+          <input type="radio" name="cur" id="cur-usd" value="usd" checked><label for="cur-usd">USD · din 1970</label>
+          <input type="radio" name="cur" id="cur-eur" value="eur"><label for="cur-eur">EUR · din 1999</label>
+        </div>
+      </fieldset>
+      <fieldset class="seg">
+        <legend>Ce numim criză: scădere a pieței de cel puțin</legend>
+        <div class="opts">
+          <input type="radio" name="th" id="th-10" value="10"><label for="th-10">10%</label>
+          <input type="radio" name="th" id="th-15" value="15" checked><label for="th-15">15%</label>
+          <input type="radio" name="th" id="th-20" value="20"><label for="th-20">20%</label>
+        </div>
+      </fieldset>
+    </form>
+
+    <div class="tiles" id="tiles" style="margin-top:18px"></div>
+
+    <div class="card" style="margin-top:22px">
+      <div id="charts" tabindex="0" role="group" aria-label="Grafice interactive. Săgețile stânga și dreapta mută cursorul cu o lună, cu Shift cu un an.">
+        <figure class="fig">
+          <div class="fig-head">
+            <h3 id="t-growth"></h3>
+            <div class="legend"><span><i class="key"></i>VWCE (piața globală)</span><span><i class="key k2"></i>50% Value + 50% Quality</span></div>
+          </div>
+          <p class="fig-sub">Randament total cu dividendele reinvestite, pe scară logaritmică. Benzile gri marchează crizele, de la vârful pieței până la minim.</p>
+          <div class="plot" id="p-growth"></div>
+        </figure>
+        <figure class="fig">
+          <div class="fig-head"><h3>50/50 raportat la piață</h3></div>
+          <p class="fig-sub">Raportul dintre cele două portofolii, pornind de la 100. Linia urcă atunci când 50/50 câștigă teren față de VWCE și coboară când pierde.</p>
+          <div class="plot" id="p-rel"></div>
+        </figure>
+        <div class="tip" id="tip" hidden></div>
+      </div>
+    </div>
+
+    <div style="margin-top:30px">
+      <h2 id="t-crises">Crizele, una câte una</h2>
+      <div class="card" style="margin-top:12px">
+        <figure class="fig">
+          <div class="fig-head">
+            <h3>Fiecare criză, de la vârf până la revenire</h3>
+            <div class="legend"><span><i class="key"></i>VWCE (piața globală)</span><span><i class="key k2"></i>50% Value + 50% Quality</span></div>
+          </div>
+          <p class="fig-sub">Fiecare linie pornește din luna vârfului dinaintea crizei și se oprește în luna în care portofoliul ajunge din nou la acel nivel. Pe verticală vezi cât a pierdut, pe orizontală câți ani au trecut de la vârf. Indică o linie ori un rând din tabelul de mai jos ca să evidențiezi o criză.</p>
+          <div id="rec" tabindex="0" role="group" aria-label="Grafic interactiv al crizelor. Săgețile trec de la o criză la alta; valorile sunt în tabelul de mai jos.">
+            <div class="plot" id="p-rec"></div>
+            <div class="tip" id="tip2" hidden></div>
+          </div>
+        </figure>
+      </div>
+      <p class="note" id="crises-sub" style="margin-top:22px"></p>
+      <div class="tbl-wrap"><table id="crises"></table></div>
+      <p class="note" id="crises-foot" style="margin-top:10px"></p>
+    </div>
+
+    <div style="margin-top:34px">
+      <h2>Cât câștigă sau pierde 50/50 față de piață, an cu an</h2>
+      <div class="tiles" id="ptiles" style="margin-top:12px"></div>
+      <div class="card" style="margin-top:18px">
+        <figure class="fig">
+          <div class="fig-head">
+            <h3>Diferența de randament: 50/50 minus VWCE</h3>
+            <div class="legend"><span><i class="sw k2"></i>50/50 înaintea pieței</span><span><i class="sw"></i>VWCE înainte</span></div>
+          </div>
+          <p class="fig-sub" id="perf-sub"></p>
+          <form id="perf-controls" onsubmit="return false">
+            <fieldset class="seg in">
+              <legend>Măsurat pe</legend>
+              <div class="opts">
+                <input type="radio" name="hz" id="hz-1" value="1" checked><label for="hz-1">1 an</label>
+                <input type="radio" name="hz" id="hz-3" value="3"><label for="hz-3">3 ani</label>
+                <input type="radio" name="hz" id="hz-5" value="5"><label for="hz-5">5 ani</label>
+                <input type="radio" name="hz" id="hz-10" value="10"><label for="hz-10">10 ani</label>
+              </div>
+            </fieldset>
+          </form>
+          <div id="perf" tabindex="0" role="group" aria-label="Grafic interactiv al diferenței de randament pe ani. Săgețile stânga și dreapta trec de la un an la altul; valorile sunt în tabelul cu date anuale.">
+            <div class="plot" id="p-perf"></div>
+            <div class="tip" id="tip3" hidden></div>
+          </div>
+        </figure>
+      </div>
+    </div>
+
+    <details style="margin-top:22px">
+      <summary>Date anuale în tabel</summary>
+      <div class="tbl-wrap" style="border-top:0"><table id="annual"></table></div>
+    </details>
+  </section>
+
+  <section class="sec" aria-labelledby="h-per">
+    <h2 id="h-per">Randament anualizat pe perioade</h2>
+    <p class="note">În USD. Diferența scade exact acolo unde datele trec de la reconstituire la piața reală.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Perioadă</th><th class="txt">Ce fel de date</th><th>VWCE</th><th>50/50</th><th>Diferență pe an</th></tr></thead>
+        <tbody><tr><td>ian. 1970 - iun. 1990</td><td class="txt">SUA, portofolii academice</td><td>11,1%</td><td>13,6%</td><td>+2,4 puncte</td></tr><tr><td>iul. 1990 - dec. 1998</td><td class="txt">piețe dezvoltate, portofolii academice</td><td>10,3%</td><td>11,9%</td><td>+1,6 puncte</td></tr><tr><td>ian. 1999 - oct. 2014</td><td class="txt">indici MSCI calculați retroactiv (lansați în aug. 2014)</td><td>4,9%</td><td>7,8%</td><td>+2,9 puncte</td></tr><tr><td>nov. 2014 - oct. 2026</td><td class="txt">indici MSCI în timp real; ETF-urile există din oct. 2014</td><td>10,4%</td><td>10,7%</td><td>+0,3 puncte</td></tr></tbody>
+        <tfoot><tr><td>Toată perioada</td><td class="txt">serie îmbinată</td><td>9,1%</td><td>11,1%</td><td>+2,0 puncte</td></tr></tfoot>
+      </table>
+    </div>
+    <p class="note" style="margin-top:10px">Pe ferestre mobile de 10 ani, 50/50 a fost înaintea pieței în 87% din cazuri de la 1970 încoace și în 67% din cazuri de la 1999 încoace. Cea mai slabă fereastră de 10 ani a fost cu 1,4 puncte pe an sub piață.</p>
+  </section>
+
+  <section class="cols">
+    <div class="sec">
+      <h2>Cum sunt construite seriile</h2>
+      <ul>
+        <li><b>VWCE.</b> FTSE All-World nu are un istoric public atât de lung. Din ianuarie 2001 am folosit MSCI ACWI (net), care acoperă practic același univers. Pentru iulie 1990 - decembrie 2000 am folosit piața dezvoltată din datele lui Kenneth French, iar pentru 1970 - iunie 1990 piața totală din SUA.</li>
+        <li><b>IS3S (Value).</b> Indicele MSCI World Enhanced Value (net) din ianuarie 1999. Înainte, portofoliul French „Big HiBM”: companii mari cu raport ridicat între valoarea contabilă și preț.</li>
+        <li><b>IS3Q (Quality).</b> Indicele MSCI World Sector Neutral Quality (net) din ianuarie 1999. Înainte, portofoliul French „Big HiOP”: companii mari cu profitabilitate operațională ridicată.</li>
+        <li><b>50/50.</b> Reechilibrat o dată pe an, la final de decembrie. Cu reechilibrare lunară rezultatele se schimbă cu sub 0,1 puncte.</li>
+        <li><b>EUR.</b> Din ianuarie 1999, cu cursul lunar dedus din MSCI World în EUR și USD; pentru 1999-2000, cursul zilnic publicat de FRED.</li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h2>Ce nu prinde analiza</h2>
+      <ul>
+        <li><b>Înainte de iulie 1990 totul este doar SUA.</b> Piața globală a avut alte scăderi, de exemplu căderea Japoniei din 1990.</li>
+        <li><b>Portofoliile academice nu sunt indicii MSCI.</b> Nu au costuri și folosesc alte criterii. Pe 1999-2021, portofoliul academic Value a adus 6,3% pe an, iar indicele MSCI Enhanced Value 8,4%. Backtestul indicelui arată deci mai bine decât echivalentul academic.</li>
+        <li><b>Închiderile lunare ascund minimele din timpul lunii.</b> Pe date zilnice, MSCI raportează pentru 2007-09 scăderi de 58,4% (ACWI), 62,0% (Enhanced Value) și 54,5% (Sector Neutral Quality).</li>
+        <li><b>Randamentele sunt nominale.</b> Nu includ inflația, comisioanele fondurilor sau impozitele. În anii '70 inflația a lungit mult revenirea reală.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-chk">
+    <h2 id="h-chk">Verificări</h2>
+    <p class="note">Fiecare serie MSCI a fost citită de două ori, independent, iar cele 1604 de valori lunare au coincis. Randamentele pe ani calendaristici 2012-2025 recalculate din serii diferă cu cel mult 0,01 puncte procentuale față de fișele MSCI. Piața dezvoltată din datele French și MSCI World au o corelație lunară de 0,996 pe 2001-2021. Aceeași criză, măsurată pe trei surse diferite de date, dă aceeași imagine:</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr class="grp"><th></th><th colspan="2"><span class="g">SUA, academic</span></th><th colspan="2" class="sep"><span class="g">Piețe dezvoltate, academic</span></th><th colspan="2" class="sep"><span class="g">Indici MSCI</span></th></tr>
+          <tr><th>Criză</th><th>Piață</th><th>50/50</th><th class="sep">Piață</th><th>50/50</th><th class="sep">Piață</th><th>50/50</th></tr>
+        </thead>
+        <tbody><tr><td>Bula dot-com, 2000-03</td><td class="">−45,1%</td><td>−35,3%</td><td class="sep">−44,6%</td><td>−34,4%</td><td class="sep">−46,6%</td><td>−31,7%</td></tr><tr><td>Criza financiară, 2007-09</td><td class="">−50,4%</td><td>−51,4%</td><td class="sep">−53,6%</td><td>−54,4%</td><td class="sep">−54,9%</td><td>−54,5%</td></tr><tr><td>Pandemia COVID-19, 2020</td><td class="">−20,2%</td><td>−27,2%</td><td class="sep">−21,8%</td><td>−24,9%</td><td class="sep">−21,4%</td><td>−22,9%</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-src">
+    <h2 id="h-src">Surse</h2>
+    <ul class="src">
+      <li>Niveluri lunare ale indicilor MSCI (net total return, până la 30 oct. 2026): <a href="https://www.msci.com/indexes/index/705130">MSCI World Enhanced Value</a>, <a href="https://www.msci.com/indexes/index/705169">MSCI World Sector Neutral Quality</a>, MSCI ACWI și MSCI World. Fișele folosite la verificare: <a href="https://www.msci.com/documents/10199/174e3915-2087-4c5b-815b-c1b7ea1ccbbf">Enhanced Value</a>, <a href="https://www.msci.com/documents/10199/f22aa42d-3d6b-478e-a4e4-26d56428ede4">Sector Neutral Quality</a>, <a href="https://www.msci.com/documents/10199/a71b65b5-d0ea-4b5c-a709-24b1213bc3c5">ACWI</a>.</li>
+      <li><a href="https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html">Kenneth R. French Data Library</a>: factorii de piață și portofoliile 2x3 pe mărime și B/M, respectiv pe mărime și profitabilitate operațională, pentru SUA și pentru piețele dezvoltate. Am folosit ediția din noiembrie 2021, dintr-o <a href="https://github.com/fernando-duarte/ERP">copie publică a fișierelor</a>.</li>
+      <li>Curs EUR/USD 1999-2000: FRED, prin <a href="https://github.com/datasets/exchange-rates">datasets/exchange-rates</a>.</li>
+      <li>Fama și French (1992), „The Cross-Section of Expected Stock Returns”, Journal of Finance 47(2). Baza academică pentru factorul Value.</li>
+      <li>Novy-Marx (2013), „The Other Side of Value: The Gross Profitability Premium”, Journal of Financial Economics 108(1); Fama și French (2015), „A Five-Factor Asset Pricing Model”, Journal of Financial Economics 116(1). Baza pentru profitabilitate ca măsură a calității.</li>
+      <li>Fama și French (2012, 2017), Journal of Financial Economics 105(3) și 123(3). Sursa datelor pentru piețele dezvoltate.</li>
+      <li>Asness, Frazzini și Pedersen (2019), „Quality Minus Junk”, Review of Accounting Studies 24.</li>
+      <li>McLean și Pontiff (2016), „Does Academic Research Destroy Stock Return Predictability?”, Journal of Finance 71(1); Fama și French (2021), „The Value Premium”, Review of Asset Pricing Studies 11(1). Despre cât din avantajul factorilor rezistă după publicare.</li>
+    </ul>
+  </section>
+
+  <p class="foot">Aceasta este o reconstituire istorică, nu o recomandare de investiții. Rezultatele din trecut, mai ales cele calculate retroactiv, nu spun cum vor arăta următoarele crize.</p>
+</main>
+
+<script>window.__DATA__ = {"usd":{"start":196912,"n":683,"mkt":[100.0,92.5,97.819,97.339,87.119,81.552,77.303,83.062,87.232,91.349,89.687,94.225,100.01,105.231,107.062,111.805,115.639,111.372,111.673,107.094,111.657,111.121,106.62,106.524,116.197,119.427,123.153,124.262,124.982,126.92,124.203,123.595,127.982,126.959,128.127,134.495,135.826,131.955,126.096,125.037,118.585,115.703,114.477,120.991,117.216,123.581,123.358,108.321,109.675,110.179,110.301,107.819,102.924,98.879,96.674,89.568,81.731,72.773,84.861,81.492,79.251,90.536,95.96,98.905,103.524,109.353,115.083,108.051,105.491,101.556,107.517,110.796,109.555,123.392,124.207,127.585,126.22,124.996,130.595,129.812,129.63,132.884,130.213,131.202,139.14,134.006,131.875,130.57,131.262,129.844,136.479,134.746,132.981,133.193,128.012,133.773,134.789,127.349,126.177,130.442,141.425,144.636,142.972,151.079,157.59,156.314,138.76,143.492,145.874,153.167,148.833,158.492,159.665,157.445,164.782,167.402,177.949,177.967,165.1,175.336,180.14,191.507,190.875,168.562,177.377,188.144,195.049,208.741,213.835,220.121,224.546,248.235,240.267,230.656,234.439,245.622,243.092,246.155,243.669,242.938,228.945,215.368,228.57,238.696,232.06,226.398,215.214,213.298,222.684,216.159,211.555,207.027,231.664,235.834,263.874,277.86,281.25,293.315,302.731,313.175,336.287,340.356,353.085,341.328,342.215,347.93,338.606,348.29,344.633,340.635,326.635,331.077,332.07,314.836,322.927,316.727,351.915,352.127,352.69,349.057,357.714,388.62,395.615,394.745,393.798,416.441,424.02,423.512,421.521,404.913,423.823,453.872,474.432,480.173,516.954,545.283,540.975,568.619,577.433,543.191,578.661,531.5,558.713,567.429,551.654,622.763,652.78,666.554,655.422,658.634,687.745,717.387,746.011,730.046,564.764,522.858,560.504,585.727,616.243,604.966,611.137,612.481,644.82,640.048,622.639,647.046,658.434,647.109,660.828,704.773,693.215,708.743,744.18,774.989,770.029,830.862,848.974,848.04,822.684,836.834,851.646,789.646,802.912,822.744,800.777,873.648,869.629,882.239,793.044,703.51,774.072,749.688,762.508,785.459,860.157,844.244,853.277,863.517,814.728,846.991,839.961,867.764,883.21,841.699,898.093,881.568,867.375,822.792,824.273,860.046,830.977,828.65,851.023,841.492,818.267,835.041,843.726,848.282,866.181,926.12,968.166,1000.503,981.893,1006.343,1052.836,1035.043,1048.809,985.775,1027.769,1104.955,1094.347,1056.811,1084.077,1085.595,1089.937,1105.087,1132.604,1104.629,1131.913,1077.581,1090.512,1070.01,1080.817,1131.4,1166.247,1171.262,1176.298,1232.76,1216.735,1242.408,1223.523,1261.33,1294.503,1314.697,1327.713,1348.69,1391.174,1398.547,1397.009,1339.592,1357.944,1407.238,1406.253,1474.456,1454.993,1462.268,1472.358,1437.61,1471.538,1581.903,1651.349,1720.375,1631.776,1720.381,1632.298,1643.56,1656.709,1695.642,1812.471,1888.414,1910.131,1886.254,1917.377,1901.463,1642.103,1669.691,1810.613,1907.118,1997.134,2039.274,1979.115,2057.488,2153.984,2094.104,2199.856,2200.516,2208.878,2204.239,2309.602,2401.755,2585.969,2457.188,2523.778,2653.248,2512.36,2442.517,2532.401,2458.962,2575.025,2453.226,2380.61,2214.92,2256.339,2313.072,2118.0,1974.661,2117.631,2092.763,2028.046,1995.655,1903.275,1728.927,1765.402,1873.459,1890.609,1838.413,1824.37,1906.095,1845.001,1846.44,1733.073,1587.352,1590.881,1415.858,1519.711,1602.291,1525.403,1480.498,1453.947,1447.668,1575.977,1666.605,1697.795,1734.943,1775.511,1786.294,1894.143,1922.521,2043.828,2078.362,2115.98,2103.888,2054.474,2070.426,2111.387,2043.817,2056.272,2098.964,2150.268,2267.471,2355.185,2305.24,2385.114,2332.555,2281.098,2323.698,2347.174,2433.984,2452.465,2526.254,2458.208,2547.719,2610.376,2738.875,2734.853,2792.383,2885.326,2771.58,2770.386,2789.294,2861.592,2894.939,3003.531,3088.444,3157.359,3188.772,3171.982,3235.6,3379.226,3479.697,3469.47,3416.487,3407.035,3589.929,3729.979,3565.062,3525.598,3236.831,3245.981,3198.36,3376.783,3429.563,3147.957,3066.204,3000.109,2625.169,2104.982,1966.695,2037.973,1863.86,1681.349,1819.848,2034.666,2237.401,2224.872,2420.721,2507.291,2622.31,2581.797,2687.973,2743.631,2625.08,2658.512,2829.529,2834.307,2565.585,2486.554,2688.871,2594.874,2843.119,2945.869,2880.327,3091.241,3139.753,3231.199,3227.956,3360.019,3287.811,3236.001,3183.32,2950.776,2672.181,2958.5,2869.921,2864.131,3030.661,3183.145,3204.286,3167.652,2883.639,3026.066,3067.486,3134.194,3232.914,3211.351,3252.423,3326.094,3479.318,3478.769,3542.374,3643.572,3633.592,3527.382,3696.248,3619.231,3806.179,3959.146,4015.222,4084.502,3921.114,4110.541,4128.811,4168.106,4256.76,4336.911,4284.311,4378.955,4236.945,4266.784,4338.161,4254.432,4187.933,4421.081,4352.563,4478.864,4473.021,4367.711,4405.643,4103.635,3954.965,4265.357,4230.142,4153.86,3903.338,3876.47,4163.754,4225.216,4230.554,4204.927,4386.144,4400.894,4427.865,4352.712,4385.791,4480.532,4603.043,4732.165,4790.056,4864.707,4972.134,4994.744,5134.331,5154.001,5253.577,5362.669,5466.481,5554.61,5867.982,5621.537,5501.198,5553.732,5560.666,5530.553,5697.336,5742.096,5767.087,5334.908,5412.933,5031.676,5428.975,5574.185,5644.286,5834.868,5488.75,5848.151,5865.287,5726.149,5846.636,6006.651,6153.282,6369.971,6299.609,5790.791,5009.015,5545.606,5786.79,5971.692,6287.517,6672.346,6457.208,6300.242,7076.828,7405.402,7371.722,7542.476,7743.931,8082.515,8208.298,8316.462,8373.769,8583.358,8228.782,8648.808,8440.541,8778.167,8347.05,8131.468,8307.588,7642.633,7651.577,7006.577,7495.864,7219.905,6528.748,6922.739,7459.69,7166.144,7679.791,7459.688,7689.689,7800.21,7716.666,8164.702,8463.596,8227.09,7886.892,7649.758,8355.799,8757.162,8808.498,9186.5,9474.928,9162.322,9534.437,9746.789,9903.98,10155.507,10391.43,10158.176,10538.129,10288.674,10634.023,10569.96,10152.397,10247.084,10836.075,11322.627,11476.183,11759.539,12185.728,12458.273,12456.891,12586.897,12960.027,13126.637,12183.92,13423.458,14116.061,14002.831,14013.542,14387.715,14227.436,13994.052],"mix":[100.0,93.176,98.909,99.028,90.5,85.348,80.153,85.42,90.202,94.33,92.518,97.976,103.607,108.392,110.603,114.565,119.585,114.768,114.686,109.501,116.753,115.432,111.119,111.071,121.537,126.828,130.345,132.109,133.409,134.757,130.251,130.314,136.414,136.254,137.801,146.552,147.897,145.716,139.969,140.539,135.87,132.901,132.227,138.654,135.652,143.545,143.596,127.663,131.397,133.322,133.904,131.183,126.296,121.286,118.789,111.854,102.906,92.058,103.191,98.573,95.53,112.005,118.097,123.715,131.604,135.512,143.236,135.026,132.626,127.753,135.3,140.161,139.939,161.149,164.08,168.779,165.928,165.869,174.787,174.365,173.235,178.105,172.745,174.35,186.955,182.102,178.663,177.904,181.228,178.399,187.804,183.404,179.56,178.879,172.588,179.758,181.52,172.817,169.538,174.683,189.347,192.892,189.427,200.668,207.38,206.465,184.752,190.176,192.644,202.573,196.449,210.169,212.045,208.722,218.765,222.897,235.841,235.598,218.58,229.065,233.512,250.203,251.502,221.575,232.695,246.607,253.81,267.464,272.12,275.571,278.94,304.109,296.181,289.253,293.102,304.267,302.41,308.261,307.305,308.022,295.351,284.301,300.044,312.784,303.653,300.831,288.776,289.555,300.48,293.618,288.552,283.185,317.322,321.6,355.545,371.059,377.551,393.699,403.727,416.949,446.963,447.634,460.703,448.553,461.388,467.113,461.029,469.775,468.658,471.223,459.251,463.475,469.902,445.556,458.823,451.675,502.871,511.76,512.635,511.145,524.04,560.967,573.564,578.645,582.463,615.285,623.2,616.449,617.177,593.54,624.89,660.768,691.682,696.513,747.267,787.999,774.105,817.637,835.414,795.942,859.422,793.357,834.048,848.955,824.955,925.941,947.258,977.108,965.069,972.142,1021.008,1067.35,1107.475,1078.886,855.394,793.406,844.451,895.801,934.63,914.384,922.191,934.666,978.377,974.606,953.704,997.143,1024.982,1014.767,1029.684,1102.977,1084.565,1115.309,1168.72,1217.385,1213.873,1309.271,1339.33,1344.199,1309.784,1322.602,1346.132,1247.456,1272.578,1294.776,1255.148,1366.173,1356.072,1368.207,1232.772,1092.723,1216.168,1173.951,1193.561,1236.231,1354.85,1321.294,1333.186,1351.177,1274.77,1334.913,1321.905,1362.826,1384.913,1315.314,1408.427,1391.244,1368.472,1300.429,1323.823,1379.267,1333.536,1324.515,1348.362,1328.81,1295.708,1321.976,1335.009,1345.622,1373.429,1475.584,1546.779,1578.554,1544.82,1585.388,1661.953,1631.903,1652.652,1554.661,1625.843,1758.756,1740.565,1686.241,1731.765,1739.897,1751.873,1778.257,1828.108,1779.158,1824.135,1738.734,1755.455,1726.051,1744.952,1827.443,1883.463,1896.006,1916.31,1993.838,1973.829,2020.529,1995.933,2052.662,2104.2,2153.333,2173.152,2195.39,2251.367,2267.598,2280.865,2198.37,2227.273,2311.838,2322.088,2470.47,2448.237,2485.94,2515.149,2451.752,2530.628,2702.718,2815.868,2938.697,2780.364,2935.305,2805.805,2850.094,2900.231,2973.897,3171.763,3333.192,3364.315,3343.064,3409.904,3385.212,2915.134,2962.713,3206.666,3375.624,3513.519,3580.969,3443.645,3618.648,3847.402,3715.117,3910.002,3917.603,3930.175,3861.966,4040.978,4187.25,4541.903,4208.954,4129.468,4374.285,4282.644,4230.737,4374.231,4309.145,4427.849,4281.285,4298.507,4167.938,4350.348,4435.868,4193.422,3971.24,4216.486,4170.143,4098.863,4133.144,3974.582,3636.096,3647.363,3893.694,3948.939,3906.919,3898.553,4076.825,4028.312,4053.209,3810.018,3484.401,3497.255,3115.746,3278.633,3432.304,3297.915,3225.777,3128.446,3103.705,3372.375,3612.683,3698.657,3808.431,3941.17,4013.516,4290.64,4348.533,4634.167,4718.482,4813.492,4844.313,4776.9,4806.338,4942.766,4808.4,4828.734,4956.566,5040.901,5366.444,5618.353,5519.426,5757.537,5648.781,5499.461,5616.749,5707.631,5912.25,5979.538,6162.22,5998.058,6174.914,6294.194,6599.72,6610.754,6779.375,7046.662,6814.718,6813.574,6880.768,7085.53,7175.955,7467.457,7687.838,7887.381,7976.239,7971.056,8147.317,8587.41,8855.009,8841.404,8614.912,8629.235,9092.552,9396.022,8990.285,8855.782,8128.354,8112.99,8023.945,8408.992,8551.408,7893.808,7661.324,7573.012,6614.645,5322.156,5050.323,5271.493,4801.391,4270.767,4623.595,5234.045,5803.108,5801.155,6296.242,6628.28,6900.898,6769.682,7024.543,7182.116,6889.182,6957.659,7389.831,7332.741,6600.342,6380.623,6931.763,6674.431,7342.3,7655.806,7402.293,7944.391,8207.075,8483.74,8411.848,8828.043,8623.703,8508.055,8315.648,7645.553,6972.025,7690.724,7487.647,7459.578,7878.482,8294.559,8323.681,8162.323,7357.48,7758.879,7797.701,8001.7,8210.296,8203.409,8302.224,8542.355,9007.851,8949.395,9135.652,9461.502,9557.948,9264.114,9808.227,9624.635,10130.251,10540.217,10792.6,11012.044,10587.869,11138.918,11206.486,11377.005,11555.006,11765.581,11659.061,11871.271,11545.144,11582.403,11771.065,11601.765,11438.02,12109.778,11936.834,12264.414,12370.922,12053.549,12220.605,11383.825,10962.535,11871.644,11750.473,11564.44,10788.969,10729.336,11417.512,11628.091,11654.021,11404.316,11905.626,11990.158,12020.937,11859.343,12045.243,12326.794,12560.536,12911.212,13022.488,13177.686,13414.259,13466.929,13770.959,13770.735,14150.079,14489.997,14889.834,15122.472,15833.753,15265.291,15004.777,15203.514,15138.977,14939.111,15397.404,15454.544,15621.305,14512.309,14578.96,13524.704,14608.153,14999.992,15111.45,15489.86,14413.166,15392.498,15405.28,14926.92,15404.361,15919.342,16337.092,16881.385,16551.407,15083.67,13018.741,14159.979,14711.333,14868.853,15058.723,16005.546,15505.914,14999.061,17103.557,17810.957,17736.337,18492.603,19396.083,19965.563,20472.6,20514.998,20764.054,21135.358,20335.394,21127.06,20593.438,21681.136,20937.195,20458.117,20803.108,19384.409,19666.188,17834.916,18772.183,17967.491,16271.841,17494.652,19042.532,18532.061,19750.901,19330.999,19734.401,20035.141,19701.759,20925.977,21688.378,21268.913,20581.002,19931.358,21615.761,22714.335,22951.722,23717.245,24657.128,23696.482,24763.734,24762.767,25337.3,25915.085,26148.278,25393.307,26042.428,25201.906,26115.178,26443.325,25812.068,25962.925,27102.596,28071.607,27952.216,29219.359,30133.558,30770.772,31352.052,32117.028,33807.61,34808.347,32235.288,35782.708,39009.884,39222.91,38928.028,40218.076,39834.678,39292.726],"crises":{"10":[{"name":"Recesiunea din 1969-70","short":"1970","src":"us","partial":true,"mkt":{"p":0,"t":6,"r":12,"d":-0.22697},"mix":{"p":0,"t":6,"r":12,"d":-0.19847},"val":-0.17552,"qual":-0.24695},{"name":"Șocul petrolier, 1973-74","short":"1973-74","src":"us","partial":false,"mkt":{"p":36,"t":57,"r":84,"d":-0.46422},"mix":{"p":36,"t":57,"r":73,"d":-0.37756},"val":-0.28656,"qual":-0.47714},{"name":"Corecția din 1975","short":"1975","src":"us","partial":false,"mkt":{"p":66,"t":69,"r":73,"d":-0.11754},"mix":{"p":66,"t":69,"r":73,"d":-0.1081},"val":-0.10025,"qual":-0.11639},{"name":"Corecția din 1978","short":"1978","src":"us","partial":false,"mkt":{"p":104,"t":106,"r":111,"d":-0.11949},"mix":{"p":104,"t":106,"r":111,"d":-0.10911},"val":-0.11618,"qual":-0.10202},{"name":"Corecția din 1980","short":"1980","src":"us","partial":false,"mkt":{"p":121,"t":123,"r":126,"d":-0.11981},"mix":{"p":122,"t":123,"r":126,"d":-0.11899},"val":-0.13036,"qual":-0.10749},{"name":"Recesiunea din 1980-82","short":"1980-82","src":"us","partial":false,"mkt":{"p":131,"t":151,"r":154,"d":-0.166},"mix":{"p":143,"t":151,"r":152,"d":-0.09463},"val":-0.05776,"qual":-0.22039},{"name":"Corecția din 1983-84","short":"1983-84","src":"us","partial":false,"mkt":{"p":162,"t":173,"r":180,"d":-0.10833},"mix":{"p":169,"t":173,"r":176,"d":-0.05447},"val":-0.05881,"qual":-0.09961},{"name":"Crahul din octombrie 1987","short":"1987","src":"us","partial":false,"mkt":{"p":212,"t":215,"r":233,"d":-0.29913},"mix":{"p":212,"t":215,"r":231,"d":-0.28359},"val":-0.26058,"qual":-0.30398},{"name":"Războiul din Golf, 1990","short":"1990","src":"dev","partial":false,"mkt":{"p":247,"t":249,"r":262,"d":-0.20259},"mix":{"p":247,"t":249,"r":262,"d":-0.20135},"val":-0.22371,"qual":-0.19679},{"name":"Criza rusă și LTCM, 1998","short":"1998","src":"dev","partial":false,"mkt":{"p":342,"t":344,"r":348,"d":-0.14357},"mix":{"p":342,"t":344,"r":348,"d":-0.1451},"val":-0.17033,"qual":-0.12209},{"name":"Bula dot-com, 2000-03","short":"2000-03","src":"msci","partial":false,"mkt":{"p":363,"t":393,"r":433,"d":-0.46637},"mix":{"p":360,"t":399,"r":408,"d":-0.31665},"val":-0.27721,"qual":-0.3831},{"name":"Criza financiară, 2007-09","short":"2007-09","src":"msci","partial":false,"mkt":{"p":454,"t":470,"r":525,"d":-0.54923},"mix":{"p":454,"t":470,"r":520,"d":-0.54547},"val":-0.58239,"qual":-0.50677},{"name":"Criza datoriilor suverane, 2010","short":"2010","src":"msci","partial":false,"mkt":{"p":484,"t":486,"r":489,"d":-0.12269},"mix":{"p":483,"t":486,"r":490,"d":-0.13657},"val":-0.1556,"qual":-0.11741},{"name":"Criza zonei euro, 2011","short":"2011","src":"msci","partial":false,"mkt":{"p":496,"t":501,"r":517,"d":-0.20471},"mix":{"p":496,"t":501,"r":517,"d":-0.21024},"val":-0.2518,"qual":-0.16813},{"name":"China și petrolul, 2015-16","short":"2015-16","src":"msci","partial":false,"mkt":{"p":544,"t":554,"r":564,"d":-0.1345},"mix":{"p":545,"t":554,"r":565,"d":-0.1327},"val":-0.18683,"qual":-0.08574},{"name":"Corecția din 2018","short":"2018","src":"msci","partial":false,"mkt":{"p":577,"t":588,"r":598,"d":-0.14252},"mix":{"p":577,"t":588,"r":598,"d":-0.14583},"val":-0.18257,"qual":-0.12869},{"name":"Pandemia COVID-19, 2020","short":"2020","src":"msci","partial":false,"mkt":{"p":600,"t":603,"r":608,"d":-0.21365},"mix":{"p":600,"t":603,"r":611,"d":-0.22881},"val":-0.26797,"qual":-0.18966},{"name":"Inflație și dobânzi, 2022","short":"2022","src":"msci","partial":false,"mkt":{"p":624,"t":633,"r":649,"d":-0.25625},"mix":{"p":624,"t":633,"r":643,"d":-0.24949},"val":-0.22435,"qual":-0.27464}],"15":[{"name":"Recesiunea din 1969-70","short":"1970","src":"us","partial":true,"mkt":{"p":0,"t":6,"r":12,"d":-0.22697},"mix":{"p":0,"t":6,"r":12,"d":-0.19847},"val":-0.17552,"qual":-0.24695},{"name":"Șocul petrolier, 1973-74","short":"1973-74","src":"us","partial":false,"mkt":{"p":36,"t":57,"r":84,"d":-0.46422},"mix":{"p":36,"t":57,"r":73,"d":-0.37756},"val":-0.28656,"qual":-0.47714},{"name":"Recesiunea din 1980-82","short":"1980-82","src":"us","partial":false,"mkt":{"p":131,"t":151,"r":154,"d":-0.166},"mix":{"p":143,"t":151,"r":152,"d":-0.09463},"val":-0.05776,"qual":-0.22039},{"name":"Crahul din octombrie 1987","short":"1987","src":"us","partial":false,"mkt":{"p":212,"t":215,"r":233,"d":-0.29913},"mix":{"p":212,"t":215,"r":231,"d":-0.28359},"val":-0.26058,"qual":-0.30398},{"name":"Războiul din Golf, 1990","short":"1990","src":"dev","partial":false,"mkt":{"p":247,"t":249,"r":262,"d":-0.20259},"mix":{"p":247,"t":249,"r":262,"d":-0.20135},"val":-0.22371,"qual":-0.19679},{"name":"Bula dot-com, 2000-03","short":"2000-03","src":"msci","partial":false,"mkt":{"p":363,"t":393,"r":433,"d":-0.46637},"mix":{"p":360,"t":399,"r":408,"d":-0.31665},"val":-0.27721,"qual":-0.3831},{"name":"Criza financiară, 2007-09","short":"2007-09","src":"msci","partial":false,"mkt":{"p":454,"t":470,"r":525,"d":-0.54923},"mix":{"p":454,"t":470,"r":520,"d":-0.54547},"val":-0.58239,"qual":-0.50677},{"name":"Criza zonei euro, 2011","short":"2011","src":"msci","partial":false,"mkt":{"p":496,"t":501,"r":517,"d":-0.20471},"mix":{"p":496,"t":501,"r":517,"d":-0.21024},"val":-0.2518,"qual":-0.16813},{"name":"Pandemia COVID-19, 2020","short":"2020","src":"msci","partial":false,"mkt":{"p":600,"t":603,"r":608,"d":-0.21365},"mix":{"p":600,"t":603,"r":611,"d":-0.22881},"val":-0.26797,"qual":-0.18966},{"name":"Inflație și dobânzi, 2022","short":"2022","src":"msci","partial":false,"mkt":{"p":624,"t":633,"r":649,"d":-0.25625},"mix":{"p":624,"t":633,"r":643,"d":-0.24949},"val":-0.22435,"qual":-0.27464}],"20":[{"name":"Recesiunea din 1969-70","short":"1970","src":"us","partial":true,"mkt":{"p":0,"t":6,"r":12,"d":-0.22697},"mix":{"p":0,"t":6,"r":12,"d":-0.19847},"val":-0.17552,"qual":-0.24695},{"name":"Șocul petrolier, 1973-74","short":"1973-74","src":"us","partial":false,"mkt":{"p":36,"t":57,"r":84,"d":-0.46422},"mix":{"p":36,"t":57,"r":73,"d":-0.37756},"val":-0.28656,"qual":-0.47714},{"name":"Crahul din octombrie 1987","short":"1987","src":"us","partial":false,"mkt":{"p":212,"t":215,"r":233,"d":-0.29913},"mix":{"p":212,"t":215,"r":231,"d":-0.28359},"val":-0.26058,"qual":-0.30398},{"name":"Războiul din Golf, 1990","short":"1990","src":"dev","partial":false,"mkt":{"p":247,"t":249,"r":262,"d":-0.20259},"mix":{"p":247,"t":249,"r":262,"d":-0.20135},"val":-0.22371,"qual":-0.19679},{"name":"Bula dot-com, 2000-03","short":"2000-03","src":"msci","partial":false,"mkt":{"p":363,"t":393,"r":433,"d":-0.46637},"mix":{"p":360,"t":399,"r":408,"d":-0.31665},"val":-0.27721,"qual":-0.3831},{"name":"Criza financiară, 2007-09","short":"2007-09","src":"msci","partial":false,"mkt":{"p":454,"t":470,"r":525,"d":-0.54923},"mix":{"p":454,"t":470,"r":520,"d":-0.54547},"val":-0.58239,"qual":-0.50677},{"name":"Criza zonei euro, 2011","short":"2011","src":"msci","partial":false,"mkt":{"p":496,"t":501,"r":517,"d":-0.20471},"mix":{"p":496,"t":501,"r":517,"d":-0.21024},"val":-0.2518,"qual":-0.16813},{"name":"Pandemia COVID-19, 2020","short":"2020","src":"msci","partial":false,"mkt":{"p":600,"t":603,"r":608,"d":-0.21365},"mix":{"p":600,"t":603,"r":611,"d":-0.22881},"val":-0.26797,"qual":-0.18966},{"name":"Inflație și dobânzi, 2022","short":"2022","src":"msci","partial":false,"mkt":{"p":624,"t":633,"r":649,"d":-0.25625},"mix":{"p":624,"t":633,"r":643,"d":-0.24949},"val":-0.22435,"qual":-0.27464}]},"tiles":{"mkt":{"cagr":0.09083367494275918,"vol":0.15729949611398814,"maxdd":-0.5492338166511807,"ddp":454,"ddt":470,"longest":71,"lf":454,"lt":525,"growth":139.94052264269203},"mix":{"cagr":0.11083030983462061,"vol":0.1553979528797283,"maxdd":-0.5454707083263235,"ddp":454,"ddt":470,"longest":66,"lf":454,"lt":520,"growth":392.92726014148946}},"rel":{"maxdd":-0.1448661951402449,"peak":552,"trough":610,"recovered":678,"longest":126,"longest_from":552,"longest_to":678},"roll":{"n":563,"share_mix_ahead":0.872113676731794,"worst":-0.01421511210556381,"best":0.04833974151133824,"worst_end":667},"seg":[[196912,199006,"us"],[199006,199812,"dev"],[199812,202610,"msci"]]},"eur":{"start":199901,"n":334,"mkt":[100.0,100.372,106.148,113.696,112.042,118.976,114.742,116.409,115.489,122.452,132.909,143.189,140.429,145.938,154.534,154.132,146.006,147.947,147.976,161.738,154.799,156.43,142.059,134.021,138.706,128.438,124.568,133.203,137.688,133.595,127.194,116.846,105.869,109.302,116.685,118.408,119.085,117.615,121.841,114.18,110.214,97.859,90.289,90.462,79.895,85.578,89.824,81.06,76.908,75.227,73.983,78.75,79.02,82.447,85.958,90.183,85.538,90.863,89.439,90.36,93.295,94.969,95.471,95.573,94.549,96.776,94.667,94.354,94.243,94.266,95.141,96.625,98.617,100.205,100.085,98.537,104.946,108.117,111.746,111.203,116.848,114.451,120.51,123.41,125.78,127.918,128.677,127.735,120.33,120.824,121.887,124.665,127.442,131.228,129.93,133.524,136.845,133.909,135.548,138.08,144.203,143.258,139.184,139.369,140.769,143.773,135.441,134.473,121.912,119.237,112.561,120.951,123.066,111.42,109.59,113.637,104.221,92.572,86.432,81.759,81.107,73.825,76.436,85.627,88.148,88.455,95.216,97.432,100.044,97.58,99.841,106.639,105.319,108.634,116.614,118.871,116.598,113.204,115.095,113.855,116.135,118.194,123.39,128.497,127.71,130.459,126.847,126.296,127.536,124.466,123.535,114.288,111.065,118.284,118.889,123.036,129.106,132.698,134.181,133.463,130.056,132.974,138.898,138.659,140.136,138.202,139.453,140.687,142.939,148.388,153.837,154.115,156.35,151.33,155.231,153.062,156.801,162.401,164.453,165.299,162.147,165.968,167.056,167.636,173.962,176.642,178.562,185.389,187.038,189.911,194.056,196.067,206.958,219.804,225.999,222.896,227.519,218.603,222.368,204.231,197.582,215.326,223.355,213.239,201.166,198.954,203.759,205.72,211.919,211.071,218.731,220.353,219.721,221.43,230.558,236.889,237.523,248.345,249.75,249.123,246.575,244.21,242.849,241.749,247.816,256.708,255.664,257.958,262.678,257.031,249.443,256.337,265.65,264.155,271.539,275.213,276.887,262.569,266.597,245.457,263.845,272.984,280.319,290.34,274.674,286.376,293.767,289.963,299.065,300.241,311.21,316.458,317.001,293.984,254.573,282.346,290.109,296.5,296.513,311.122,307.073,301.615,329.914,337.514,338.371,346.523,367.433,374.419,374.383,391.071,393.799,405.485,395.946,416.768,418.169,430.46,415.234,403.717,416.372,403.996,398.314,373.739,409.955,400.399,371.642,390.6,404.014,374.442,394.335,392.261,394.698,394.006,403.643,417.331,428.077,422.709,415.411,403.588,427.06,442.083,452.207,473.4,489.235,477.85,489.768,507.147,510.397,511.633,519.227,521.785,556.394,554.083,570.45,566.768,524.119,502.691,532.287,537.898,559.15,560.253,578.334,601.925,598.565,597.654,607.508,619.982,589.691,638.136,674.569,683.001,679.216,690.718,698.507,699.082],"mix":[100.0,99.456,106.323,115.675,113.225,120.457,116.371,117.993,115.272,122.049,132.006,143.275,137.037,136.037,145.144,149.681,144.077,145.587,147.733,158.442,153.904,160.914,152.292,147.211,151.541,144.871,142.72,151.098,156.304,153.823,150.075,139.011,126.844,128.65,138.159,140.899,144.176,143.185,148.463,142.024,137.831,122.562,112.911,113.293,100.163,105.181,109.618,99.841,95.465,92.215,90.362,96.003,97.584,102.325,107.496,114.044,109.491,117.257,115.251,116.721,120.667,123.076,125.235,126.599,125.042,129.067,126.883,126.23,126.786,125.897,128.279,131.317,134.517,137.804,138.083,135.339,144.516,149.778,154.637,154.464,162.378,159.095,166.397,169.525,172.668,176.155,177.976,177.723,168.555,169.291,171.296,175.856,179.97,185.872,184.255,190.027,195.007,191.708,194.446,199.903,209.059,207.98,199.943,201.098,203.119,206.33,194.582,192.431,174.412,169.782,160.877,171.591,174.817,159.172,155.999,163.417,149.606,133.341,126.445,120.48,119.031,106.831,110.635,125.487,130.25,131.394,141.089,146.739,149.989,145.766,148.644,159.033,157.463,161.971,173.506,175.202,170.889,165.491,169.035,166.839,170.863,174.992,180.655,188.133,190.179,195.138,188.317,189.042,190.575,186.431,183.844,168.701,165.088,175.173,176.711,182.558,191.204,196.991,198.573,195.923,189.044,194.237,201.153,201.674,202.75,201.126,202.797,205.846,210.826,217.477,226.023,227.994,234.299,226.424,234.667,231.89,237.752,246.31,251.828,253.89,249.432,256.22,258.317,260.677,269.024,273.007,276.833,286.323,290.35,293.693,299.973,304.601,322.018,342.997,353.099,347.718,358.479,343.687,351.399,322.766,312.004,341.427,353.46,338.21,316.77,313.714,318.309,322.538,332.579,326.126,338.24,342.017,339.829,343.702,360.739,371.289,369.245,386.019,386.816,384.452,378.982,375.116,371.075,367.979,380.259,395.159,396.732,400.095,403.798,397.632,387.604,399.776,412.027,406.5,418.075,421.989,427.277,406.91,409.068,375.868,404.457,418.497,427.558,439.106,410.912,429.411,439.571,430.621,448.899,453.324,470.726,477.785,474.491,436.252,376.942,410.715,420.167,420.582,404.574,425.176,420.088,409.077,454.249,462.463,463.804,484.019,524.296,526.912,531.964,549.585,556.304,568.818,557.441,579.993,581.241,605.698,593.368,578.655,593.992,583.757,583.231,541.975,584.891,567.669,527.688,562.349,587.552,551.656,577.761,579.102,577.066,576.547,587.108,609.357,624.942,622.568,617.567,599.064,629.386,653.261,671.269,696.286,725.32,704.07,724.699,734.035,743.882,743.799,744.339,743.089,783.333,773.205,798.103,807.781,759.154,725.604,758.456,759.741,775.877,793.068,814.749,846.971,858.249,868.784,902.831,936.602,888.822,969.098,1062.022,1089.91,1074.9,1099.957,1114.17,1118.259],"crises":{"10":[{"name":"Bula dot-com, 2000-03","short":"2000-03","src":"msci","partial":false,"mkt":{"p":19,"t":50,"r":177,"d":-0.54258},"mix":{"p":21,"t":50,"r":80,"d":-0.43844},"val":-0.42304,"qual":-0.47856},{"name":"Criza financiară, 2007-09","short":"2007-09","src":"msci","partial":false,"mkt":{"p":100,"t":121,"r":169,"d":-0.48805},"mix":{"p":100,"t":121,"r":168,"d":-0.48899},"val":-0.54266,"qual":-0.43814},{"name":"Criza zonei euro, 2011","short":"2011","src":"msci","partial":false,"mkt":{"p":145,"t":152,"r":157,"d":-0.14866},"mix":{"p":145,"t":152,"r":157,"d":-0.154},"val":-0.20792,"qual":-0.09803},{"name":"China și petrolul, 2015-16","short":"2015-16","src":"msci","partial":false,"mkt":{"p":196,"t":200,"r":214,"d":-0.13158},"mix":{"p":196,"t":200,"r":214,"d":-0.12964},"val":-0.1795,"qual":-0.10204},{"name":"Corecția din 2018","short":"2018","src":"msci","partial":false,"mkt":{"p":236,"t":239,"r":242,"d":-0.11351},"mix":{"p":236,"t":239,"r":242,"d":-0.12032},"val":-0.12629,"qual":-0.1147},{"name":"Pandemia COVID-19, 2020","short":"2020","src":"msci","partial":false,"mkt":{"p":252,"t":254,"r":262,"d":-0.19693},"mix":{"p":251,"t":254,"r":265,"d":-0.21106},"val":-0.25112,"qual":-0.17796},{"name":"Inflație și dobânzi, 2022","short":"2022","src":"msci","partial":false,"mkt":{"p":275,"t":284,"r":299,"d":-0.13664},"mix":{"p":275,"t":284,"r":293,"d":-0.12879},"val":-0.11961,"qual":-0.15799},{"name":"Tarifele comerciale, 2025","short":"2025","src":"msci","partial":false,"mkt":{"p":312,"t":315,"r":320,"d":-0.11878},"mix":{"p":313,"t":315,"r":320,"d":-0.10173},"val":-0.07848,"qual":-0.12819}],"15":[{"name":"Bula dot-com, 2000-03","short":"2000-03","src":"msci","partial":false,"mkt":{"p":19,"t":50,"r":177,"d":-0.54258},"mix":{"p":21,"t":50,"r":80,"d":-0.43844},"val":-0.42304,"qual":-0.47856},{"name":"Criza financiară, 2007-09","short":"2007-09","src":"msci","partial":false,"mkt":{"p":100,"t":121,"r":169,"d":-0.48805},"mix":{"p":100,"t":121,"r":168,"d":-0.48899},"val":-0.54266,"qual":-0.43814},{"name":"Pandemia COVID-19, 2020","short":"2020","src":"msci","partial":false,"mkt":{"p":252,"t":254,"r":262,"d":-0.19693},"mix":{"p":251,"t":254,"r":265,"d":-0.21106},"val":-0.25112,"qual":-0.17796}],"20":[{"name":"Bula dot-com, 2000-03","short":"2000-03","src":"msci","partial":false,"mkt":{"p":19,"t":50,"r":177,"d":-0.54258},"mix":{"p":21,"t":50,"r":80,"d":-0.43844},"val":-0.42304,"qual":-0.47856},{"name":"Criza financiară, 2007-09","short":"2007-09","src":"msci","partial":false,"mkt":{"p":100,"t":121,"r":169,"d":-0.48805},"mix":{"p":100,"t":121,"r":168,"d":-0.48899},"val":-0.54266,"qual":-0.43814}]},"tiles":{"mkt":{"cagr":0.07258924870596073,"vol":0.1409868211966913,"maxdd":-0.5435530702425662,"ddp":19,"ddt":121,"longest":158,"lf":19,"lt":177,"growth":6.990817164331783},"mix":{"cagr":0.09090092513161951,"vol":0.140375518953347,"maxdd":-0.48899142536726226,"ddp":100,"ddt":121,"longest":68,"lf":100,"lt":168,"growth":11.18258876027764}},"rel":{"maxdd":-0.14486619514024257,"peak":203,"trough":261,"recovered":329,"longest":126,"longest_from":203,"longest_to":329},"roll":{"n":214,"share_mix_ahead":0.6635514018691588,"worst":-0.014165018435277066,"best":0.046690171139005865,"worst_end":318},"seg":[[199901,202610,"msci"]]},"periods":[{"k":"us","a":0.11127404351182912,"b":0.13562072121782398},{"k":"dev","a":0.10275543515744734,"b":0.11851623729194039},{"k":"backtest","a":0.049114136978022804,"b":0.07824970987282609},{"k":"live","a":0.10404533114644066,"b":0.10715762699609122},{"k":"full","a":0.09083367494275918,"b":0.11083030983462061}],"cross":[{"name":"Bula dot-com, 2000-03","us":[-0.4509,-0.3533],"dev":[-0.446,-0.3439],"msci":[-0.4664,-0.3167]},{"name":"Criza financiară, 2007-09","us":[-0.5039,-0.5144],"dev":[-0.5362,-0.5436],"msci":[-0.5492,-0.5455]},{"name":"Pandemia COVID-19, 2020","us":[-0.2021,-0.2717],"dev":[-0.2177,-0.2491],"msci":[-0.2137,-0.2288]}],"pre70":{"mkt":{"peak":196811,"d":-0.3359,"rec":197201},"mix":{"peak":196811,"d":-0.2992,"rec":197103}},"check":{"cal_max_pp":0.005,"dev_world_corr":0.9964583952266944,"val_academic":0.06264061443428592,"val_msci":0.0838087223861963,"q_academic":0.08487319558703965,"q_msci":0.07512801020316062,"fx_mean":0.0011406559706994284}};</script>
+<script>
+(function () {
+  "use strict";
+  var D = window.__DATA__;
+  var $ = function (id) { return document.getElementById(id); };
+  var MON = ["ian.", "feb.", "mar.", "apr.", "mai", "iun.", "iul.", "aug.", "sep.", "oct.", "nov.", "dec."];
+  var nf0 = new Intl.NumberFormat("ro-RO", { maximumFractionDigits: 0 });
+  var state = { cur: "usd", th: "15", hi: null, cr: null, hz: 1, pf: null };
+  var SRC = { us: ["SUA, portofolii academice", "SUA"], dev: ["piețe dezvoltate, academic", "dezv."], msci: ["indici MSCI", "MSCI"] };
+  var SRC_TAG = { us: "SUA", dev: "dezvoltate", msci: "MSCI" };
+  var MINUS = "−";
+  var geo = null;
+
+  function base(ds) { return Math.floor(ds.start / 100) * 12 + (ds.start % 100 - 1); }
+  function ymOf(ds, i) { var t = base(ds) + i; return [Math.floor(t / 12), t % 12]; }
+  function idxOf(ds, ym) { return Math.floor(ym / 100) * 12 + (ym % 100 - 1) - base(ds); }
+  function mlabel(ds, i) { var a = ymOf(ds, i); return MON[a[1]] + " " + a[0]; }
+  function pct(x, d) { d = d === undefined ? 1 : d; return (x < 0 ? MINUS : "") + Math.abs(x * 100).toFixed(d).replace(".", ",") + "%"; }
+  function signed(x, d) { return (x < 0 ? MINUS : "+") + Math.abs(x).toFixed(d).replace(".", ","); }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; }
+
+  function prep(ds) {
+    if (ds.uwm) return;
+    var pm = -1e9, px = -1e9; ds.uwm = []; ds.uwx = []; ds.ratio = [];
+    for (var i = 0; i < ds.n; i++) {
+      pm = Math.max(pm, ds.mkt[i]); px = Math.max(px, ds.mix[i]);
+      ds.uwm.push(ds.mkt[i] / pm - 1); ds.uwx.push(ds.mix[i] / px - 1); ds.ratio.push(ds.mix[i] / ds.mkt[i] * 100);
+    }
+  }
+
+  /* ---------------------------------------------------------------- scales */
+  function logTicks(lo, hi) {
+    var sets = [[1, 2, 5], [1, 3], [1]];
+    for (var s = 0; s < sets.length; s++) {
+      var out = [];
+      for (var k = Math.floor(Math.log10(lo)) - 1; k <= Math.ceil(Math.log10(hi)); k++) {
+        for (var j = 0; j < sets[s].length; j++) { var v = sets[s][j] * Math.pow(10, k); if (v >= lo && v <= hi) out.push(v); }
+      }
+      if (out.length <= 7) return out;
+    }
+    return [];
+  }
+  function pathOf(arr, X, Y) {
+    var s = "";
+    for (var i = 0; i < arr.length; i++) s += (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(arr[i]).toFixed(1);
+    return s;
+  }
+
+  /* ---------------------------------------------------------------- charts */
+  function chart(host, o) {
+    // o: {H, series:[{arr,color}], scale:'log'|'lin', lo, hi, ticks, fmt, bands, strip, bandLabels, baseline}
+    var g = geo, m = g.m, W = g.W, H = o.H, ds = g.ds;
+    var top = m.t + (o.bandLabels ? 14 : 0), bottom = H - m.b - (o.strip ? 20 : 0), ph = bottom - top;
+    var X = g.X;
+    var Y = o.scale === "log"
+      ? function (v) { return top + (1 - (Math.log(v) - Math.log(o.lo)) / (Math.log(o.hi) - Math.log(o.lo))) * ph; }
+      : function (v) { return top + (1 - (v - o.lo) / (o.hi - o.lo)) * ph; };
+    var s = '<svg viewBox="0 0 ' + W + " " + H + '" width="' + W + '" height="' + H + '" role="img" aria-label="' + o.aria + '">';
+    // crisis bands
+    var rows = ds.crises[state.th];
+    for (var b = 0; b < rows.length; b++) {
+      var x0 = X(rows[b].mkt.p), x1 = X(rows[b].mkt.t);
+      s += '<rect x="' + x0.toFixed(1) + '" y="' + top + '" width="' + Math.max(1.5, x1 - x0).toFixed(1) + '" height="' + ph + '" fill="var(--band)"/>';
+    }
+    if (o.bandLabels) {
+      var order = rows.map(function (r, i) { return i; }).sort(function (a, c) { return rows[a].mkt.d - rows[c].mkt.d; });
+      var placed = [];
+      order.forEach(function (i) {
+        var r = rows[i], cx = (X(r.mkt.p) + X(r.mkt.t)) / 2, w = r.short.length * 6.1 + 6;
+        var a = cx - w / 2, z = cx + w / 2;
+        if (a < m.l - 4 || z > W - m.r + 4) return;
+        for (var k = 0; k < placed.length; k++) if (a < placed[k][1] && z > placed[k][0]) return;
+        placed.push([a, z]);
+        s += '<text class="bl" x="' + cx.toFixed(1) + '" y="' + (top - 5) + '" text-anchor="middle">' + r.short + "</text>";
+      });
+    }
+    // grid + y ticks
+    o.ticks.forEach(function (t) {
+      var y = Y(t).toFixed(1), strong = o.baseline !== undefined && t === o.baseline;
+      s += '<line x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + y + '" y2="' + y + '" stroke="var(' + (strong ? "--axis" : "--grid") + ')" stroke-width="1"/>';
+      s += '<text x="' + (m.l - 7) + '" y="' + (Y(t) + 4).toFixed(1) + '" text-anchor="end">' + o.fmt(t) + "</text>";
+    });
+    // x axis
+    s += '<line x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + bottom + '" y2="' + bottom + '" stroke="var(--axis)" stroke-width="1"/>';
+    g.years.forEach(function (yr) {
+      var x = X(idxOf(ds, (yr - 1) * 100 + 12));
+      s += '<line x1="' + x.toFixed(1) + '" x2="' + x.toFixed(1) + '" y1="' + bottom + '" y2="' + (bottom + 4) + '" stroke="var(--axis)" stroke-width="1"/>';
+      s += '<text x="' + x.toFixed(1) + '" y="' + (bottom + 16) + '" text-anchor="middle">' + yr + "</text>";
+    });
+    // data-source strip
+    if (o.strip) {
+      var sy = bottom + 24;
+      ds.seg.forEach(function (sg, k) {
+        var a = X(Math.max(0, idxOf(ds, sg[0]))), z = X(Math.min(ds.n - 1, idxOf(ds, sg[1]))), w = z - a;
+        s += '<line x1="' + a.toFixed(1) + '" x2="' + z.toFixed(1) + '" y1="' + sy + '" y2="' + sy + '" stroke="var(--axis)" stroke-width="1"/>';
+        s += '<line x1="' + a.toFixed(1) + '" x2="' + a.toFixed(1) + '" y1="' + (sy - 3) + '" y2="' + (sy + 3) + '" stroke="var(--axis)" stroke-width="1"/>';
+        if (k === ds.seg.length - 1) s += '<line x1="' + z.toFixed(1) + '" x2="' + z.toFixed(1) + '" y1="' + (sy - 3) + '" y2="' + (sy + 3) + '" stroke="var(--axis)" stroke-width="1"/>';
+        var lab = SRC[sg[2]][0];
+        if (lab.length * 6.1 + 8 > w) lab = SRC[sg[2]][1];
+        if (lab.length * 6.1 + 4 <= w) s += '<text class="bl" x="' + ((a + z) / 2).toFixed(1) + '" y="' + (sy + 14) + '" text-anchor="middle">' + lab + "</text>";
+      });
+    }
+    // lines, end dots, end labels
+    var ends = [];
+    o.series.forEach(function (sr) {
+      s += '<path d="' + pathOf(sr.arr, X, Y) + '" fill="none" stroke="var(' + sr.color + ')" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+      ends.push({ y: Y(sr.arr[ds.n - 1]), v: sr.arr[ds.n - 1], color: sr.color });
+    });
+    if (o.endLabels) {
+      ends.sort(function (a, c) { return a.y - c.y; });
+      for (var e = 1; e < ends.length; e++) if (ends[e].y - ends[e - 1].y < 14) { var mid = (ends[e].y + ends[e - 1].y) / 2; ends[e - 1].ly = mid - 7; ends[e].ly = mid + 7; }
+      ends.forEach(function (en) {
+        var xe = X(ds.n - 1);
+        s += '<circle cx="' + xe.toFixed(1) + '" cy="' + en.y.toFixed(1) + '" r="4" fill="var(' + en.color + ')" stroke="var(--surface)" stroke-width="2"/>';
+        s += '<text class="end" x="' + (xe + 9).toFixed(1) + '" y="' + ((en.ly === undefined ? en.y : en.ly) + 4).toFixed(1) + '">' + o.fmt(en.v) + "</text>";
+      });
+    }
+    // crosshair layer
+    s += '<g class="xh" visibility="hidden"><line y1="' + top + '" y2="' + bottom + '" stroke="var(--ink-2)" stroke-width="1"/>';
+    o.series.forEach(function (sr) { s += '<circle r="4.5" fill="var(' + sr.color + ')" stroke="var(--surface)" stroke-width="2"/>'; });
+    s += "</g></svg>";
+    host.innerHTML = s;
+    return { host: host, Y: Y, series: o.series };
+  }
+
+  function draw() {
+    var ds = D[state.cur]; prep(ds);
+    var wrap = $("charts"), W = Math.max(280, Math.floor(wrap.clientWidth));
+    var narrow = W < 560;
+    var m = { l: narrow ? 42 : 54, r: narrow ? 50 : 60, t: 8, b: 22 };
+    var pw = W - m.l - m.r;
+    var X = function (i) { return m.l + i / (ds.n - 1) * pw; };
+    var first = ymOf(ds, 0)[0] + 1, last = ymOf(ds, ds.n - 1)[0], span = last - first;
+    var step = span > 40 ? 10 : 5, years = [];
+    for (var y = Math.ceil(first / step) * step; y <= last; y += step) years.push(y);
+    geo = { ds: ds, m: m, W: W, pw: pw, X: X, years: years, charts: [] };
+
+    var ccy = state.cur === "usd" ? "USD" : "EUR";
+    $("t-growth").textContent = "Cât ar valora 100 " + ccy + " investiți în " + (state.cur === "usd" ? "decembrie 1969" : "ianuarie 1999");
+    var all = ds.mkt.concat(ds.mix), lo = Math.min.apply(null, all) * 0.88, hi = Math.max.apply(null, all) * 1.12;
+    geo.charts.push(chart($("p-growth"), { H: narrow ? 300 : 400, scale: "log", lo: lo, hi: hi, ticks: logTicks(lo, hi),
+      fmt: function (v) { return nf0.format(v); }, series: [{ arr: ds.mkt, color: "--s1" }, { arr: ds.mix, color: "--s2" }],
+      strip: true, bandLabels: true, endLabels: true,
+      aria: "Evoluția valorii pentru cele două portofolii; valorile sunt în tabelul cu date anuale" }));
+
+    var rl = Math.min.apply(null, ds.ratio) * 0.94, rh = Math.max.apply(null, ds.ratio) * 1.08;
+    var sets = [[50, 60, 70, 80, 90, 100, 120, 150, 200, 250, 300, 400, 500], [50, 75, 100, 150, 200, 300, 400, 500], [50, 100, 200, 400]], cand = [];
+    for (var q = 0; q < sets.length; q++) { cand = sets[q].filter(function (x) { return x >= rl && x <= rh; }); if (cand.length <= 5) break; }
+    geo.charts.push(chart($("p-rel"), { H: narrow ? 170 : 200, scale: "log", lo: rl, hi: rh, ticks: cand, baseline: 100,
+      fmt: function (x) { return nf0.format(x); }, series: [{ arr: ds.ratio, color: "--s3" }], endLabels: true,
+      aria: "Raportul dintre portofoliul 50/50 și piață" }));
+    if (state.hi !== null) showAt(Math.min(state.hi, ds.n - 1), null);
+  }
+
+  /* ---------------------------------------------------------------- hover */
+  function showAt(i, py) {
+    var ds = geo.ds, x = geo.X(i); state.hi = i;
+    geo.charts.forEach(function (c) {
+      var g = c.host.querySelector(".xh"); g.setAttribute("visibility", "visible");
+      var ln = g.querySelector("line"); ln.setAttribute("x1", x); ln.setAttribute("x2", x);
+      var dots = g.querySelectorAll("circle");
+      c.series.forEach(function (sr, k) { dots[k].setAttribute("cx", x); dots[k].setAttribute("cy", c.Y(sr.arr[i])); });
+    });
+    var tip = $("tip"); tip.textContent = "";
+    tip.appendChild(el("div", "d", mlabel(ds, i)));
+    function row(cls, name, val, sub) {
+      var r = el("div", "r"); r.appendChild(el("i", "key " + cls)); r.appendChild(el("span", "n", name)); r.appendChild(el("span", "v", val));
+      if (sub) r.appendChild(el("span", "s", sub)); tip.appendChild(r);
+    }
+    row("", "VWCE", nf0.format(ds.mkt[i]), ds.uwm[i] < -0.0005 ? pct(ds.uwm[i]) + " față de maxim" : "la maxim");
+    row("k2", "50/50", nf0.format(ds.mix[i]), ds.uwx[i] < -0.0005 ? pct(ds.uwx[i]) + " față de maxim" : "la maxim");
+    row("k3", "Raport", nf0.format(ds.ratio[i]), null);
+    tip.hidden = false;
+    var wrap = $("charts"), tw = tip.offsetWidth, th = tip.offsetHeight;
+    var left = x + 14; if (left + tw > geo.W) left = x - 14 - tw; if (left < 0) left = 0;
+    var topPx = py === null || py === undefined ? 44 : Math.max(0, Math.min(wrap.clientHeight - th, py - th - 14));
+    tip.style.left = left + "px"; tip.style.top = topPx + "px";
+  }
+  function hide() {
+    state.hi = null; $("tip").hidden = true;
+    if (geo) geo.charts.forEach(function (c) { c.host.querySelector(".xh").setAttribute("visibility", "hidden"); });
+  }
+  function idxFromEvent(ev) {
+    var r = $("charts").getBoundingClientRect(), px = ev.clientX - r.left;
+    var i = Math.round((px - geo.m.l) / geo.pw * (geo.ds.n - 1));
+    return [Math.max(0, Math.min(geo.ds.n - 1, i)), ev.clientY - r.top];
+  }
+
+  /* ---------------------------------------------------------------- tiles */
+  function tiles() {
+    var ds = D[state.cur], t = ds.tiles, host = $("tiles"); host.textContent = "";
+    function tile(label, rows, sub) {
+      var d = el("div", "tile"); d.appendChild(el("div", "lab", label));
+      rows.forEach(function (r) {
+        var row = el("div", "row"), who = el("span", "who");
+        if (r[0] !== null) { who.appendChild(el("i", "key " + r[0])); who.appendChild(document.createTextNode(r[1])); row.appendChild(who); }
+        row.appendChild(el("span", "val", r[2])); d.appendChild(row);
+      });
+      if (sub) d.appendChild(el("div", "sub", sub));
+      host.appendChild(d);
+    }
+    var span = function (a, b) { return mlabel(ds, a) + " - " + (b === null ? "prezent" : mlabel(ds, b)); };
+    tile("Cea mai mare scădere, pe închideri lunare", [["", "VWCE", pct(t.mkt.maxdd)], ["k2", "50/50", pct(t.mix.maxdd)]],
+      "VWCE: " + span(t.mkt.ddp, t.mkt.ddt) + ". 50/50: " + span(t.mix.ddp, t.mix.ddt) + ".");
+    tile("Cea mai lungă perioadă sub maximul anterior", [["", "VWCE", t.mkt.longest + " luni"], ["k2", "50/50", t.mix.longest + " luni"]],
+      "VWCE: " + span(t.mkt.lf, t.mkt.lt) + ". 50/50: " + span(t.mix.lf, t.mix.lt) + ".");
+    tile("Randament anualizat, " + ymOf(ds, 1)[0] + " - " + ymOf(ds, ds.n - 1)[0],
+      [["", "VWCE", pct(t.mkt.cagr)], ["k2", "50/50", pct(t.mix.cagr)]],
+      "100 " + (state.cur === "usd" ? "USD" : "EUR") + " au devenit " + nf0.format(ds.mkt[ds.n - 1]) + ", respectiv " + nf0.format(ds.mix[ds.n - 1]) + ".");
+    tile("Cel mai lung interval în care 50/50 a fost în urma pieței", [[null, "", ds.rel.longest + " luni"]],
+      span(ds.rel.longest_from, ds.rel.longest_to) + ", cu un decalaj de până la " + pct(Math.abs(ds.rel.maxdd)) + " în " + mlabel(ds, ds.rel.trough) + ".");
+  }
+
+  /* ---------------------------------------------------------------- crisis table */
+  function crises() {
+    var ds = D[state.cur], rows = ds.crises[state.th], T = $("crises"); T.textContent = "";
+    $("crises-sub").textContent = "Scăderi ale pieței de cel puțin " + state.th + "%, în " + (state.cur === "usd" ? "USD" : "EUR") +
+      ", pe închideri lunare. Coborâre = luni de la vârf la minim. Revenire = luni de la minim până când portofoliul atinge din nou vârful.";
+    var thead = el("thead"), g = el("tr", "grp");
+    g.appendChild(el("th"));
+    [["", "VWCE (piața globală)", 3, ""], ["k2", "50% Value + 50% Quality", 3, "sep"], [null, "Diferență", 1, "sep"], [null, "Componente, scădere", 2, "sep"]].forEach(function (c) {
+      var th = el("th", c[3]); th.colSpan = c[2]; var s = el("span", "g");
+      if (c[0] !== null) s.appendChild(el("i", "key " + c[0])); s.appendChild(document.createTextNode(c[1])); th.appendChild(s); g.appendChild(th);
+    });
+    thead.appendChild(g);
+    var h = el("tr");
+    ["Criză", "Scădere", "Coborâre", "Revenire", "Scădere", "Coborâre", "Revenire", "puncte", "Value", "Quality"].forEach(function (t, i) {
+      h.appendChild(el("th", i === 4 || i === 7 || i === 8 ? "sep" : "", t));
+    });
+    thead.appendChild(h); T.appendChild(thead);
+    var tb = el("tbody"), anyPartial = false;
+    rows.forEach(function (r) {
+      var tr = el("tr"), c0 = el("td");
+      r.name.split(/(\d{4}-\d{2})/).forEach(function (part) {
+        if (/^\d{4}-\d{2}$/.test(part)) c0.appendChild(el("span", "nb", part)); else if (part) c0.appendChild(document.createTextNode(part));
+      });
+      if (r.partial) c0.appendChild(document.createTextNode(" *"));
+      c0.appendChild(el("span", "small", mlabel(ds, r.mkt.p) + " - " + mlabel(ds, r.mkt.t)));
+      if (state.cur === "usd") c0.appendChild(el("span", "tag", SRC_TAG[r.src]));
+      tr.appendChild(c0); if (r.partial) anyPartial = true;
+      [["mkt", ""], ["mix", "b2"]].forEach(function (k, j) {
+        var c = r[k[0]], d = el("td", "depth" + (j ? " sep" : ""));
+        d.appendChild(el("b", "", pct(c.d)));
+        var bar = el("span", "bar " + k[1]); bar.style.width = Math.max(2, Math.min(100, Math.abs(c.d) / 0.6 * 100)).toFixed(0) + "%"; d.appendChild(bar);
+        tr.appendChild(d);
+        var down = el("td", "", (c.t - c.p) + " luni");
+        if (j && (c.p !== r.mkt.p || c.t !== r.mkt.t)) { down.appendChild(el("span", "small", mlabel(ds, c.p) + " -")); down.appendChild(el("span", "small", mlabel(ds, c.t))); }
+        tr.appendChild(down);
+        var rec = el("td", "", c.r === null ? "încă sub vârf" : (c.r - c.t) + " luni");
+        if (c.r !== null) rec.appendChild(el("span", "small", "în " + mlabel(ds, c.r)));
+        tr.appendChild(rec);
+      });
+      tr.appendChild(el("td", "sep", signed((r.mix.d - r.mkt.d) * 100, 1)));
+      tr.appendChild(el("td", "sep", pct(r.val))); tr.appendChild(el("td", "", pct(r.qual)));
+      (function (i) {
+        tr.addEventListener("mouseenter", function () { setCr(i, false); });
+        tr.addEventListener("mouseleave", function () { setCr(null, false); });
+      })(tb.children.length);
+      tb.appendChild(tr);
+    });
+    T.appendChild(tb);
+    var foot = "Diferența este în puncte procentuale; plus înseamnă că 50/50 a scăzut mai puțin decât piața. La 50/50 datele apar doar acolo unde vârful sau minimul lui diferă de ale pieței. Scăderea componentelor este măsurată separat pentru fiecare indice, în aceeași fereastră.";
+    if (anyPartial) foot += " * Seria începe în decembrie 1969, după vârful real din " + mlabel({ start: D.pre70.mkt.peak }, 0) + ". Măsurată de la acel vârf, scăderea până în iunie 1970 a fost " + pct(D.pre70.mkt.d) + " pentru piață și " + pct(D.pre70.mix.d) + " pentru 50/50.";
+    $("crises-foot").textContent = foot;
+  }
+
+  /* ---------------------------------------------------------------- annual table */
+  function annual() {
+    var ds = D[state.cur], T = $("annual"); T.textContent = "";
+    var thead = el("thead"), h = el("tr");
+    ["An", "VWCE, valoare", "VWCE, randament", "50/50, valoare", "50/50, randament", "Diferență, puncte", "Raport 50/50 la piață"].forEach(function (t) { h.appendChild(el("th", "", t)); });
+    thead.appendChild(h); T.appendChild(thead);
+    var tb = el("tbody"), prev = 0;
+    for (var i = 1; i < ds.n; i++) {
+      var a = ymOf(ds, i), lastRow = i === ds.n - 1;
+      if (a[1] !== 11 && !lastRow) continue;
+      var tr = el("tr");
+      var startM = ymOf(ds, 0)[1], lab = String(a[0]);
+      if (prev === 0 && startM !== 11) lab += " (din " + MON[startM + 1] + ")";
+      if (a[1] !== 11) lab += " (până în " + MON[a[1]] + ")";
+      tr.appendChild(el("td", "", lab));
+      tr.appendChild(el("td", "", nf0.format(ds.mkt[i]))); tr.appendChild(el("td", "", pct(ds.mkt[i] / ds.mkt[prev] - 1)));
+      tr.appendChild(el("td", "", nf0.format(ds.mix[i]))); tr.appendChild(el("td", "", pct(ds.mix[i] / ds.mix[prev] - 1)));
+      tr.appendChild(el("td", "", signed((ds.mix[i] / ds.mix[prev] - ds.mkt[i] / ds.mkt[prev]) * 100, 1)));
+      tr.appendChild(el("td", "", nf0.format(ds.ratio[i])));
+      tb.appendChild(tr); prev = i;
+    }
+    T.appendChild(tb);
+  }
+
+  /* ---------------------------------------------------------------- recovery chart */
+  var rec = null;
+  function drawRec() {
+    var ds = D[state.cur], rows = ds.crises[state.th], wrapR = $("rec");
+    var W = Math.max(280, Math.floor(wrapR.clientWidth)), narrow = W < 560, H = narrow ? 320 : 430;
+    var m = { l: narrow ? 42 : 54, r: narrow ? 12 : 22, t: 10, b: 42 }, pw = W - m.l - m.r, ph = H - m.t - m.b;
+    var lines = [], maxM = 12, minD = -0.1;
+    rows.forEach(function (r, ci) {
+      [["mkt", "--s1"], ["mix", "--s2"]].forEach(function (k) {
+        var c = r[k[0]], lv = ds[k[0]], end = c.r === null ? ds.n - 1 : c.r, pts = [];
+        for (var i = c.p; i <= end; i++) { var y = Math.min(0, lv[i] / lv[c.p] - 1); pts.push(y); if (y < minD) minD = y; }
+        maxM = Math.max(maxM, pts.length - 1);
+        lines.push({ ci: ci, key: k[0], color: k[1], pts: pts, t: c.t - c.p, open: c.r === null });
+      });
+    });
+    var years = Math.ceil(maxM / 12 + 0.15), xm = years * 12;
+    var st = minD < -0.3 ? 0.2 : 0.1, lo = Math.floor(minD / st - 0.05) * st;
+    var X = function (k) { return m.l + k / xm * pw; }, Y = function (v) { return m.t + v / lo * ph; };
+    var s = '<svg viewBox="0 0 ' + W + " " + H + '" width="' + W + '" height="' + H + '" role="img" aria-label="Traiectoria fiecărei crize de la vârf până la revenire, pentru cele două portofolii">';
+    for (var v = 0; v >= lo - 1e-9; v -= st) {
+      var yy = Y(v).toFixed(1);
+      s += '<line x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + yy + '" y2="' + yy + '" stroke="var(' + (v === 0 ? "--axis" : "--grid") + ')" stroke-width="1"/>';
+      s += '<text x="' + (m.l - 7) + '" y="' + (Y(v) + 4).toFixed(1) + '" text-anchor="end">' + pct(v, 0) + "</text>";
+    }
+    var bottom = m.t + ph, stepY = years > 8 ? 2 : 1;
+    s += '<line x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + bottom + '" y2="' + bottom + '" stroke="var(--axis)" stroke-width="1"/>';
+    for (var yr = 0; yr <= years; yr += stepY) {
+      var xx = X(yr * 12).toFixed(1);
+      s += '<line x1="' + xx + '" x2="' + xx + '" y1="' + bottom + '" y2="' + (bottom + 4) + '" stroke="var(--axis)" stroke-width="1"/>';
+      s += '<text x="' + xx + '" y="' + (bottom + 16) + '" text-anchor="middle">' + yr + "</text>";
+    }
+    s += '<text class="ax" x="' + (m.l + pw / 2).toFixed(1) + '" y="' + (bottom + 34) + '" text-anchor="middle">ani de la vârful dinaintea crizei</text>';
+    lines.forEach(function (l) {
+      var d = "";
+      for (var k = 0; k < l.pts.length; k++) d += (k ? "L" : "M") + X(k).toFixed(1) + " " + Y(l.pts[k]).toFixed(1);
+      s += '<path data-ci="' + l.ci + '" d="' + d + '" fill="none" stroke="var(' + l.color + ')" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>';
+      if (!l.open) s += '<circle data-ci="' + l.ci + '" cx="' + X(l.pts.length - 1).toFixed(1) + '" cy="' + Y(0).toFixed(1) + '" r="3.5" fill="var(' + l.color + ')" stroke="var(--surface)" stroke-width="2"/>';
+    });
+    // crisis names at the market low, deepest first, skipping any that would collide
+    var order = rows.map(function (r, i) { return i; }).sort(function (a, c) { return rows[a].mkt.d - rows[c].mkt.d; }), boxes = [];
+    order.forEach(function (i) {
+      var r = rows[i], cx = X(r.mkt.t - r.mkt.p), cy = Y(r.mkt.d) + 16, w = r.short.length * 6.2 + 8;
+      if (cx - w / 2 < m.l) cx = m.l + w / 2;
+      var bx = [cx - w / 2, cx + w / 2, cy - 12, cy + 4];
+      if (bx[1] > W - m.r || bx[3] > bottom - 2) return;
+      for (var q = 0; q < boxes.length; q++) if (bx[0] < boxes[q][1] && bx[1] > boxes[q][0] && bx[2] < boxes[q][3] && bx[3] > boxes[q][2]) return;
+      boxes.push(bx);
+      s += '<text class="lb" data-lb="' + i + '" x="' + cx.toFixed(1) + '" y="' + cy.toFixed(1) + '" text-anchor="middle">' + r.short + "</text>";
+    });
+    s += '<g class="hl"></g></svg>';
+    $("p-rec").innerHTML = s;
+    rec = { ds: ds, rows: rows, lines: lines, X: X, Y: Y, W: W, H: H, m: m, bottom: bottom };
+    setCr(null, false);
+  }
+  function setCr(ci, withTip) {
+    state.cr = ci;
+    var tip = $("tip2"), svg = $("p-rec").querySelector("svg");
+    if (!svg || !rec) return;
+    svg.querySelectorAll("[data-ci]").forEach(function (e) {
+      var on = ci === null || +e.getAttribute("data-ci") === ci;
+      e.style.opacity = on ? "" : "0.14";
+      if (e.tagName.toLowerCase() === "path") e.setAttribute("stroke-width", ci !== null && on ? 3 : 1.6);
+    });
+    svg.querySelectorAll("[data-lb]").forEach(function (e) { e.style.opacity = ci === null ? "" : "0"; });
+    var g = "";
+    if (ci !== null) {
+      var r = rec.rows[ci];
+      rec.lines.forEach(function (l) {
+        if (l.ci !== ci) return;
+        g += '<circle cx="' + rec.X(l.t).toFixed(1) + '" cy="' + rec.Y(l.pts[l.t]).toFixed(1) + '" r="4.5" fill="var(' + l.color + ')" stroke="var(--surface)" stroke-width="2"/>';
+      });
+      var w = r.short.length * 6.2 + 8, cx = Math.max(rec.m.l + w / 2, rec.X(r.mkt.t - r.mkt.p)), cy = Math.min(rec.bottom - 6, rec.Y(Math.min(r.mkt.d, r.mix.d)) + 18);
+      g += '<text class="lb" x="' + cx.toFixed(1) + '" y="' + cy.toFixed(1) + '" text-anchor="middle">' + r.short + "</text>";
+    }
+    svg.querySelector(".hl").innerHTML = g;
+    var trs = document.querySelectorAll("#crises tbody tr");
+    for (var i = 0; i < trs.length; i++) trs[i].classList.toggle("on", i === ci);
+    if (ci === null || !withTip) { tip.hidden = true; return; }
+    var row = rec.rows[ci], ds = rec.ds; tip.textContent = ""; tip.className = "tip mini";
+    tip.appendChild(el("div", "d", row.name));
+    [["mkt", "", "VWCE"], ["mix", "k2", "50/50"]].forEach(function (k) {
+      var c = row[k[0]], line = el("div", "r3");
+      line.appendChild(el("i", "key " + k[1])); line.appendChild(el("span", "n", k[2])); line.appendChild(el("span", "v", pct(c.d)));
+      var yrs = ((c.r === null ? ds.n - 1 : c.r) - c.p) / 12;
+      var sub = el("span", "s", c.r === null ? "încă sub vârf după " + yrs.toFixed(1).replace(".", ",") + " ani" : "revenit după " + yrs.toFixed(1).replace(".", ",") + " ani de la vârf");
+      sub.style.gridColumn = "2 / 4"; line.appendChild(sub); tip.appendChild(line);
+    });
+    tip.hidden = false;
+    tip.style.left = Math.max(0, rec.W - rec.m.r - tip.offsetWidth - 6) + "px";
+    tip.style.top = Math.max(0, rec.bottom - tip.offsetHeight - 8) + "px";
+  }
+  function nearestCrisis(ev) {
+    var b = $("rec").getBoundingClientRect(), px = ev.clientX - b.left, py = ev.clientY - b.top, best = null, bd = 34 * 34;
+    rec.lines.forEach(function (l) {
+      var k0 = Math.round((px - rec.m.l) / (rec.X(1) - rec.X(0)));
+      for (var k = Math.max(0, k0 - 3); k <= Math.min(l.pts.length - 1, k0 + 3); k++) {
+        var dx = rec.X(k) - px, dy = rec.Y(l.pts[k]) - py, dd = dx * dx + dy * dy;
+        if (dd < bd) { bd = dd; best = l.ci; }
+      }
+      var ke = l.pts.length - 1, ex = rec.X(ke) - px, ey = rec.Y(l.pts[ke]) - py;
+      if (k0 > ke && ex * ex + ey * ey < bd) { bd = ex * ex + ey * ey; best = l.ci; }
+    });
+    return best;
+  }
+
+  /* ---------------------------------------------------------------- yearly difference */
+  var perf = null;
+  function pctS(x) { return (x < 0 ? MINUS : "+") + Math.abs(x * 100).toFixed(1).replace(".", ",") + "%"; }
+  function perfSeries(ds, N) {
+    var ends = [], out = [];
+    for (var i = 0; i < ds.n; i++) if (ymOf(ds, i)[1] === 11) ends.push(i);
+    if (ends[0] !== 0) ends.unshift(0);
+    if (ends[ends.length - 1] !== ds.n - 1) ends.push(ds.n - 1);
+    for (var k = 1; k < ends.length; k++) {
+      var b = ends[k], a = N === 1 ? ends[k - 1] : b - 12 * N;
+      if (a < 0) continue;
+      var gm = ds.mkt[b] / ds.mkt[a], gx = ds.mix[b] / ds.mix[a];
+      var rm = N === 1 ? gm - 1 : Math.pow(gm, 1 / N) - 1, rx = N === 1 ? gx - 1 : Math.pow(gx, 1 / N) - 1;
+      out.push({ y: ymOf(ds, b)[0], a: a, b: b, rm: rm, rx: rx, d: rx - rm, cum: gx / gm - 1, partial: N === 1 && b - a < 12 });
+    }
+    return out;
+  }
+  function perfLabel(ds, p, N) {
+    if (ymOf(ds, p.b)[1] !== 11 || p.partial) return mlabel(ds, p.a + 1) + " - " + mlabel(ds, p.b);
+    return N === 1 ? String(p.y) : (p.y - N + 1) + " - " + p.y;
+  }
+  function srcOfYear(ds, y) {
+    for (var k = 0; k < ds.seg.length; k++) if (Math.floor(ds.seg[k][1] / 100) >= y) return ds.seg[k][2];
+    return ds.seg[ds.seg.length - 1][2];
+  }
+  function drawPerf() {
+    var ds = D[state.cur], N = state.hz, ser = perfSeries(ds, N), wrapP = $("perf");
+    var W = Math.max(280, Math.floor(wrapP.clientWidth)), narrow = W < 560, H = narrow ? 300 : 390, strip = N === 1;
+    var m = { l: narrow ? 40 : 50, r: 12, t: 24, b: strip ? 46 : 26 }, pw = W - m.l - m.r, ph = H - m.t - m.b, bottom = m.t + ph;
+    var n = ser.length, slot = pw / n, bw = Math.max(2, Math.min(22, slot * 0.7));
+    var lo = 0, hi = 0, iMin = 0, iMax = 0;
+    ser.forEach(function (p, i) { var v = p.d * 100; if (v < lo) { lo = v; iMin = i; } if (v > hi) { hi = v; iMax = i; } });
+    var span = hi - lo, step = [0.5, 1, 2, 5, 10].filter(function (q) { return span / q <= 6; })[0] || 20;
+    lo = Math.floor(lo / step - 0.35) * step; hi = Math.ceil(hi / step + 0.35) * step;
+    var Y = function (v) { return m.t + (hi - v) / (hi - lo) * ph; }, Xc = function (i) { return m.l + (i + 0.5) * slot; };
+    $("perf-sub").textContent = N === 1
+      ? "Fiecare bară este un an calendaristic: randamentul 50/50 minus randamentul VWCE, în puncte procentuale. Deasupra liniei sunt anii în care 50/50 a câștigat mai mult, dedesubt anii în care a rămas în urmă. Barele mai șterse sunt ani incompleți."
+      : "Fiecare bară este o perioadă de " + N + " ani încheiată în anul respectiv: diferența dintre randamentul anualizat al 50/50 și cel al VWCE, în puncte procentuale pe an. Ultima bară se încheie în " + mlabel(ds, ds.n - 1) + ".";
+    var s = '<svg viewBox="0 0 ' + W + " " + H + '" width="' + W + '" height="' + H + '" role="img" aria-label="Diferența de randament dintre portofoliul 50/50 și piață, pe ani">';
+    s += '<rect class="hov" y="' + m.t + '" height="' + ph + '" width="' + slot.toFixed(1) + '" fill="var(--wash)" visibility="hidden"/>';
+    for (var v = lo; v <= hi + 1e-9; v += step) {
+      var vv = Math.round(v * 10) / 10, yy = Y(vv).toFixed(1);
+      s += '<line x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + yy + '" y2="' + yy + '" stroke="var(' + (vv === 0 ? "--axis" : "--grid") + ')" stroke-width="1"/>';
+      s += '<text x="' + (m.l - 7) + '" y="' + (Y(vv) + 4).toFixed(1) + '" text-anchor="end">' + (vv === 0 ? "0" : signed(vv, step < 1 ? 1 : 0)) + "</text>";
+    }
+    s += '<text class="ax" x="' + m.l + '" y="' + (m.t - 10) + '">' + (N === 1 ? "puncte procentuale" : "puncte procentuale pe an") + "</text>";
+    var y0 = Y(0), stepY = n > 30 ? 10 : 5;
+    ser.forEach(function (p, i) {
+      var x = Xc(i) - bw / 2, y1 = Y(p.d * 100), h = Math.abs(y1 - y0), r = Math.min(4, bw / 2, h), up = p.d >= 0, q = up ? r : -r;
+      var d = h < 0.6 ? "M" + x.toFixed(1) + " " + (y0 - 0.6).toFixed(1) + "h" + bw.toFixed(1) + "v1.2h" + (-bw).toFixed(1) + "Z"
+        : "M" + x.toFixed(1) + " " + y0.toFixed(1) + "L" + x.toFixed(1) + " " + (y1 + q).toFixed(1) + "Q" + x.toFixed(1) + " " + y1.toFixed(1) + " " + (x + r).toFixed(1) + " " + y1.toFixed(1) +
+          "L" + (x + bw - r).toFixed(1) + " " + y1.toFixed(1) + "Q" + (x + bw).toFixed(1) + " " + y1.toFixed(1) + " " + (x + bw).toFixed(1) + " " + (y1 + q).toFixed(1) + "L" + (x + bw).toFixed(1) + " " + y0.toFixed(1) + "Z";
+      s += '<path d="' + d + '" fill="var(' + (up ? "--s2" : "--s1") + ')"' + (p.partial ? ' opacity="0.5"' : "") + "/>";
+      if (p.y % stepY === 0) {
+        s += '<line x1="' + Xc(i).toFixed(1) + '" x2="' + Xc(i).toFixed(1) + '" y1="' + bottom + '" y2="' + (bottom + 4) + '" stroke="var(--axis)" stroke-width="1"/>';
+        s += '<text x="' + Xc(i).toFixed(1) + '" y="' + (bottom + 16) + '" text-anchor="middle">' + p.y + "</text>";
+      }
+    });
+    s += '<line x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + y0.toFixed(1) + '" y2="' + y0.toFixed(1) + '" stroke="var(--axis)" stroke-width="1"/>';
+    // name the two extremes
+    [iMin, iMax].forEach(function (i) {
+      var p = ser[i], txt = p.y + ": " + signed(p.d * 100, 1), w = txt.length * 6.6 + 6;
+      var cx = Math.max(m.l + w / 2, Math.min(W - m.r - w / 2, Xc(i))), cy = Y(p.d * 100) + (p.d < 0 ? 15 : -7);
+      s += '<text class="lb" x="' + cx.toFixed(1) + '" y="' + cy.toFixed(1) + '" text-anchor="middle">' + txt + "</text>";
+    });
+    if (strip) {
+      var sy = bottom + 26, i0 = 0;
+      while (i0 < n) {
+        var key = srcOfYear(ds, ser[i0].y), i1 = i0;
+        while (i1 + 1 < n && srcOfYear(ds, ser[i1 + 1].y) === key) i1++;
+        var a = m.l + i0 * slot, z = m.l + (i1 + 1) * slot, wd = z - a, lab = SRC[key][0];
+        s += '<line x1="' + a.toFixed(1) + '" x2="' + z.toFixed(1) + '" y1="' + sy + '" y2="' + sy + '" stroke="var(--axis)" stroke-width="1"/>';
+        s += '<line x1="' + a.toFixed(1) + '" x2="' + a.toFixed(1) + '" y1="' + (sy - 3) + '" y2="' + (sy + 3) + '" stroke="var(--axis)" stroke-width="1"/>';
+        if (i1 === n - 1) s += '<line x1="' + z.toFixed(1) + '" x2="' + z.toFixed(1) + '" y1="' + (sy - 3) + '" y2="' + (sy + 3) + '" stroke="var(--axis)" stroke-width="1"/>';
+        if (lab.length * 6.1 + 8 > wd) lab = SRC[key][1];
+        if (lab.length * 6.1 + 4 <= wd) s += '<text class="ax" x="' + ((a + z) / 2).toFixed(1) + '" y="' + (sy + 14) + '" text-anchor="middle">' + lab + "</text>";
+        i0 = i1 + 1;
+      }
+    }
+    s += "</svg>";
+    $("p-perf").innerHTML = s;
+    perf = { ds: ds, N: N, ser: ser, slot: slot, m: m, W: W, Xc: Xc, Y: Y, bottom: bottom };
+    setPf(null);
+    ptiles(ds, N, ser);
+  }
+  function setPf(i) {
+    state.pf = i;
+    var tip = $("tip3"), hov = $("p-perf").querySelector(".hov");
+    if (!hov || !perf) return;
+    if (i === null) { hov.setAttribute("visibility", "hidden"); tip.hidden = true; return; }
+    var p = perf.ser[i], ds = perf.ds, N = perf.N, per = N === 1 ? "" : " pe an";
+    hov.setAttribute("x", (perf.m.l + i * perf.slot).toFixed(1)); hov.setAttribute("visibility", "visible");
+    tip.textContent = ""; tip.appendChild(el("div", "d", perfLabel(ds, p, N)));
+    [["", "VWCE", p.rm], ["k2", "50/50", p.rx]].forEach(function (k) {
+      var r = el("div", "r"); r.appendChild(el("i", "key " + k[0])); r.appendChild(el("span", "n", k[1])); r.appendChild(el("span", "v", pctS(k[2]) + per)); tip.appendChild(r);
+    });
+    var r = el("div", "r"); r.appendChild(el("i")); r.appendChild(el("span", "n", "Diferență")); r.appendChild(el("span", "v", signed(p.d * 100, 1) + " pp" + per));
+    var sub = N === 1 ? (state.cur === "usd" ? "date: " + SRC[srcOfYear(ds, p.y)][0] : null)
+      : "după " + N + " ani, avere cu " + pct(Math.abs(p.cum)) + (p.cum < 0 ? " mai mică" : " mai mare") + " decât cu VWCE";
+    if (sub) r.appendChild(el("span", "s", sub));
+    tip.appendChild(r); tip.hidden = false;
+    var x = perf.Xc(i), tw = tip.offsetWidth, left = x + 16; if (left + tw > perf.W) left = x - 16 - tw; if (left < 0) left = 0;
+    // keep the readout on the opposite side of the zero line from the bar it describes
+    tip.style.left = left + "px"; tip.style.top = (p.d >= 0 ? Math.max(6, perf.bottom - tip.offsetHeight - 6) : 6) + "px";
+  }
+  function ptiles(ds, N, ser) {
+    var host = $("ptiles"); host.textContent = "";
+    function tile(label, val, sub) {
+      var d = el("div", "tile"); d.appendChild(el("div", "lab", label));
+      var row = el("div", "row"); row.appendChild(el("span", "val", val)); d.appendChild(row);
+      d.appendChild(el("div", "sub", sub)); host.appendChild(d);
+    }
+    var neg = ser.filter(function (p) { return p.d < 0; }), pos = ser.filter(function (p) { return p.d >= 0; });
+    var avg = function (a) { return a.length ? a.reduce(function (t, p) { return t + p.d; }, 0) / a.length * 100 : 0; };
+    var worst = ser.reduce(function (w, p) { return p.d < w.d ? p : w; }, ser[0]);
+    var best = 0, cur = 0, s0 = 0, span = [0, 0];
+    ser.forEach(function (p, i) { if (p.d < 0) { if (!cur) s0 = i; cur++; if (cur > best) { best = cur; span = [s0, i]; } } else cur = 0; });
+    var per = N === 1 ? "" : " pe an", unit = N === 1 ? "ani" : "perioade";
+    tile(N === 1 ? "Ani în care 50/50 a fost în urma pieței" : "Perioade de " + N + " ani în care 50/50 a fost în urmă", neg.length + " din " + ser.length,
+      (N === 1 ? "În ceilalți " : "În celelalte ") + pos.length + " a fost înaintea pieței.");
+    tile(N === 1 ? "Cel mai slab an" : "Cea mai slabă perioadă de " + N + " ani", signed(worst.d * 100, 1) + " pp" + per,
+      N === 1 ? perfLabel(ds, worst, N) + ": 50/50 " + pctS(worst.rx) + ", VWCE " + pctS(worst.rm) + "."
+        : perfLabel(ds, worst, N) + ": la final, avere cu " + pct(Math.abs(worst.cum)) + (worst.cum < 0 ? " mai mică" : " mai mare") + " decât cu VWCE.");
+    tile(N === 1 ? "Cât a pierdut în medie în anii slabi" : "Cât a pierdut în medie în perioadele slabe", neg.length ? signed(avg(neg), 1) + " pp" + per : "0",
+      (N === 1 ? "În anii buni a câștigat în medie " : "În perioadele bune a câștigat în medie ") + signed(avg(pos), 1) + " pp" + per + ".");
+    var a0 = ser[span[0]], z0 = ser[span[1]], cum = (ds.mix[z0.b] / ds.mix[a0.a]) / (ds.mkt[z0.b] / ds.mkt[a0.a]) - 1;
+    tile(N === 1 ? "Cei mai mulți ani la rând în urma pieței" : "Cele mai multe perioade la rând în urmă", best + (N === 1 ? " ani" : ""),
+      best ? (N === 1 ? a0.y + " - " + z0.y + ". La capăt, averea era cu " + pct(Math.abs(cum)) + " sub cea din VWCE."
+        : "Perioadele încheiate între " + a0.y + " și " + z0.y + ".") : "Nicio perioadă în urmă.");
+  }
+
+  function renderAll() { var ds = D[state.cur]; prep(ds); tiles(); draw(); crises(); drawRec(); drawPerf(); annual(); }
+
+  /* ---------------------------------------------------------------- events */
+  $("controls").addEventListener("change", function (ev) {
+    if (ev.target.name === "cur") { state.cur = ev.target.value; hide(); }
+    if (ev.target.name === "th") state.th = ev.target.value;
+    renderAll();
+  });
+  var wrap = $("charts");
+  wrap.addEventListener("pointermove", function (ev) { var p = idxFromEvent(ev); showAt(p[0], p[1]); });
+  wrap.addEventListener("pointerdown", function (ev) { var p = idxFromEvent(ev); showAt(p[0], p[1]); });
+  wrap.addEventListener("pointerleave", function () { if (document.activeElement !== wrap) hide(); });
+  wrap.addEventListener("focus", function () { if (state.hi === null && wrap.matches(":focus-visible")) showAt(geo.ds.n - 1, null); });
+  wrap.addEventListener("blur", hide);
+  wrap.addEventListener("keydown", function (ev) {
+    var n = geo.ds.n, i = state.hi === null ? n - 1 : state.hi, stepK = ev.shiftKey ? 12 : 1;
+    if (ev.key === "ArrowLeft") i -= stepK; else if (ev.key === "ArrowRight") i += stepK;
+    else if (ev.key === "Home") i = 0; else if (ev.key === "End") i = n - 1; else if (ev.key === "Escape") { hide(); return; } else return;
+    ev.preventDefault(); showAt(Math.max(0, Math.min(n - 1, i)), null);
+  });
+  var wrapP = $("perf");
+  function pfFromEvent(ev) {
+    var b = wrapP.getBoundingClientRect(), i = Math.floor((ev.clientX - b.left - perf.m.l) / perf.slot);
+    return i < 0 || i >= perf.ser.length ? null : i;
+  }
+  wrapP.addEventListener("pointermove", function (ev) { var i = pfFromEvent(ev); if (i !== state.pf) setPf(i); });
+  wrapP.addEventListener("pointerdown", function (ev) { setPf(pfFromEvent(ev)); });
+  wrapP.addEventListener("pointerleave", function () { if (document.activeElement !== wrapP) setPf(null); });
+  wrapP.addEventListener("focus", function () { if (state.pf === null && wrapP.matches(":focus-visible")) setPf(perf.ser.length - 1); });
+  wrapP.addEventListener("blur", function () { setPf(null); });
+  wrapP.addEventListener("keydown", function (ev) {
+    var n = perf.ser.length, i = state.pf === null ? n - 1 : state.pf;
+    if (ev.key === "ArrowLeft") i--; else if (ev.key === "ArrowRight") i++;
+    else if (ev.key === "Home") i = 0; else if (ev.key === "End") i = n - 1;
+    else if (ev.key === "Escape") { setPf(null); return; } else return;
+    ev.preventDefault(); setPf(Math.max(0, Math.min(n - 1, i)));
+  });
+  $("perf-controls").addEventListener("change", function (ev) { if (ev.target.name === "hz") { state.hz = +ev.target.value; drawPerf(); } });
+  var rafP = 0, lastWP = 0;
+  new ResizeObserver(function () {
+    var w = Math.floor(wrapP.clientWidth); if (w === lastWP) return; lastWP = w;
+    cancelAnimationFrame(rafP); rafP = requestAnimationFrame(drawPerf);
+  }).observe(wrapP);
+  var wrapR = $("rec");
+  wrapR.addEventListener("pointermove", function (ev) { var c = nearestCrisis(ev); if (c !== state.cr || $("tip2").hidden !== (c === null)) setCr(c, true); });
+  wrapR.addEventListener("pointerdown", function (ev) { setCr(nearestCrisis(ev), true); });
+  wrapR.addEventListener("pointerleave", function () { if (document.activeElement !== wrapR) setCr(null, false); });
+  wrapR.addEventListener("focus", function () { if (state.cr === null && wrapR.matches(":focus-visible")) setCr(0, true); });
+  wrapR.addEventListener("blur", function () { setCr(null, false); });
+  wrapR.addEventListener("keydown", function (ev) {
+    var n = rec.rows.length, i = state.cr;
+    if (ev.key === "ArrowRight" || ev.key === "ArrowDown") i = i === null ? 0 : (i + 1) % n;
+    else if (ev.key === "ArrowLeft" || ev.key === "ArrowUp") i = i === null ? n - 1 : (i + n - 1) % n;
+    else if (ev.key === "Home") i = 0; else if (ev.key === "End") i = n - 1;
+    else if (ev.key === "Escape") { setCr(null, false); return; } else return;
+    ev.preventDefault(); setCr(i, true);
+  });
+  var rafR = 0, lastWR = 0;
+  new ResizeObserver(function () {
+    var w = Math.floor(wrapR.clientWidth); if (w === lastWR) return; lastWR = w;
+    cancelAnimationFrame(rafR); rafR = requestAnimationFrame(drawRec);
+  }).observe(wrapR);
+  var raf = 0, lastW = 0;
+  new ResizeObserver(function () {
+    var w = Math.floor(wrap.clientWidth); if (w === lastW) return; lastW = w;
+    cancelAnimationFrame(raf); raf = requestAnimationFrame(draw);
+  }).observe(wrap);
+
+  ["cur", "th"].forEach(function (n) { var c = document.querySelector('input[name="' + n + '"]:checked'); if (c) state[n] = c.value; });
+  (function () { var c = document.querySelector('input[name="hz"]:checked'); if (c) state.hz = +c.value; })();
+  renderAll();
+})();
+</script>
+
+</body>
+</html>
