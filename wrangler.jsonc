@@ -2,6 +2,11 @@
   // Site static servit prin Cloudflare Workers (static assets). Fișierele publice stau în ./public
   "name": "vladgriguta-com",
   "compatibility_date": "2026-10-01",
+  // Domeniile proprii; zona vladgriguta.com e în același cont Cloudflare, deci DNS-ul se configurează automat la deploy
+  "routes": [
+    { "pattern": "vladgriguta.com", "custom_domain": true },
+    { "pattern": "www.vladgriguta.com", "custom_domain": true }
+  ],
   "assets": {
     "directory": "./public",
     "html_handling": "auto-trailing-slash",
