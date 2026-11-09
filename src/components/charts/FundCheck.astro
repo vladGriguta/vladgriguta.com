@@ -1,0 +1,51 @@
+---
+// Reality check: calendar-year returns published by the fund issuer for the actual ETFs,
+// next to the academic portfolios used in the charts. Data: src/data/funds.json (from analysis/).
+import funds from '../../data/funds.json';
+interface Props { lang?: 'ro' | 'en' }
+const { lang = 'ro' } = Astro.props;
+const dec = (x: number, d = 1) => Math.abs(x).toFixed(d).replace('.', lang === 'ro' ? ',' : '.');
+const pct = (x: number) => (x < 0 ? '−' : '') + dec(x) + '%';
+const pp = (x: number) => (x < 0 ? '−' : '+') + dec(x);
+const s = funds.sum;
+const t = lang === 'ro'
+  ? { title: 'Fondurile reale, an cu an', cap: 'Randamente pe an calendaristic, în USD, publicate de iShares. 50/50 este media dintre IS3S și IS3Q, adică un portofoliu reechilibrat în fiecare ianuarie. ETF-ul global este iShares MSCI ACWI, pentru că VWCE există abia din 2019.',
+      cols: ['An', 'IS3S (Value)', 'IS3Q (Quality)', '50/50', 'ETF global', 'Diferență', 'Diferență în datele academice'], foot: 'Pe an, 2016-2025', pts: 'puncte' }
+  : { title: 'The actual funds, year by year', cap: 'Calendar-year returns in USD, as published by iShares. 50/50 is the average of IS3S and IS3Q, i.e. a portfolio rebalanced every January. The global ETF is iShares MSCI ACWI, because VWCE only exists since 2019.',
+      cols: ['Year', 'IS3S (Value)', 'IS3Q (Quality)', '50/50', 'Global ETF', 'Difference', 'Difference in the academic data'], foot: 'Per year, 2016-2025', pts: 'points' };
+---
+<figure class="fig wide card fundcheck">
+  <div class="fig-head"><h3>{t.title}</h3></div>
+  <p class="fig-sub">{t.cap}</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>{t.cols.map((c, i) => <th class={i === 3 || i === 5 ? 'sep' : ''}>{c}</th>)}</tr></thead>
+      <tbody>
+        {funds.rows.map((r) => (
+          <tr>
+            <td>{r.y}</td><td>{pct(r.is3s)}</td><td>{pct(r.is3q)}</td>
+            <td class="sep"><b>{pct(r.mix)}</b></td><td><b>{pct(r.mkt)}</b></td>
+            <td class:list={['sep', 'diff', r.d < 0 ? 'neg' : 'pos']}><i class={r.d < 0 ? 'sw' : 'sw k2'}></i>{pp(r.d)}</td>
+            <td class="muted">{pp(r.a_d)}</td>
+          </tr>
+        ))}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>{t.foot}</td><td></td><td></td>
+          <td class="sep">{pct(s.cagr_mix * 100)}</td><td>{pct(s.cagr_mkt * 100)}</td>
+          <td class="sep">{pp((s.cagr_mix - s.cagr_mkt) * 100)}</td><td class="muted">{pp((s.cagr_a_mix - s.cagr_a_mkt) * 100)}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</figure>
+<style>
+  .fundcheck th:first-child, .fundcheck td:first-child { min-width: 0; }
+  .fundcheck td b { font-weight: 600; }
+  .fundcheck td.diff { white-space: nowrap; }
+  .fundcheck td.diff .sw { margin-right: 6px; }
+  .fundcheck td.muted { color: var(--ink-2); }
+  .fundcheck tfoot td { font-weight: 600; border-bottom: 0; border-top: 1px solid var(--axis); }
+  .fundcheck thead th { white-space: normal; }
+</style>

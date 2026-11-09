@@ -1,6 +1,6 @@
 ---
 title: "VWCE or Value + Quality? What 56 years of crises say"
-description: "A factor portfolio does not protect you in a crash. It can, however, leave you trailing the market for years. The data, from 1970 to today."
+description: "A factor portfolio does not protect you in a crash. On paper it wins over the long run; the actual funds have trailed the market."
 date: 2026-11-09
 lang: en
 ---
@@ -9,12 +9,13 @@ import Growth from '../../../components/charts/Growth.astro';
 import Recovery from '../../../components/charts/Recovery.astro';
 import Perf from '../../../components/charts/Perf.astro';
 import CrisisTable from '../../../components/charts/CrisisTable.astro';
+import FundCheck from '../../../components/charts/FundCheck.astro';
 
 <div class="col">
 
-I was reviewing my portfolio and wanted a simple answer: if, instead of VWCE, I held half in a Value ETF (IS3S) and half in a Quality ETF (IS3Q), would I lose less in a crash? And how much would that bet cost me when it does not work?
+I was reviewing my portfolio and wanted a simple answer: if, instead of VWCE, I held half in a Value ETF (IS3S) and half in a Quality ETF (IS3Q), would I lose less in a crash? And what would that bet cost me when it does not pay off?
 
-The ETFs only exist since 2014, so I rebuilt both portfolios from the MSCI indices they track and, before 1999, from Kenneth French's academic portfolios. The short version: over the long run 50/50 earned more, 11.1% a year against 9.1%. But almost all of that edge comes from reconstructed data, not from the years the ETFs actually existed.
+The ETFs only exist since 2014, so I rebuilt both portfolios from Kenneth French's public academic data: large, cheap firms for Value, large, profitable firms for Quality. On paper, since 1970, 50/50 returned 10.9% a year against 9.5% for the market.
 
 </div>
 
@@ -25,9 +26,9 @@ The ETFs only exist since 2014, so I rebuilt both portfolios from the MSCI indic
 
 ## In the big crashes, it protects you from nothing
 
-The 2007-09 financial crisis: VWCE lost 54.9%, 50/50 lost 54.5%. The 2020 pandemic: 21.4% against 22.9%. The year 2022: 25.6% against 24.9%. The lines below sit almost on top of each other.
+The 2007-09 financial crisis: the market lost 53.6%, 50/50 lost 54.4%. The 2020 pandemic: 21.8% against 24.9%. In both, 50/50 fell further.
 
-The only times 50/50 fell clearly less were the two bubbles in expensive stocks: 1973-74 and the dot-com bust. In 2000-03, VWCE fell 46.6% and needed almost 6 years to recover. 50/50 fell 31.7% and was back in 4.
+It fell clearly less only when expensive stocks deflated. In 1973-74 it lost 37.9%, against 46.5%. After the dot-com bubble it lost 34.4% and was back at its peak in under 4 years; the market lost 44.6% and needed more than 5.
 
 </div>
 
@@ -36,11 +37,11 @@ The only times 50/50 fell clearly less were the two bubbles in expensive stocks:
 
 <div class="col">
 
-## The real price: the years you fall behind
+## The price: the years you fall behind
 
-In 15 of the last 57 years, 50/50 earned less than the market. On average by 2.6 percentage points, but in 2020 by 10.7. The longest streak was 2016-2020, five years in a row, at the end of which you had 13.6% less money than with VWCE. Exactly the period in which the ETFs existed.
+In 18 of the 57 years, 50/50 earned less than the market. On average by 2.2 percentage points, but in 2020 by 8.2.
 
-Only in 2025 and 2026 did Value close the gap. Had you given up on the strategy in 2020, when it was hardest to hold, you would have left with the loss and without the rebound.
+The long stretches are harder to live with. The lead of 50/50 over the market peaked in October 2008 and was only surpassed in March 2025. More than 16 years in which you gained nothing extra for choosing something other than the market.
 
 </div>
 
@@ -48,24 +49,37 @@ Only in 2025 and 2026 did Value close the gap. Had you given up on the strategy 
 
 <div class="col">
 
+## It looks better on paper than in your account
+
+Academic data has no fees and is not the ETFs you can actually buy. So I put the returns iShares publishes for IS3S and IS3Q next to it, for the ten full years the funds have existed.
+
+With the real funds, 50/50 returned 10.7% a year. A global ETF returned 11.7%. It trailed in 6 years out of 10, five of them in a row, from 2016 to 2020, at the end of which you had 12.9% less money. Over the same ten years, the academic data shows an edge of 0.8 points a year.
+
+</div>
+
+<FundCheck lang="en" />
+
+<div class="col">
+
 ## What I do with this
 
-The "you lose less in crashes" argument does not hold. The case for factors remains the long-run return, and that requires sitting through years of below-market results without changing course halfway. If you are not sure you can do that, VWCE is the safer choice, because it is the one you will not abandon.
+The "you lose less in crashes" argument does not hold. What remains is the promise of a higher long-run return, which is there in the historical data but has not yet shown up in the real funds. To collect it, you have to sit through years below the market without changing course halfway. If you are not sure you can, VWCE is the safer choice, because it is the one you will not abandon.
 
 <details>
 <summary>How I calculated this</summary>
 
-**Global market (VWCE).** MSCI ACWI net total return from January 2001; the developed-market return from French's data for July 1990 - December 2000; the US market for 1970 - June 1990.
+**Data.** All charts come from the Kenneth R. French Data Library, September 2026 edition. The market is all stocks, weighted by market value. Value is the large firms with the highest book-to-market ratio ("Big HiBM"). Quality is the large firms with the highest operating profitability ("Big HiOP"). I use the US for 1970 - June 1990 and developed markets from July 1990 to September 2026. 50/50 is rebalanced once a year. The EUR view uses the monthly exchange rate published by FRED.
 
-**Value (IS3S) and Quality (IS3Q).** The MSCI World Enhanced Value and MSCI World Sector Neutral Quality indices, net, from January 1999. Before that, French's "Big HiBM" and "Big HiOP" portfolios: large firms with high book-to-market and with high operating profitability. 50/50 is rebalanced annually.
+**Limits.** The academic portfolios are not the ETFs: they have no costs, exclude emerging markets and pick firms differently from the indices that IS3S and IS3Q track. The table of real funds shows how much that matters. Before 1990 everything is US only. Lows are month-end closes, so milder than daily ones. Returns are nominal, before taxes.
 
-**Limits.** Before 1990 everything is US only. The MSCI indices are back-tested for 1999-2014. Lows are month-end closes, so milder than daily ones. Returns are nominal, before fees and taxes. I am not a financial adviser and this is not a recommendation.
+The code and data are in [the site's repo](https://github.com/vladGriguta/vladgriguta.com/tree/main/analysis). I am not a financial adviser and this is not a recommendation.
 
 </details>
 
 <ul class="sources">
-  <li><a href="https://www.msci.com/indexes/index/705130">MSCI World Enhanced Value Index</a>, <a href="https://www.msci.com/indexes/index/705169">MSCI World Sector Neutral Quality Index</a>, MSCI ACWI, MSCI World</li>
-  <li><a href="https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html">Kenneth R. French Data Library</a>: market factors and 2x3 portfolios, US and developed markets</li>
+  <li><a href="https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html">Kenneth R. French Data Library</a>: market factors and the 2x3 portfolios on size and B/M, and on size and profitability, US and developed markets</li>
+  <li>Fund returns: the iShares pages for <a href="https://www.ishares.com/uk/individual/en/products/270048/ishares-msci-world-value-factor-ucits-etf">IS3S</a>, <a href="https://ishares.com/ch/individual/en/products/270054/ishares-msci-world-quality-factor-ucits-etf">IS3Q</a> and <a href="https://www.ishares.com/uk/individual/en/products/251850/ishares-msci-acwi-ucits-etf">iShares MSCI ACWI</a>, read on 9 November 2026</li>
+  <li>EUR/USD rate: <a href="https://fred.stlouisfed.org/series/DEXUSEU">FRED, series DEXUSEU</a></li>
   <li>Fama and French (1992, 2015); Novy-Marx (2013); Asness, Frazzini and Pedersen (2019)</li>
 </ul>
 
