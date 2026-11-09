@@ -14,7 +14,8 @@ npm run build    # generează ./dist
 
 - `src/content/posts/ro|en/*.mdx`: articolele, câte un fișier pe limbă, cu același nume
 - `src/components/charts/`: componentele de grafice folosite în articole
-- `src/scripts/charts.js` și `src/data/charts.json`: logica și datele graficelor
+- `src/scripts/charts.js` și `src/data/*.json`: logica și datele graficelor
+- `analysis/`: scripturile și datele deschise din care se generează `src/data` (vezi `analysis/README.md`)
 - `src/layouts/Base.astro`, `src/styles/global.css`: layout și stil
 - `wrangler.jsonc`: configurația Cloudflare (servește `./dist`, domeniile proprii)
 
