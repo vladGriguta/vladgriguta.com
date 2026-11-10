@@ -21,6 +21,8 @@ npm run build    # generează ./dist
 
 ## Articol nou
 
-Creează `src/content/posts/ro/nume-articol.mdx` (și opțional varianta din `en/`) cu `title`, `description`, `date`, `lang` în frontmatter.
+**Din editorul vizual:** intră pe [app.pagescms.org](https://app.pagescms.org), loghează-te cu GitHub și alege repo-ul. Articolele noi pornesc ca ciorne; apar pe site când debifezi „Ciornă”. Configurarea e în `.pages.yml`.
+
+**Din cod:** creează `src/content/posts/ro/nume-articol.md` (și opțional varianta din `en/`, cu același nume de fișier) cu `title`, `description`, `date`, `lang` în antet. Numele fișierului devine adresa articolului. Pentru articole cu grafice folosește `.mdx` și importă componentele din `src/components/charts/`.
 
 Analizele sunt reconstituiri istorice, nu recomandări de investiții.

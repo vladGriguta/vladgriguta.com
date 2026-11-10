@@ -6,6 +6,8 @@ interface Props { post: CollectionEntry<'posts'> }
 const { post } = Astro.props;
 const { Content } = await render(post);
 const lang = post.data.lang;
+// Plain Markdown posts get the reading column here; MDX posts place it themselves around wide charts.
+const plain = !post.filePath?.endsWith('.mdx');
 const other = (await getCollection('posts', (p) => p.id.split('/').pop() === post.id.split('/').pop() && p.data.lang !== lang))[0];
 const alt = other ? (other.data.lang === 'ro' ? `/${other.id.split('/').pop()}/` : `/en/${other.id.split('/').pop()}/`) : undefined;
 const fmt = new Intl.DateTimeFormat(lang === 'ro' ? 'ro-RO' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -17,6 +19,6 @@ const fmt = new Intl.DateTimeFormat(lang === 'ro' ? 'ro-RO' : 'en-GB', { day: 'n
       <p class="lede">{post.data.description}</p>
       <p class="meta">{fmt.format(post.data.date)}</p>
     </header>
-    <Content />
+    {plain ? <div class="col"><Content /></div> : <Content />}
   </article>
 </Base>
