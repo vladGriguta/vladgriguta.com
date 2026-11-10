@@ -74,7 +74,7 @@ img, svg { max-width: 100%; }
 .stats div { flex: 1 1 180px; }
 .stats dt { font-size: 28px; line-height: 1.15; font-weight: 600; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
 .stats dd { margin: 4px 0 0; font-size: 14px; line-height: 1.45; color: var(--ink-2); }
-.work { display: flex; flex-wrap: wrap; gap: 0 32px; }
+.work { display: flex; flex-wrap: wrap; gap: 8px 32px; }
 .work article { flex: 1 1 200px; border-top: 1px solid var(--grid); padding: 18px 0 8px; }
 .work h3 { font-size: 17px; line-height: 1.35; letter-spacing: -.01em; margin: 0 0 6px; }
 .work article p:last-child { margin: 0; font-size: 15px; line-height: 1.55; color: var(--ink-2); }
