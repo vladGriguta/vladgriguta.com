@@ -4,7 +4,7 @@ description: "Umila mea contribuție la dezbaterea despre reforma educației:
   bugetul e mic, dar e mai ales prost împărțit."
 date: 2026-11-10
 lang: ro
-draft: true
+draft: false
 ---
 Am avut recent o dezbatere lungă cu un prieten despre reforma educației și vreau să îmi aduc și eu umila contribuție. Nu lucrez în domeniu, așa că am pus date lângă păreri acolo unde le-am găsit.
 
