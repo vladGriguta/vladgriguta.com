@@ -16,7 +16,9 @@ npm run build    # generează ./dist
 - `src/components/charts/`: componentele de grafice folosite în articole
 - `src/scripts/charts.js` și `src/data/*.json`: logica și datele graficelor
 - `analysis/`: scripturile și datele deschise din care se generează `src/data` (vezi `analysis/README.md`)
-- `src/layouts/Base.astro`, `src/styles/global.css`: layout și stil
+- `src/components/Home.astro`: prima pagină (engleză la `/`, română la `/ro/`), cu textele în ambele limbi
+- `src/layouts/Base.astro`, `src/styles/global.css`, `src/components/Mark.astro`: layout, stil și logo
+- `public/og.png`, `public/favicon.svg`, `public/apple-touch-icon.png`, `public/images/vlad.*`: imaginea pentru linkuri distribuite, iconițe, portret
 - `wrangler.jsonc`: configurația Cloudflare (servește `./dist`, domeniile proprii)
 
 ## Articol nou

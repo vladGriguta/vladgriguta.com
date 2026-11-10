@@ -1,11 +1,22 @@
 ---
 import '../styles/global.css';
-interface Props { title: string; description: string; lang?: 'ro' | 'en'; alt?: string; }
-const { title, description, lang = 'ro', alt } = Astro.props;
+import Mark from '../components/Mark.astro';
+interface Props {
+  title: string;
+  description: string;
+  lang?: 'ro' | 'en';
+  /** URL of this page in the other language, when it exists */
+  alt?: string;
+  /** Show the "not investment advice" note in the footer */
+  disclaimer?: boolean;
+  type?: 'website' | 'article';
+}
+const { title, description, lang = 'en', alt, disclaimer = false, type = 'website' } = Astro.props;
 const t = lang === 'ro'
-  ? { home: '/', posts: 'Articole', other: 'English', otherHref: alt ?? '/en/', disclaimer: 'Analizele de aici sunt reconstituiri istorice, nu recomandări de investiții.' }
-  : { home: '/en/', posts: 'Articles', other: 'Română', otherHref: alt ?? '/', disclaimer: 'Everything here is historical reconstruction, not investment advice.' };
+  ? { home: '/ro/', work: 'Proiecte', writing: 'Articole', contact: 'Contact', other: 'English', otherHref: alt ?? '/', disclaimer: 'Analizele de aici sunt reconstituiri istorice, nu recomandări de investiții.' }
+  : { home: '/', work: 'Work', writing: 'Writing', contact: 'Contact', other: 'Română', otherHref: alt ?? '/ro/', disclaimer: 'Everything here is historical reconstruction, not investment advice.' };
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/og.png', Astro.site);
 ---
 <!doctype html>
 <html lang={lang}>
@@ -16,28 +27,40 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="alternate" type="application/rss+xml" title="Vlad Griguta" href="/rss.xml" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:type" content="article" />
+  <meta property="og:type" content={type} />
   <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600&display=swap" />
 </head>
 <body>
   <div class="wrap">
     <header class="site-head">
-      <a class="name" href={t.home}>Vlad Griguta</a>
-      <nav>
-        <a href={t.home}>{t.posts}</a>
-        <a href={t.otherHref} hreflang={lang === 'ro' ? 'en' : 'ro'}>{t.other}</a>
+      <a class="name" href={t.home}><Mark size={24} /><span>Vlad Griguta</span></a>
+      <nav aria-label={lang === 'ro' ? 'Principal' : 'Main'}>
+        <a href={`${t.home}#work`}>{t.work}</a>
+        <a href={`${t.home}#writing`}>{t.writing}</a>
+        <a href={`${t.home}#contact`}>{t.contact}</a>
+        <a href={t.otherHref} hreflang={lang === 'ro' ? 'en' : 'ro'} lang={lang === 'ro' ? 'en' : 'ro'}>{t.other}</a>
       </nav>
     </header>
     <slot />
     <footer class="site-foot">
-      <span>{t.disclaimer}</span>
+      {disclaimer && <span class="disclaimer">{t.disclaimer}</span>}
       <span>© {new Date().getFullYear()} Vlad Griguta</span>
+      <span class="foot-links">
+        <a href="https://www.linkedin.com/in/vlad-marius-griguta">LinkedIn</a>
+        <a href="https://github.com/vladGriguta">GitHub</a>
+        <a href="/rss.xml">RSS</a>
+      </span>
     </footer>
   </div>
 </body>

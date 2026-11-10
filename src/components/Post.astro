@@ -12,7 +12,7 @@ const other = (await getCollection('posts', (p) => p.id.split('/').pop() === pos
 const alt = other ? (other.data.lang === 'ro' ? `/${other.id.split('/').pop()}/` : `/en/${other.id.split('/').pop()}/`) : undefined;
 const fmt = new Intl.DateTimeFormat(lang === 'ro' ? 'ro-RO' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
-<Base title={post.data.title} description={post.data.description} lang={lang} alt={alt}>
+<Base title={post.data.title} description={post.data.description} lang={lang} alt={alt} disclaimer={post.data.disclaimer} type="article">
   <article class="article" style="padding-top:48px">
     <header class="col">
       <h1>{post.data.title}</h1>

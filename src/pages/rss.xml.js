@@ -6,7 +6,7 @@ export async function GET(context) {
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
   return rss({
     title: 'Vlad Griguta',
-    description: 'Analize scurte, cu date și grafice interactive.',
+    description: 'ML engineering, data and charts. Articles in English and Romanian.',
     site: context.site,
     items: posts.map((p) => ({
       title: p.data.title,

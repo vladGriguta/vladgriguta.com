@@ -9,6 +9,8 @@ const posts = defineCollection({
     date: z.coerce.date(),
     lang: z.enum(['ro', 'en']),
     draft: z.boolean().default(false),
+    // Shows the "not investment advice" note under the article
+    disclaimer: z.boolean().default(false),
   }),
 });
 

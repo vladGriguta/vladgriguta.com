@@ -1,0 +1,164 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+interface Props { lang: 'en' | 'ro' }
+const { lang } = Astro.props;
+
+const EMAIL = 'hello@vladgriguta.com';
+
+const copy = {
+  en: {
+    title: 'Vlad Griguta — ML engineer and consultant',
+    description: 'ML engineer and independent consultant: time series, anomaly detection, computer vision and LLM/RAG in production.',
+    eyebrow: 'ML engineer · Independent consultant · Cluj, Romania',
+    h1: 'I build ML systems that find the signal in noisy data.',
+    lede: 'Six years shipping production ML in fintech, mapping, defence and telecoms: time series, anomaly detection, computer vision and LLM/RAG. Trained as a physicist (MPhys, CERN research). Currently taking on consulting work.',
+    cta: 'Get in touch',
+    photoAlt: 'Portrait of Vlad Griguta',
+    previously: 'Previously',
+    workTitle: 'Selected work',
+    workSub: 'Recent projects.',
+    featured: {
+      tag: 'Fintech · On-device computer vision · Nov 2025 – Apr 2026',
+      title: 'Android document scanner for a fintech platform',
+      text: "Replaced the brittle OpenCV detector in an invoice-processing app's Android scanner with a U-Net/MobileNetV2 segmentation model that runs on budget phones like the Samsung A12. In production since April 2026.",
+      stats: [
+        ['99%', 'pixel accuracy on unseen images; the old detector managed ~70%'],
+        ['30–50 ms', 'preprocessing on a low-end phone, down from 700–1000 ms'],
+        ['600 → 300', 'lines of code, heuristics replaced by one pipeline'],
+      ],
+    },
+    work: [
+      ['Telecoms · Data', 'Maintenance deconfliction', 'Stops planned maintenance from hitting diverse network circuits at the same time. Dataiku and Snowflake, over inventory data too big for memory.'],
+      ['Compliance · RAG evaluation', 'Auditing a regulatory RAG system', "Showed the vendor's metrics were flawed and rebuilt the evaluation on real-world data. The findings changed the client's strategy."],
+      ['Healthcare · Computer vision', 'Image similarity for a blind study', 'Grounding DINO detection and CLIP embeddings in ChromaDB, with face anonymisation and a Plotly Dash front end for blind evaluation.'],
+      ['Banking · RAG', 'Chunking for long procedures', "Bottom-up hierarchical chunking for a bank's long internal procedures. Retrieval recall doubled."],
+      ['Internal docs · RAG', 'Internal knowledge assistant', "RAG over a company's internal documentation for employees, extended with graph-database lookups."],
+      ['Engineering · AI-assisted development', 'Multi-agent coding workflow', 'A Claude Code setup with analyst, codebase-mapping, architect, implementer and verifier agents. Open decisions come up, with suggested answers, before any code is written.'],
+    ],
+    writingTitle: 'Writing',
+    writingSub: 'Analyses I run for myself, charts and method in the open.',
+    contactTitle: 'Working together',
+    contactText: 'I help teams take ML models into production: forecasting and anomaly detection on time series, computer vision on mobile devices, and RAG systems evaluated on real data.',
+    dateLocale: 'en-GB',
+  },
+  ro: {
+    title: 'Vlad Griguta — inginer ML și consultant',
+    description: 'Inginer ML și consultant independent: serii de timp, detecție de anomalii, computer vision și LLM/RAG în producție.',
+    eyebrow: 'Inginer ML · Consultant independent · Cluj',
+    h1: 'Construiesc sisteme ML care găsesc semnalul în date zgomotoase.',
+    lede: 'Șase ani de ML în producție, în fintech, cartografie, apărare și telecom: serii de timp, detecție de anomalii, computer vision și LLM/RAG. Fizician de formare (MPhys, cercetare la CERN). Acum lucrez ca consultant.',
+    cta: 'Scrie-mi',
+    photoAlt: 'Portretul lui Vlad Griguta',
+    previously: 'Anterior',
+    workTitle: 'Proiecte alese',
+    workSub: 'Proiecte recente.',
+    featured: {
+      tag: 'Fintech · Computer vision pe mobil · nov. 2025 – apr. 2026',
+      title: 'Scanner Android de documente pentru o platformă fintech',
+      text: 'Am înlocuit detectorul OpenCV fragil din scannerul Android al unei aplicații de procesare a facturilor cu un model de segmentare U-Net/MobileNetV2 care rulează și pe telefoane ieftine, ca Samsung A12. În producție din aprilie 2026.',
+      stats: [
+        ['99%', 'acuratețe la nivel de pixel pe imagini noi; vechiul detector avea ~70%'],
+        ['30–50 ms', 'preprocesare pe un telefon slab, de la 700–1000 ms'],
+        ['600 → 300', 'linii de cod: euristicile înlocuite de un singur pipeline'],
+      ],
+    },
+    work: [
+      ['Telecom · Date', 'Deconflictarea mentenanței', 'Împiedică lucrările de mentenanță simultane pe circuite de rețea redundante. Dataiku și Snowflake, peste date de inventar prea mari pentru memorie.'],
+      ['Conformitate · Evaluare RAG', 'Audit pentru un sistem RAG de reglementări', 'Am arătat că metricile furnizorului erau greșite și am refăcut evaluarea pe date reale. Concluziile au schimbat strategia clientului.'],
+      ['Sănătate · Computer vision', 'Similaritate de imagini pentru un studiu orb', 'Detecție cu Grounding DINO și embeddings CLIP în ChromaDB, cu anonimizarea fețelor și o interfață Plotly Dash pentru evaluarea în regim orb.'],
+      ['Bancar · RAG', 'Chunking pentru proceduri lungi', 'Chunking ierarhic bottom-up pentru procedurile interne lungi ale unei bănci. Recall-ul la regăsire s-a dublat.'],
+      ['Documentație internă · RAG', 'Asistent pentru documentația internă', 'RAG peste documentația internă a unei companii, pentru angajați, extins cu interogări într-o bază de date de tip graf.'],
+      ['Inginerie · Dezvoltare asistată de AI', 'Flux de lucru cu mai mulți agenți', 'Un setup Claude Code cu agenți de analiză, cartografiere a codului, arhitectură, implementare și verificare. Deciziile deschise apar, cu răspunsuri sugerate, înainte să se scrie cod.'],
+    ],
+    writingTitle: 'Articole',
+    writingSub: 'Analize pe care le fac pentru mine, cu graficele și metoda la vedere.',
+    contactTitle: 'Să lucrăm împreună',
+    contactText: 'Ajut echipele să ducă modelele ML în producție: prognoză și detecție de anomalii pe serii de timp, computer vision pe dispozitive mobile și sisteme RAG evaluate pe date reale.',
+    dateLocale: 'ro-RO',
+  },
+}[lang];
+
+// This language's posts, plus posts that exist only in the other language (marked with a badge).
+const all = await getCollection('posts', (p) => !p.data.draft);
+const slug = (p) => p.id.split('/').pop();
+const mine = all.filter((p) => p.data.lang === lang);
+const mineSlugs = new Set(mine.map(slug));
+const posts = [...mine, ...all.filter((p) => p.data.lang !== lang && !mineSlugs.has(slug(p)))]
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const href = (p) => (p.data.lang === 'ro' ? `/${slug(p)}/` : `/en/${slug(p)}/`);
+const fmt = new Intl.DateTimeFormat(copy.dateLocale, { month: 'short', year: 'numeric' });
+---
+<Base title={copy.title} description={copy.description} lang={lang} alt={lang === 'ro' ? '/' : '/ro/'}>
+  <main class="home">
+    <section class="hero">
+      <div class="hero-text">
+        <p class="label">{copy.eyebrow}</p>
+        <h1>{copy.h1}</h1>
+        <p class="lede">{copy.lede}</p>
+        <div class="cta">
+          <a class="btn" href={`mailto:${EMAIL}`}>{copy.cta}</a>
+          <a href="https://www.linkedin.com/in/vlad-marius-griguta">LinkedIn</a>
+          <a href="https://github.com/vladGriguta">GitHub</a>
+        </div>
+      </div>
+      <picture>
+        <source srcset="/images/vlad.webp" type="image/webp" />
+        <img class="portrait" src="/images/vlad.jpg" width="640" height="800" alt={copy.photoAlt} fetchpriority="high" />
+      </picture>
+    </section>
+
+    <section class="col previously" aria-label={copy.previously}>
+      <span class="label">{copy.previously}</span>
+      <span>Banca Transilvania · Grab · Rinicom · AccessPay · LHCb at CERN · University of Manchester</span>
+    </section>
+
+    <section class="col" id="work">
+      <h2>{copy.workTitle}</h2>
+      <p class="sub">{copy.workSub}</p>
+      <article class="featured">
+        <p class="label">{copy.featured.tag}</p>
+        <h3>{copy.featured.title}</h3>
+        <p>{copy.featured.text}</p>
+        <dl class="stats">
+          {copy.featured.stats.map(([value, label]) => (
+            <div><dt>{value}</dt><dd>{label}</dd></div>
+          ))}
+        </dl>
+      </article>
+      <div class="work">
+        {copy.work.map(([tag, title, text]) => (
+          <article>
+            <p class="label">{tag}</p>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="col" id="writing">
+      <h2>{copy.writingTitle}</h2>
+      <p class="sub">{copy.writingSub}</p>
+      <ul class="posts">
+        {posts.map((p) => (
+          <li>
+            <a href={href(p)} hreflang={p.data.lang} lang={p.data.lang}>
+              <div class="post-head">
+                <h3>{p.data.title}{p.data.lang !== lang && <span class="badge">{p.data.lang.toUpperCase()}</span>}</h3>
+                <time datetime={p.data.date.toISOString().slice(0, 10)}>{fmt.format(p.data.date)}</time>
+              </div>
+              <p>{p.data.description}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="col" id="contact">
+      <h2>{copy.contactTitle}</h2>
+      <p class="sub big">{copy.contactText}</p>
+      <p class="big"><a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
+    </section>
+  </main>
+</Base>

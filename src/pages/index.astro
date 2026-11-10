@@ -1,24 +1,4 @@
 ---
-import Base from '../layouts/Base.astro';
-import { getCollection } from 'astro:content';
-const posts = (await getCollection('posts', (p) => p.data.lang === 'ro' && !p.data.draft))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const fmt = new Intl.DateTimeFormat('ro-RO', { month: 'long', year: 'numeric' });
+import Home from '../components/Home.astro';
 ---
-<Base title="Vlad Griguta" description="Analize scurte, cu date și grafice interactive, despre investiții pe termen lung și modele." lang="ro">
-  <main class="col" style="padding-top:56px">
-    <h1>Mai puține cuvinte, mai multe date.</h1>
-    <p class="lede">Sunt Vlad, consultant ML/AI. Aici public analize pe care le fac pentru mine, cu graficele și metoda la vedere.</p>
-    <ul class="posts">
-      {posts.map((p) => (
-        <li>
-          <a href={`/${p.id.split('/').pop()}/`}>
-            <h3>{p.data.title}</h3>
-            <p>{p.data.description}</p>
-            <p class="meta">{fmt.format(p.data.date)}</p>
-          </a>
-        </li>
-      ))}
-    </ul>
-  </main>
-</Base>
+<Home lang="en" />
