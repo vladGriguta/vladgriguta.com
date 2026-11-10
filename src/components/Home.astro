@@ -1,0 +1,130 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+interface Props { lang: 'en' | 'ro' }
+const { lang } = Astro.props;
+
+const EMAIL = 'hello@vladgriguta.com';
+
+const copy = {
+  en: {
+    title: 'Vlad Griguta — ML engineer and consultant',
+    description: 'ML engineer and independent consultant: time series, anomaly detection, computer vision and LLM/RAG in production.',
+    eyebrow: 'ML engineer · Independent consultant · Cluj, Romania',
+    h1: 'I build ML systems that find the signal in noisy data.',
+    lede: 'Six years shipping production ML in fintech, mapping, defence and telecoms: time series, anomaly detection, computer vision and LLM/RAG. Trained as a physicist (MPhys, CERN research). Currently taking on consulting work.',
+    cta: 'Get in touch',
+    photoAlt: 'Portrait of Vlad Griguta',
+    previously: 'Previously',
+    workTitle: 'Selected work',
+    workSub: 'A few things that reached production, with the number that mattered.',
+    work: [
+      ['Banking · LLM', 'GenAI for front-desk operations', '20+ production prompts with versioning, A/B tests and monitoring. Front-desk operation time down 40%.'],
+      ['RAG · Retrieval', 'Chunking that doubled recall', 'Bottom-up hierarchical chunking for long banking procedures. Retrieval recall 2×.'],
+      ['Mapping · Computer vision', 'Automated map-making at Grab', 'Geopositioned house-number detections in Grab Nav; automatic imagery checks saved about $10k per quarter.'],
+      ['Defence · Detection', 'Fewer false alarms', "An EM-based training loss cut the intrusion detector's false positives; inference latency halved."],
+    ],
+    writingTitle: 'Writing',
+    writingSub: 'Analyses I run for myself, charts and method in the open.',
+    contactTitle: 'Working together',
+    contactText: "I help teams take ML from notebook to monitored service: anomaly detection that doesn't cry wolf, forecasting validated without leakage, and RAG systems evaluated on real data rather than vendor demos.",
+    dateLocale: 'en-GB',
+  },
+  ro: {
+    title: 'Vlad Griguta — inginer ML și consultant',
+    description: 'Inginer ML și consultant independent: serii de timp, detecție de anomalii, computer vision și LLM/RAG în producție.',
+    eyebrow: 'Inginer ML · Consultant independent · Cluj',
+    h1: 'Construiesc sisteme ML care găsesc semnalul în date zgomotoase.',
+    lede: 'Șase ani de ML în producție, în fintech, cartografie, apărare și telecom: serii de timp, detecție de anomalii, computer vision și LLM/RAG. Fizician de formare (MPhys, cercetare la CERN). Acum lucrez ca consultant.',
+    cta: 'Scrie-mi',
+    photoAlt: 'Portretul lui Vlad Griguta',
+    previously: 'Anterior',
+    workTitle: 'Proiecte alese',
+    workSub: 'Câteva lucruri ajunse în producție, cu cifra care a contat.',
+    work: [
+      ['Bancar · LLM', 'GenAI pentru front-desk', '20+ prompturi în producție, cu versionare, teste A/B și monitorizare. Timpul de operare la front-desk a scăzut cu 40%.'],
+      ['RAG · Regăsire', 'Chunking care a dublat recall-ul', 'Chunking ierarhic bottom-up pentru proceduri bancare lungi. Recall la regăsire de 2×.'],
+      ['Cartografie · Computer vision', 'Hărți automate la Grab', 'Geopoziționarea numerelor de casă detectate în Grab Nav; verificările automate de imagini au economisit circa 10.000 $ pe trimestru.'],
+      ['Apărare · Detecție', 'Mai puține alarme false', 'O funcție de cost bazată pe EM a redus alarmele false ale detectorului de intruziuni; latența la inferență s-a înjumătățit.'],
+    ],
+    writingTitle: 'Articole',
+    writingSub: 'Analize pe care le fac pentru mine, cu graficele și metoda la vedere.',
+    contactTitle: 'Să lucrăm împreună',
+    contactText: 'Ajut echipele să ducă ML-ul din notebook într-un serviciu monitorizat: detecție de anomalii care nu dă alarme false la tot pasul, prognoze validate fără leakage și sisteme RAG evaluate pe date reale, nu pe demo-uri de la furnizori.',
+    dateLocale: 'ro-RO',
+  },
+}[lang];
+
+// This language's posts, plus posts that exist only in the other language (marked with a badge).
+const all = await getCollection('posts', (p) => !p.data.draft);
+const slug = (p) => p.id.split('/').pop();
+const mine = all.filter((p) => p.data.lang === lang);
+const mineSlugs = new Set(mine.map(slug));
+const posts = [...mine, ...all.filter((p) => p.data.lang !== lang && !mineSlugs.has(slug(p)))]
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const href = (p) => (p.data.lang === 'ro' ? `/${slug(p)}/` : `/en/${slug(p)}/`);
+const fmt = new Intl.DateTimeFormat(copy.dateLocale, { month: 'short', year: 'numeric' });
+---
+<Base title={copy.title} description={copy.description} lang={lang} alt={lang === 'ro' ? '/' : '/ro/'}>
+  <main class="home">
+    <section class="hero">
+      <div class="hero-text">
+        <p class="label">{copy.eyebrow}</p>
+        <h1>{copy.h1}</h1>
+        <p class="lede">{copy.lede}</p>
+        <div class="cta">
+          <a class="btn" href={`mailto:${EMAIL}`}>{copy.cta}</a>
+          <a href="https://www.linkedin.com/in/vlad-marius-griguta">LinkedIn</a>
+          <a href="https://github.com/vladGriguta">GitHub</a>
+        </div>
+      </div>
+      <picture>
+        <source srcset="/images/vlad.webp" type="image/webp" />
+        <img class="portrait" src="/images/vlad.jpg" width="640" height="800" alt={copy.photoAlt} fetchpriority="high" />
+      </picture>
+    </section>
+
+    <section class="col previously" aria-label={copy.previously}>
+      <span class="label">{copy.previously}</span>
+      <span>Banca Transilvania · Grab · Rinicom · AccessPay · LHCb at CERN · University of Manchester</span>
+    </section>
+
+    <section class="col" id="work">
+      <h2>{copy.workTitle}</h2>
+      <p class="sub">{copy.workSub}</p>
+      <div class="work">
+        {copy.work.map(([tag, title, text]) => (
+          <article>
+            <p class="label">{tag}</p>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="col" id="writing">
+      <h2>{copy.writingTitle}</h2>
+      <p class="sub">{copy.writingSub}</p>
+      <ul class="posts">
+        {posts.map((p) => (
+          <li>
+            <a href={href(p)} hreflang={p.data.lang} lang={p.data.lang}>
+              <div class="post-head">
+                <h3>{p.data.title}{p.data.lang !== lang && <span class="badge">{p.data.lang.toUpperCase()}</span>}</h3>
+                <time datetime={p.data.date.toISOString().slice(0, 10)}>{fmt.format(p.data.date)}</time>
+              </div>
+              <p>{p.data.description}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="col" id="contact">
+      <h2>{copy.contactTitle}</h2>
+      <p class="sub big">{copy.contactText}</p>
+      <p class="big"><a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
+    </section>
+  </main>
+</Base>
