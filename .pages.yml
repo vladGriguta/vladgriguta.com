@@ -1,0 +1,60 @@
+# Pages CMS (https://pagescms.org): editor vizual pentru articole.
+# Intră pe app.pagescms.org, loghează-te cu GitHub și alege acest repo.
+
+media:
+  input: public/images
+  output: /images
+  categories: [image]
+
+content:
+  - name: posts-ro
+    label: Articole (română)
+    type: collection
+    path: src/content/posts/ro
+    filename: "{primary}.md"
+    format: yaml-frontmatter
+    exclude: ["*.mdx"]   # articolele cu grafice (MDX) se editează din cod
+    view:
+      fields: [title, date, draft]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - { name: title, label: Titlu, type: string, required: true }
+      - { name: description, label: "Descriere (o frază, apare sub titlu și în listă)", type: text, required: true }
+      - { name: date, label: Data, type: date, required: true }
+      - { name: lang, label: Limbă, type: string, default: ro, hidden: true }
+      - { name: draft, label: "Ciornă (nu apare pe site)", type: boolean, default: true }
+      - name: body
+        label: Text
+        type: rich-text
+        options:
+          format: markdown
+
+  - name: posts-en
+    label: Articles (English)
+    type: collection
+    path: src/content/posts/en
+    filename: "{primary}.md"
+    format: yaml-frontmatter
+    exclude: ["*.mdx"]
+    view:
+      fields: [title, date, draft]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: description, label: "Description (one sentence, shown under the title and in the list)", type: text, required: true }
+      - { name: date, label: Date, type: date, required: true }
+      - { name: lang, label: Language, type: string, default: en, hidden: true }
+      - { name: draft, label: "Draft (not shown on the site)", type: boolean, default: true }
+      - name: body
+        label: Text
+        type: rich-text
+        options:
+          format: markdown
