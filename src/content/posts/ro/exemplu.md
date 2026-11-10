@@ -30,5 +30,4 @@ Că banii singuri nu repară asta se vede peste Prut. Potrivit [Băncii Mondiale
 
 Aș comasa gimnaziile și liceele mici acolo unde drumul e rezonabil, cu microbuz garantat înainte să se închidă școala, nu după. Finlanda, de exemplu, nu reglementează distanța dintre școli, ci drumul copilului: [transport gratuit peste 5 km](https://www.turku.fi/sites/default/files/document/koulukuljetusperusteet-2025_en.pdf) și cel mult două ore și jumătate pe zi, cu tot cu așteptare.
 
-  
 Deci nu, nu sunt împotriva subvenționării. Avem nevoie să creștem bugetul. Sunt împotriva banilor fără condiții. Reformăm titularizarea ca să existe criterii și de rămânere în sistem, apropiem școala de elev ca să poată alege și să dea și el note învățământului, și abia apoi discutăm cât costă. Altfel dublăm bugetul și peste zece ani avem aceeași discuție, cu cifre mai mari.
