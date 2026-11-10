@@ -17,11 +17,21 @@ const copy = {
     photoAlt: 'Portrait of Vlad Griguta',
     previously: 'Previously',
     workTitle: 'Selected work',
-    workSub: 'A few things that reached production, with the number that mattered.',
+    workSub: 'Recent client projects, 2025–26.',
+    featured: {
+      tag: 'Fintech · On-device computer vision · Nov 2025 – Apr 2026',
+      title: 'Android document scanner for a fintech platform',
+      text: "Replaced the brittle OpenCV detector in an invoice-processing app's Android scanner with a U-Net/MobileNetV2 segmentation model that runs on budget phones like the Samsung A12. In production since April 2026.",
+      stats: [
+        ['99%', 'pixel accuracy on unseen images; the old detector managed ~70%'],
+        ['30–50 ms', 'preprocessing on a low-end phone, down from 700–1000 ms'],
+        ['600 → 300', 'lines of code, heuristics replaced by one pipeline'],
+      ],
+    },
     work: [
-      ['RAG · Retrieval', 'Chunking that doubled recall', 'Bottom-up hierarchical chunking for long banking procedures. Retrieval recall 2×.'],
-      ['Mapping · Computer vision', 'Automated map-making at Grab', 'Geopositioned house-number detections in Grab Nav; automatic imagery checks saved about $10k per quarter.'],
-      ['Defence · Detection', 'Fewer false alarms', "An EM-based training loss cut the intrusion detector's false positives; inference latency halved."],
+      ['Telecoms · Data', 'Maintenance deconfliction', 'Stops planned maintenance from hitting diverse network circuits at the same time. Dataiku and Snowflake, over inventory data too big for memory.'],
+      ['Compliance · RAG evaluation', 'Auditing a regulatory RAG system', "Showed the vendor's metrics were flawed and rebuilt the evaluation on real-world data. The findings changed the client's strategy."],
+      ['Healthcare · Computer vision', 'Image similarity for a blind study', 'Grounding DINO detection and CLIP embeddings in ChromaDB, with face anonymisation and a Plotly Dash front end for blind evaluation.'],
     ],
     writingTitle: 'Writing',
     writingSub: 'Analyses I run for myself, charts and method in the open.',
@@ -39,11 +49,21 @@ const copy = {
     photoAlt: 'Portretul lui Vlad Griguta',
     previously: 'Anterior',
     workTitle: 'Proiecte alese',
-    workSub: 'Câteva lucruri ajunse în producție, cu cifra care a contat.',
+    workSub: 'Proiecte recente pentru clienți, 2025–26.',
+    featured: {
+      tag: 'Fintech · Computer vision pe mobil · nov. 2025 – apr. 2026',
+      title: 'Scanner Android de documente pentru o platformă fintech',
+      text: 'Am înlocuit detectorul OpenCV fragil din scannerul Android al unei aplicații de procesare a facturilor cu un model de segmentare U-Net/MobileNetV2 care rulează și pe telefoane ieftine, ca Samsung A12. În producție din aprilie 2026.',
+      stats: [
+        ['99%', 'acuratețe la nivel de pixel pe imagini noi; vechiul detector avea ~70%'],
+        ['30–50 ms', 'preprocesare pe un telefon slab, de la 700–1000 ms'],
+        ['600 → 300', 'linii de cod: euristicile înlocuite de un singur pipeline'],
+      ],
+    },
     work: [
-      ['RAG · Regăsire', 'Chunking care a dublat recall-ul', 'Chunking ierarhic bottom-up pentru proceduri bancare lungi. Recall la regăsire de 2×.'],
-      ['Cartografie · Computer vision', 'Hărți automate la Grab', 'Geopoziționarea numerelor de casă detectate în Grab Nav; verificările automate de imagini au economisit circa 10.000 $ pe trimestru.'],
-      ['Apărare · Detecție', 'Mai puține alarme false', 'O funcție de cost bazată pe EM a redus alarmele false ale detectorului de intruziuni; latența la inferență s-a înjumătățit.'],
+      ['Telecom · Date', 'Deconflictarea mentenanței', 'Împiedică lucrările de mentenanță simultane pe circuite de rețea redundante. Dataiku și Snowflake, peste date de inventar prea mari pentru memorie.'],
+      ['Conformitate · Evaluare RAG', 'Audit pentru un sistem RAG de reglementări', 'Am arătat că metricile furnizorului erau greșite și am refăcut evaluarea pe date reale. Concluziile au schimbat strategia clientului.'],
+      ['Sănătate · Computer vision', 'Similaritate de imagini pentru un studiu orb', 'Detecție cu Grounding DINO și embeddings CLIP în ChromaDB, cu anonimizarea fețelor și o interfață Plotly Dash pentru evaluarea în regim orb.'],
     ],
     writingTitle: 'Articole',
     writingSub: 'Analize pe care le fac pentru mine, cu graficele și metoda la vedere.',
@@ -90,6 +110,16 @@ const fmt = new Intl.DateTimeFormat(copy.dateLocale, { month: 'short', year: 'nu
     <section class="col" id="work">
       <h2>{copy.workTitle}</h2>
       <p class="sub">{copy.workSub}</p>
+      <article class="featured">
+        <p class="label">{copy.featured.tag}</p>
+        <h3>{copy.featured.title}</h3>
+        <p>{copy.featured.text}</p>
+        <dl class="stats">
+          {copy.featured.stats.map(([value, label]) => (
+            <div><dt>{value}</dt><dd>{label}</dd></div>
+          ))}
+        </dl>
+      </article>
       <div class="work">
         {copy.work.map(([tag, title, text]) => (
           <article>
