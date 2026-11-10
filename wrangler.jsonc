@@ -9,6 +9,8 @@
   ],
   // Rulează build-ul Astro înainte de fiecare deploy, deci nu trebuie setat nimic în dashboard
   "build": { "command": "npm run build" },
+  // Cerut de `wrangler preview` (build-urile de preview pentru branch-uri și PR-uri)
+  "previews": {},
   "assets": {
     "directory": "./dist",
     "html_handling": "auto-trailing-slash",
