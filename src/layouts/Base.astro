@@ -72,12 +72,16 @@ const ogImage = new URL('/og.png', Astro.site);
     </footer>
   </div>
   <script is:inline>
+    // The saved choice is only an override. Switching back to what the system uses clears it,
+    // so the site follows the system setting again.
     document.querySelector('.theme-toggle').addEventListener('click', function () {
       var root = document.documentElement;
-      var dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-      var next = dark ? 'light' : 'dark';
-      root.dataset.theme = next;
-      try { localStorage.setItem('theme', next); } catch (e) {}
+      var system = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      var next = (root.dataset.theme || system) === 'dark' ? 'light' : 'dark';
+      try {
+        if (next === system) { delete root.dataset.theme; localStorage.removeItem('theme'); }
+        else { root.dataset.theme = next; localStorage.setItem('theme', next); }
+      } catch (e) { root.dataset.theme = next; }
     });
   </script>
 </body>
