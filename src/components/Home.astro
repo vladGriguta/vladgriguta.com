@@ -79,12 +79,9 @@ const copy = {
   },
 }[lang];
 
-// This language's posts, plus posts that exist only in the other language (marked with a badge).
-const all = await getCollection('posts', (p) => !p.data.draft);
+// Only this language's posts. A post appears on the other homepage only if it has a translation there.
 const slug = (p) => p.id.split('/').pop();
-const mine = all.filter((p) => p.data.lang === lang);
-const mineSlugs = new Set(mine.map(slug));
-const posts = [...mine, ...all.filter((p) => p.data.lang !== lang && !mineSlugs.has(slug(p)))]
+const posts = (await getCollection('posts', (p) => !p.data.draft && p.data.lang === lang))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const href = (p) => (p.data.lang === 'ro' ? `/${slug(p)}/` : `/en/${slug(p)}/`);
 const fmt = new Intl.DateTimeFormat(copy.dateLocale, { month: 'short', year: 'numeric' });
@@ -143,9 +140,9 @@ const fmt = new Intl.DateTimeFormat(copy.dateLocale, { month: 'short', year: 'nu
       <ul class="posts">
         {posts.map((p) => (
           <li>
-            <a href={href(p)} hreflang={p.data.lang} lang={p.data.lang}>
+            <a href={href(p)}>
               <div class="post-head">
-                <h3>{p.data.title}{p.data.lang !== lang && <span class="badge">{p.data.lang.toUpperCase()}</span>}</h3>
+                <h3>{p.data.title}</h3>
                 <time datetime={p.data.date.toISOString().slice(0, 10)}>{fmt.format(p.data.date)}</time>
               </div>
               <p>{p.data.description}</p>
