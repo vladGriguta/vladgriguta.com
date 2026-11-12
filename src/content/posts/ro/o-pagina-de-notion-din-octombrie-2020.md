@@ -8,13 +8,15 @@ draft: true
 ---
 ---
 
+## title: "O pagină de Notion din octombrie 2020" description: "Ne bugetăm cheltuielile din 2019. De atunci s-a schimbat aproape tot în viața noastră, mai puțin obiceiul ăsta." date: 2026-11-12 lang: ro draft: true
+
 În octombrie 2020 am făcut în Notion o pagină cu două liste scurte, una pentru mine și una pentru Diana. Aproape fiecare liră avea o destinație înainte să intre în cont. Jumătate mergea la investiții. Restul era chirie, facturi, mâncare, vacanțe și câte o sumă mică pe care fiecare o cheltuia fără explicații.
 
 Despre pagina asta am vorbit până acum doar cu prietenii apropiați. E cel mai personal lucru pe care l-am publicat, așa că o iau de la început.
 
 ## Iulie 2019
 
-Lucram full time de două luni. Diana era încă la facultate. Trăiam [în Anglia] și doar chiria ne lua cam 35% din venit.
+Lucram full time de două luni. Diana era încă la facultate. Trăiam în Marea Britanie și doar chiria ne lua cam 35% din venit.
 
 Atunci am început să hotărâm dinainte pe ce se duc banii. Pe amândoi ne-au pasionat dintotdeauna finanțele personale, cu gândul să ieșim devreme la pensie. Salariul a fost doar momentul în care am avut cu ce începe. Prima versiune a fost o simplă listă: ce intră, ce e de plătit, ce punem deoparte.
 
@@ -24,11 +26,15 @@ Cu tot cu chiria aia, puneam deoparte 25%. De acolo am pornit, și nu se întâm
 
 Un an și ceva mai târziu aveam pagina din Notion. Jumătate din venit pleca la investiții. Din ce rămânea, mai mult de jumătate se ducea pe chirie și facturi.
 
+![](/images/buget_2020.png)
+
 Pe pagină mai erau două lucruri mici. Un rând cu bani pe care îi cheltuiam fără să dăm socoteală. Și o diferență care nu avea nicio destinație. Bugetul nostru n-a fost niciodată exact la virgulă, și cred că de asta a ținut.
 
 ## Iulie 2026
 
 Pagina de azi arată aproape la fel: două nume, o listă, trei totaluri. Doar lista s-a lungit.
+
+![](/images/buget_2026.png)
 
 
 | Din ce cheltuim | 2020 | 2026 |
@@ -47,7 +53,7 @@ Pagina de azi arată aproape la fel: două nume, o listă, trei totaluri. Doar l
 
 *Procente din cheltuieli, rotunjite. Investițiile nu sunt incluse.*
 
-Locuința a coborât de la peste jumătate la sub o cincime, [pentru că ...]. Banii fără socoteală aproape și-au dublat partea. Și au apărut rânduri care în 2020 nu existau: un copil, un câine, o casă de aranjat, nunțile prietenilor.
+Locuința a coborât de la peste jumătate la sub o cincime: în lista de azi nu mai e niciun rând de chirie. Banii fără socoteală aproape și-au dublat partea. Și au apărut rânduri care în 2020 nu existau: un copil, un câine, o casă de aranjat, nunțile prietenilor.
 
 Niciun rând n-a apărut singur. Pe fiecare l-am adăugat noi, cu pagina deschisă.
 
