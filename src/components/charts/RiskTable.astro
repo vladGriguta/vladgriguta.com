@@ -1,0 +1,78 @@
+---
+// Depth next to duration: maximum drawdown against the share of months below a previous high,
+// the longest recovery and the Ulcer Index. Data: src/data/risk.json (from analysis/).
+import risk from '../../data/risk.json';
+interface Props { lang?: 'ro' | 'en' }
+const { lang = 'ro' } = Astro.props;
+const ro = lang === 'ro';
+const MON = ro
+  ? ['ian.', 'feb.', 'mar.', 'apr.', 'mai', 'iun.', 'iul.', 'aug.', 'sep.', 'oct.', 'nov.', 'dec.']
+  : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const dec = (x: number, d = 1) => Math.abs(x).toFixed(d).replace('.', ro ? ',' : '.');
+const pct = (x: number) => (x < 0 ? '−' : '') + dec(x * 100) + '%';
+const mon = (ym: number) => `${MON[ym % 100 - 1]} ${Math.floor(ym / 100)}`;
+const next = (ym: number) => (ym % 100 === 12 ? ym + 89 : ym + 1);
+const t = ro
+  ? { title: 'Adâncimea și durata pierderilor', market: 'Piața', mix: '50/50', months: 'luni', mo: 'luni', of: 'din',
+      cap: 'Pierderea maximă măsoară doar adâncimea. Celelalte trei țin cont și de durată: în câte luni portofoliul a valorat mai puțin decât un maxim anterior, cât a durat cea mai lungă revenire la un maxim și Ulcer Index, care le combină. Peste tot, mai mic înseamnă mai bine. Îngroșat: valoarea mai bună din fiecare pereche.',
+      cols: ['Perioadă', 'Pierdere maximă', 'Luni sub maxim', 'Cea mai lungă revenire', 'Ulcer Index'],
+      open: (m: string, n: number) => `În USD, la sfârșitul datelor, ambele portofolii erau de ${n === 1 ? 'o lună' : n + ' luni'} sub maximul din ${m}. Episodul nu este încheiat și nu este numărat ca revenire.` }
+  : { title: 'Depth and duration of losses', market: 'Market', mix: '50/50', months: 'months', mo: 'mo', of: 'of',
+      cap: 'Maximum drawdown only measures depth. The other three also account for time: in how many months the portfolio was worth less than an earlier high, how long the longest recovery to a high took, and the Ulcer Index, which combines the two. Lower is better throughout. Bold: the better value of each pair.',
+      cols: ['Period', 'Max drawdown', 'Months below a high', 'Longest recovery', 'Ulcer Index'],
+      open: (m: string, n: number) => `In USD, at the end of the data, both portfolios were ${n === 1 ? 'one month' : n + ' months'} below their ${m} high. That episode is not over and is not counted as a recovery.` };
+// Lower is better for every measure; a tie leaves both plain.
+const better = (a: number, b: number) => (a < b ? 0 : b < a ? 1 : -1);
+const rows = risk.windows.map((w) => {
+  const s = [w.mkt, w.mix];
+  return { w, s, label: `${w.cur.toUpperCase()} · ${Math.floor(next(w.from) / 100)}-${Math.floor(w.to / 100)}`,
+    win: { maxdd: better(-s[0].maxdd, -s[1].maxdd), share: better(s[0].share, s[1].share), longest: better(s[0].longest.months, s[1].longest.months), ulcer: better(s[0].ulcer, s[1].ulcer) } };
+});
+const open = risk.windows[0].mkt.open && risk.windows[0].mix.open ? risk.windows[0].mkt.open : null;
+---
+<figure class="fig wide card risktable">
+  <div class="fig-head"><h3>{t.title}</h3></div>
+  <p class="fig-sub">{t.cap}</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>{t.cols.map((c) => <th>{c}</th>)}</tr></thead>
+      {rows.map((r) => (
+        <tbody>
+          <tr class="win"><th colspan="5" scope="rowgroup">{r.label}<span class="n">{r.w.months} {t.months}</span></th></tr>
+          {r.s.map((x, i) => (
+            <tr>
+              <td><span class="who"><i class={i ? 'sw k2' : 'sw'}></i>{i ? t.mix : t.market}</span></td>
+              <td class:list={{ best: r.win.maxdd === i }}>{pct(x.maxdd)}</td>
+              <td class:list={{ best: r.win.share === i }}>{pct(x.share)}<span class="small">{x.below} {t.of} {r.w.months} {t.months}</span></td>
+              <td class:list={{ best: r.win.longest === i }}>{x.longest.months}<span class="u"> {t.months}</span><span class="us"> {t.mo}</span><span class="small">{mon(x.longest.from)} - {mon(x.longest.to)}</span></td>
+              <td class:list={{ best: r.win.ulcer === i }}>{dec(x.ulcer, 2)}</td>
+            </tr>
+          ))}
+        </tbody>
+      ))}
+    </table>
+  </div>
+  {open && <p class="note">{t.open(mon(open.from), open.months)}</p>}
+</figure>
+<style>
+  .risktable th:first-child, .risktable td:first-child { min-width: 96px; }
+  .risktable tr.win th { text-align: left; font-family: var(--font-c); font-weight: 600; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-2); padding-top: 14px; border-bottom-color: var(--axis); }
+  .risktable tr.win .n { margin-left: 10px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); }
+  .risktable .who { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+  .risktable td { font-size: 14px; }
+  .risktable td.best { font-weight: 600; }
+  .risktable td .small { font-weight: 400; }
+  .risktable tbody:last-child tr:last-child td { border-bottom: 0; }
+  .risktable .note { margin: 10px 0 8px; }
+  .risktable .us { display: none; }
+  .risktable thead th { white-space: normal; }
+  /* Narrow screens: keep the four measures on screen and drop the second line of detail. */
+  @media (max-width: 560px) {
+    .risktable th:first-child, .risktable td:first-child { min-width: 70px; }
+    .risktable th, .risktable td { padding-left: 4px; padding-right: 4px; }
+    .risktable thead th { font-size: 11px; letter-spacing: 0; }
+    .risktable td .small, .risktable .u { display: none; }
+    .risktable .us { display: inline; }
+    .risktable td { font-size: 13px; }
+  }
+</style>

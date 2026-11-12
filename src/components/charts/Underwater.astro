@@ -1,0 +1,32 @@
+---
+// How far below its previous high each portfolio stood, month by month: depth is the height
+// of each shaded area, duration its width. Has its own currency selector, starting on EUR.
+interface Props { lang?: 'ro' | 'en' }
+const { lang = 'ro' } = Astro.props;
+const t = lang === 'ro'
+  ? { a: 'Piața (proxy pentru VWCE)', b: '50% Value + 50% Quality', cur: 'Monedă și perioadă', usd: 'USD · din 1970', eur: 'EUR · din 1999',
+      sub: 'Fiecare zonă colorată este o perioadă în care portofoliul valora mai puțin decât un maxim pe care îl atinsese deja. Înălțimea zonei arată cât pierduse; lățimea, cât a durat până a revenit. Perioadele de cel puțin trei ani sunt marcate deasupra, cu durata de la maxim până la revenire.',
+      aria: 'Grafic interactiv. Săgețile mută cursorul cu o lună, cu Shift cu un an.' }
+  : { a: 'Market (proxy for VWCE)', b: '50% Value + 50% Quality', cur: 'Currency and period', usd: 'USD · since 1970', eur: 'EUR · since 1999',
+      sub: 'Each shaded area is a stretch in which the portfolio was worth less than a high it had already reached. The height of the area shows how much it had lost; the width, how long it took to come back. Stretches of at least three years are marked above, with the time from the high to the recovery.',
+      aria: 'Interactive chart. Arrow keys move the cursor by one month, with Shift by one year.' };
+---
+<figure class="fig wide card" data-chart="underwater">
+  <div class="fig-head">
+    <h3 data-title></h3>
+    <div class="legend"><span><i class="sw"></i>{t.a}</span><span><i class="sw k2"></i>{t.b}</span></div>
+  </div>
+  <p class="fig-sub">{t.sub}</p>
+  <fieldset class="seg">
+    <legend>{t.cur}</legend>
+    <div class="opts">
+      <input type="radio" name="uwcur" id="uw-eur" value="eur" checked /><label for="uw-eur">{t.eur}</label>
+      <input type="radio" name="uwcur" id="uw-usd" value="usd" /><label for="uw-usd">{t.usd}</label>
+    </div>
+  </fieldset>
+  <div class="plot-wrap" tabindex="0" role="group" aria-label={t.aria}>
+    <div class="plot"></div>
+    <div class="tip" hidden></div>
+  </div>
+</figure>
+<script src="../../scripts/charts.js"></script>

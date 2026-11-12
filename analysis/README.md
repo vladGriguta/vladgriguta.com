@@ -4,7 +4,19 @@
 python3 analysis/build.py && python3 analysis/export.py
 ```
 
-`build.py` construiește cele două portofolii și calculează crizele; `export.py` scrie `src/data/charts.json` și `src/data/funds.json`, pe care le citesc graficele.
+`build.py` construiește cele două portofolii și calculează crizele, lunile sub maxim, revenirile și Ulcer Index; `export.py` scrie `src/data/charts.json`, `src/data/funds.json` și `src/data/risk.json`, pe care le citesc graficele și tabelele, și afișează cifrele citate în articol.
+
+## Adâncime și durată
+
+Calculele sunt într-o singură secțiune din `build.py` („depth vs duration of losses”), pe valori de sfârșit de lună și pe maxime numărate de la începutul fiecărei ferestre:
+
+- **Luni sub maxim**: lunile în care valoarea este sub cea mai mare valoare de până atunci, împărțite la lunile ferestrei.
+- **Revenire**: luni de la luna unui maxim până la prima lună cu valoare cel puțin egală. O perioadă nerecuperată la sfârșitul datelor este raportată separat (`open`) și nu intră la cea mai lungă revenire.
+- **Ulcer Index**: rădăcina pătrată a mediei pătratelor scăderilor față de maxim, în procente.
+- **Episoade** (`recovery_episodes`): perioadele în care piața a stat sub maximul ei istoric și a scăzut cu cel puțin 10, 15 sau 20%. Pentru 50/50 se ia perioada lui sub maxim care conține luna minimului pieței și se compară luna calendaristică a revenirii.
+- **Același randament** (`same_return`): 50/50 cu un cost lunar constant care îl aduce în același punct final cu piața, ca să se vadă cât din avantajul la reveniri vine doar din randamentul mai mare.
+
+Ferestrele: USD din decembrie 1969, EUR din ianuarie 1999 și, pentru comparație directă cu EUR, USD tot din ianuarie 1999.
 
 ## Date
 
