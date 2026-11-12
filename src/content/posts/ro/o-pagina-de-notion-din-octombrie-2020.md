@@ -8,8 +8,6 @@ draft: true
 ---
 ---
 
-## title: "O pagină de Notion din octombrie 2020" description: "Ne bugetăm cheltuielile din 2019. De atunci s-a schimbat aproape tot în viața noastră, mai puțin obiceiul ăsta." date: 2026-11-12 lang: ro draft: true
-
 În octombrie 2020 am făcut în Notion o pagină cu două liste scurte, una pentru mine și una pentru Diana. Aproape fiecare liră avea o destinație înainte să intre în cont. Jumătate mergea la investiții. Restul era chirie, facturi, mâncare, vacanțe și câte o sumă mică pe care fiecare o cheltuia fără explicații.
 
 Despre pagina asta am vorbit până acum doar cu prietenii apropiați. E cel mai personal lucru pe care l-am publicat, așa că o iau de la început.
