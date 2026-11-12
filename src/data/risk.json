@@ -1,0 +1,109 @@
+{
+ "windows": [
+  {
+   "key": "usd_full",
+   "cur": "usd",
+   "from": 196912,
+   "to": 202609,
+   "months": 681,
+   "mkt": {
+    "below": 484,
+    "share": 0.7107,
+    "ulcer": 13.34,
+    "maxdd": -0.53622,
+    "longest": {
+     "from": 200710,
+     "to": 201304,
+     "months": 66
+    },
+    "open": {
+     "from": 202608,
+     "months": 1
+    }
+   },
+   "mix": {
+    "below": 449,
+    "share": 0.6593,
+    "ulcer": 11.03,
+    "maxdd": -0.54358,
+    "longest": {
+     "from": 200710,
+     "to": 201305,
+     "months": 67
+    },
+    "open": {
+     "from": 202608,
+     "months": 1
+    }
+   }
+  },
+  {
+   "key": "usd_1999",
+   "cur": "usd",
+   "from": 199901,
+   "to": 202609,
+   "months": 332,
+   "mkt": {
+    "below": 238,
+    "share": 0.7169,
+    "ulcer": 16.07,
+    "maxdd": -0.53622,
+    "longest": {
+     "from": 200710,
+     "to": 201304,
+     "months": 66
+    },
+    "open": {
+     "from": 202608,
+     "months": 1
+    }
+   },
+   "mix": {
+    "below": 230,
+    "share": 0.6928,
+    "ulcer": 13.78,
+    "maxdd": -0.54358,
+    "longest": {
+     "from": 200710,
+     "to": 201305,
+     "months": 67
+    },
+    "open": {
+     "from": 202608,
+     "months": 1
+    }
+   }
+  },
+  {
+   "key": "eur_1999",
+   "cur": "eur",
+   "from": 199901,
+   "to": 202609,
+   "months": 332,
+   "mkt": {
+    "below": 246,
+    "share": 0.741,
+    "ulcer": 19.09,
+    "maxdd": -0.5249,
+    "longest": {
+     "from": 200008,
+     "to": 201302,
+     "months": 150
+    },
+    "open": null
+   },
+   "mix": {
+    "below": 232,
+    "share": 0.6988,
+    "ulcer": 16.03,
+    "maxdd": -0.48954,
+    "longest": {
+     "from": 200010,
+     "to": 200610,
+     "months": 72
+    },
+    "open": null
+   }
+  }
+ ]
+}

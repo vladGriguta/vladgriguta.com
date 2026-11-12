@@ -1,0 +1,30 @@
+---
+// Time from a high back to that high, after every market fall from an all-time high.
+// Follows the page-wide currency and threshold toggles (Controls.astro).
+interface Props { lang?: 'ro' | 'en' }
+const { lang = 'ro' } = Astro.props;
+const t = lang === 'ro'
+  ? { title: 'De la maxim înapoi la maxim, criză cu criză', a: 'Piața (proxy pentru VWCE)', b: '50% Value + 50% Quality',
+      sub: 'Fiecare rând este o scădere a pieței față de maximul ei istoric, de mărimea aleasă sus, la „Criză”. Barele merg din luna maximului până în luna revenirii la el; cele ale lui 50/50 sunt măsurate față de maximele lui, pe același calendar. O scădere care începe înainte ca piața să fi revenit la maxim ține de același rând. Îngroșat: cine a revenit primul. Indică un rând ca să vezi lunile maximului, minimului și revenirii.',
+      aria: 'Grafic interactiv al revenirilor. Săgețile trec de la un rând la altul.' }
+  : { title: 'From a high back to that high, crisis by crisis', a: 'Market (proxy for VWCE)', b: '50% Value + 50% Quality',
+      sub: 'Each row is a fall of the market from its all-time high, of the size chosen above under "Crisis". Bars run from the month of the high to the month it was regained; those of 50/50 are measured against its own highs, on the same calendar. A fall that begins before the market has regained its high belongs to the same row. Bold: whichever was back first. Point at a row to see the months of the high, the low and the recovery.',
+      aria: 'Interactive chart of recoveries. Arrow keys step from one row to the next.' };
+---
+<figure class="fig wide card" data-chart="durations">
+  <div class="fig-head">
+    <h3>{t.title}</h3>
+    <div class="legend"><span><i class="sw"></i>{t.a}</span><span><i class="sw k2"></i>{t.b}</span></div>
+  </div>
+  <p class="fig-sub">{t.sub}</p>
+  <p class="fig-sub tally" data-tally></p>
+  <div class="plot-wrap" tabindex="0" role="group" aria-label={t.aria}>
+    <div class="plot"></div>
+    <div class="tip" hidden></div>
+  </div>
+</figure>
+<style>
+  .tally { color: var(--ink); font-weight: 500; margin-bottom: 10px; }
+  .tip.wide { max-width: 330px; }
+</style>
+<script src="../../scripts/charts.js"></script>

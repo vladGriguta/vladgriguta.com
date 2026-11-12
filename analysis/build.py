@@ -6,7 +6,7 @@ Inputs (analysis/data):
                       2x3 sorts on size and book-to-market / operating profitability);
                       US 1963-07..1990-06, Developed 1990-07..latest
   eur_per_usd.csv     month-end EUR per USD (FRED series DEXUSEU, inverted)
-Output: analysis/out.json, then export.py writes src/data/charts.json.
+Output: analysis/out.json, then export.py writes src/data/charts.json, funds.json and risk.json.
 
 Run:  python3 analysis/build.py && python3 analysis/export.py
 """
@@ -241,6 +241,143 @@ for key in ("mkt", "mix"):
     pk = max(range(len(seg)), key=lambda i: (seg[i], i))
     pre70[key] = {"peak": ld[pk], "depth": seg[i70] / seg[pk] - 1}
 
+# ----------------------------------------------------------------- depth vs duration of losses
+# Everything about time below a previous high is in this section. All of it is on an
+# all-time-high basis, on month-end levels: a month is "under water" when its level is
+# below the highest earlier level in the window.
+def spells(lv):
+    """Underwater spells as [peak, trough, recovery] indices. The recovery is the
+    first month back at or above the peak level; None if the series ends below it."""
+    out, peak_i, cur = [], 0, None
+    for i, v in enumerate(lv):
+        if v >= lv[peak_i]:
+            if cur is not None:
+                out.append([cur[0], cur[1], i])
+                cur = None
+            peak_i = i
+        elif cur is None:
+            cur = [peak_i, i]
+        elif v < lv[cur[1]]:
+            cur[1] = i
+    if cur is not None:
+        out.append([cur[0], cur[1], None])
+    return out
+
+
+def spell_row(lv, s, off=0):
+    """One spell with its depth and length. `months` runs from the peak to the
+    recovery, or to the last month of the data for a spell that is still open."""
+    p, t, r = s
+    return {"p": p + off, "t": t + off, "r": None if r is None else r + off,
+            "depth": lv[t] / lv[p] - 1, "months": (len(lv) - 1 if r is None else r) - p}
+
+
+def risk_stats(lv, off=0):
+    """Depth and duration of losses over one window. lv[0] is the starting value,
+    so the window has len(lv) - 1 months and highs are counted from its start.
+      share    months below a previous high / months in the window
+      ulcer    Ulcer Index: sqrt(mean(drawdown in % squared)) over those months
+      longest  longest completed spell, previous high to the month it is regained
+      open     the spell still unrecovered at the end of the data, kept apart
+    """
+    dd = underwater(lv)[1:]
+    n, sp = len(dd), spells(lv)
+    below = sum((n if s[2] is None else s[2] - 1) - s[0] for s in sp)   # months after the peak and before the recovery
+    assert below == sum(1 for x in dd if x < 0)
+    closed = [s for s in sp if s[2] is not None]
+    still = [s for s in sp if s[2] is None]
+    longest = max(closed, key=lambda s: (s[2] - s[0], -s[0])) if closed else None
+    return {"months": n, "below": below, "share": below / n,
+            "ulcer": math.sqrt(sum((100 * x) ** 2 for x in dd) / n), "maxdd": min(dd),
+            "longest": spell_row(lv, longest, off) if longest else None,
+            "open": spell_row(lv, still[0], off) if still else None,
+            "spells": [spell_row(lv, s, off) for s in sp]}
+
+
+def risk_window(ds, ym0, ym1):
+    """Risk measures for market and 50/50 between two months of a dataset."""
+    i0, i1 = ds["dates"].index(ym0), ds["dates"].index(ym1)
+    return {"from": ym0, "to": ym1, "mkt": risk_stats(ds["lv"]["mkt"][i0:i1 + 1], i0), "mix": risk_stats(ds["lv"]["mix"][i0:i1 + 1], i0)}
+
+
+def recovery_episodes(ds, decline):
+    """Recoveries after market falls, all-time-high basis.
+
+    An episode is an underwater spell of the market at least `decline` deep: from
+    an all-time high, through the low, to the first month back at that high. A
+    fall that starts before the previous high is regained belongs to the same
+    episode. For 50/50 the matching spell is its own underwater spell that
+    contains the month of the market low, measured from its own high. `first`
+    compares the calendar month of the two recoveries. Episodes where either
+    side has not recovered by the end of the data are tallied as "open" and are
+    never counted as recoveries. `also` lists other 50/50 spells at least
+    `decline` deep that overlap the market episode."""
+    mkt, mix, last = ds["lv"]["mkt"], ds["lv"]["mix"], len(ds["dates"]) - 1
+    sx, rows, tally = spells(mix), [], {"mix": 0, "mkt": 0, "same": 0, "open": 0}
+    for s in spells(mkt):
+        P, T, R = s
+        if mkt[T] > mkt[P] * (1 - decline):     # same test as bear_windows: at least `decline` below the high
+            continue
+        match = next((x for x in sx if x[0] < T and (x[2] is None or T < x[2])), None)
+        if match is None:                       # 50/50 at a high in the month of the market low
+            first, m = ("mix" if R is not None else "open"), None
+        else:
+            m = spell_row(mix, match)
+            first = "open" if R is None or match[2] is None else "mix" if match[2] < R else "mkt" if match[2] > R else "same"
+        tally[first] += 1
+        end = last if R is None else R
+        also = [spell_row(mix, x) for x in sx if x is not match and x[0] < end and (x[2] is None or x[2] > P)
+                and mix[x[1]] <= mix[x[0]] * (1 - decline)]
+        rows.append({"mkt": spell_row(mkt, s), "mix": m, "also": also, "first": first})
+    return {"rows": rows, "tally": tally}
+
+
+def same_return(mix, mkt):
+    """The 50/50 series with a constant monthly drag that makes it end where the
+    market ends. Used to see how much of the faster recoveries is just the higher
+    return of 50/50 and how much is the shape of its losses."""
+    rets = [mix[i] / mix[i - 1] - 1 for i in range(1, len(mix))]
+    target, lo, hi = mkt[-1] / mkt[0], -0.02, 0.02
+    for _ in range(80):
+        c, g = (lo + hi) / 2, 1.0
+        for x in rets:
+            g *= 1 + x - c
+        lo, hi = (c, hi) if g > target else (lo, c)
+    out = [mix[0]]
+    for x in rets:
+        out.append(out[-1] * (1 + x - c))
+    return out
+
+
+# The EUR series starts in 1999-01, so USD is also measured from that month, to have a
+# like-for-like window next to the full USD history. The last three windows are the checks
+# quoted in the article: the US-only stretch and the years the ETFs have existed.
+risk = {"windows": OrderedDict([
+            ("usd_full", dict(cur="usd", **risk_window(main, main["dates"][0], LAST))),
+            ("usd_1999", dict(cur="usd", **risk_window(main, 199901, LAST))),
+            ("eur_1999", dict(cur="eur", **risk_window(ds_eur, ds_eur["dates"][0], LAST))),
+            ("usd_us", dict(cur="usd", **risk_window(main, main["dates"][0], SPLIT))),
+            ("usd_etf_era", dict(cur="usd", **risk_window(main, 201410, LAST))),
+            ("eur_etf_era", dict(cur="eur", **risk_window(ds_eur, 201410, LAST)))]),
+        "episodes": {cur: {str(int(d * 100)): recovery_episodes(ds, d) for d in (0.10, 0.15, 0.20)}
+                     for cur, ds in (("usd", main), ("eur", ds_eur))}}
+
+flat = risk_stats(same_return(main["lv"]["mix"], main["lv"]["mkt"]))
+risk["same_return"] = {"share": flat["share"], "ulcer": flat["ulcer"]}
+
+# The market's longest spell in EUR seen from the 50/50 side: the months each spent below a
+# high inside it, and where both stood when 50/50 set a new high between its two legs.
+w = risk["windows"]["eur_1999"]
+P, R = w["mkt"]["longest"]["p"], w["mkt"]["longest"]["r"]
+legs = [s for s in w["mix"]["spells"] if s["months"] >= 12 and s["p"] < R and (s["r"] is None or s["r"] > P)]
+um, ux = ds_eur["uw"]["mkt"], ds_eur["uw"]["mix"]
+risk["eur_case"] = {"months": R - P, "below": {"mkt": sum(1 for i in range(P + 1, R + 1) if um[i] < 0),
+                                               "mix": sum(1 for i in range(P + 1, R + 1) if ux[i] < 0)}, "mix_spells": legs}
+if len(legs) > 1:
+    i = legs[1]["p"]
+    risk["eur_case"]["between"] = {"ym": ds_eur["dates"][i], "mix_vs_first_high": ds_eur["lv"]["mix"][i] / ds_eur["lv"]["mix"][legs[0]["p"]] - 1,
+                                   "mkt_vs_high": ds_eur["lv"]["mkt"][i] / ds_eur["lv"]["mkt"][P] - 1}
+
 # rebalancing sensitivity
 sens = {}
 for mode in ("annual", "monthly", "never"):
@@ -302,6 +439,6 @@ fund_sum = {"cagr_mix": gx ** 0.1 - 1, "cagr_mkt": gm ** 0.1 - 1, "cagr_a_mix": 
             "streak_2016_2020": math.prod(1 + f["mix"] / 100 for f in funds[:5]) / math.prod(1 + f["mkt"] / 100 for f in funds[:5]) - 1}
 
 out = {"main": main, "eur": ds_eur, "subs": subs, "pre70": pre70, "sens": sens, "last": LAST,
-       "years": {"usd": year_stats(main), "eur": year_stats(ds_eur)}, "funds": funds, "fund_sum": fund_sum}
+       "years": {"usd": year_stats(main), "eur": year_stats(ds_eur)}, "funds": funds, "fund_sum": fund_sum, "risk": risk}
 json.dump(out, open(OUT, "w"))
 print("written", OUT, "last month", LAST)

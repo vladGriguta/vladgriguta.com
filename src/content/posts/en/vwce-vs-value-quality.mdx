@@ -1,6 +1,6 @@
 ---
 title: "VWCE or Value + Quality? What 56 years of crises say"
-description: "A factor portfolio does not protect you in a crash. On paper it wins over the long run; the actual funds have trailed the market."
+description: "A factor portfolio does not fall less in every crash, but on paper it spent less time below its previous highs. The actual funds have so far trailed the market."
 date: 2026-11-09
 lang: en
 disclaimer: true
@@ -11,6 +11,9 @@ import Recovery from '../../../components/charts/Recovery.astro';
 import Perf from '../../../components/charts/Perf.astro';
 import CrisisTable from '../../../components/charts/CrisisTable.astro';
 import FundCheck from '../../../components/charts/FundCheck.astro';
+import RiskTable from '../../../components/charts/RiskTable.astro';
+import Underwater from '../../../components/charts/Underwater.astro';
+import Durations from '../../../components/charts/Durations.astro';
 
 <div class="col">
 
@@ -25,16 +28,68 @@ The ETFs only exist since 2014, so I rebuilt both portfolios from Kenneth French
 
 <div class="col">
 
-## In the big crashes, it protects you from nothing
+## In some crashes it falls less, in others more
 
 The 2007-09 financial crisis: the market lost 53.6%, 50/50 lost 54.4%. The 2020 pandemic: 21.8% against 24.9%. In both, 50/50 fell further.
 
-It fell clearly less only when expensive stocks deflated. In 1973-74 it lost 37.9%, against 46.5%. After the dot-com bubble it lost 34.4% and was back at its peak in under 4 years; the market lost 44.6% and needed more than 5.
+It fell clearly less when expensive stocks deflated. In 1973-74 it lost 37.9%, against 46.5%. After the dot-com bubble it lost 34.4% and was back at its peak in under 4 years; the market lost 44.6% and needed more than 5.
+
+Of the 10 crises of at least 15%, 50/50 fell less in 7. It is still not insurance: you cannot know in advance whether the next crash will look like 2000 or like 2008.
 
 </div>
 
 <Recovery lang="en" />
 <CrisisTable lang="en" />
+
+<div class="col">
+
+## How long you stay underwater matters as much as how deep you fall
+
+Maximum drawdown is a single number: how low you were in the worst month. It does not say how long you stayed there. If you invest for 20 or 30 years, the second question matters at least as much: for how many years do you look at an account that is worth less than it was already worth?
+
+There are three ways to measure that:
+
+- **Months below a high.** In how many months, out of all of them, the portfolio was worth less than a high it had already reached.
+- **Time to recovery.** How many months pass from a high until the portfolio is back at it.
+- **Ulcer Index.** It combines the two: it takes every month below a high and gives more weight to the deep ones. A 40% fall you climb out of in a year gives a small number. The same fall stretched over five years gives a much larger one.
+
+Since 1970, in USD, the market was below a previous high in 71.1% of months and 50/50 in 65.9%. Ulcer Index: 13.34 against 11.03. Both being below a high in two months out of three is not a calculation error: that is what stocks look like. Maximum drawdown and the longest recovery, on the other hand, are almost equal and both come from 2007: 66 months for the market, 67 for 50/50.
+
+</div>
+
+<RiskTable lang="en" />
+
+<div class="col">
+
+The largest difference shows up in EUR, since 1999. The market reached a high in August 2000 and only got back to it in February 2013: 150 months, or twelve and a half years. 50/50 reached its high in October 2000 and was back at it in October 2006: 72 months.
+
+That number needs careful reading. 50/50 did not escape the 2008 crisis: from May 2007 it was below its high again and came out in February 2013 as well, after another 69 months. If I count the months below a high over the whole stretch from August 2000 to February 2013, there are 149 for the market and 143 for 50/50. Almost the same. The difference is that 50/50 managed to surface between the two crises, 13.9% above its 2000 high, while the market stopped 2.5% short of its own and waited almost six more years. And it sat less deep, hence an Ulcer Index of 16.03 against 19.09.
+
+This comes from the period and the currency, it is not a property of the portfolio. In USD, the market recovered from the dot-com bust before 2008 arrived, and the longest recoveries are 66 and 67 months.
+
+</div>
+
+<Underwater lang="en" />
+
+<div class="col">
+
+Crisis by crisis, the picture is mixed. In USD, after 1973-74, 50/50 was back at its high in 37 months, the market in 48. After the dot-com bust, in 47 against 65. After 2022, in 18 against 24. But after 2007-09 it was back one month later, and after the pandemic three months later: 11 against 8.
+
+If I count the market falls of at least 15% from its all-time high, there are 9 episodes: 50/50 was back first in 5, the market in 2, and in 2 they were back in the same month. If I lower the threshold to 10%, there are 15 episodes: 6, 3 and 6. So it did not win in most crises. The edge comes from a few long episodes, not from all of them.
+
+</div>
+
+<Durations lang="en" />
+
+<div class="col">
+
+Two things keep this edge in check.
+
+First: part of it is the higher return itself, seen from another angle. A portfolio that grows faster gets back to its high faster. If I take away from 50/50 exactly its extra return, so that it ends at the same point as the market, months below a high go up from 65.9% to 69.3% and the Ulcer Index from 11.03 to 12.06. It stays below the market, which has 71.1% and 13.34, but by less.
+
+Second: the edge has thinned. In the US data up to 1990, 50/50 was below a high in 63.4% of months, against 72.4% for the market. Since the ETFs have existed, from October 2014, the gap is 58.0% against 59.4% in USD, and in EUR the Ulcer Index of 50/50 is even slightly higher than the market's: 5.05 against 4.97.
+
+</div>
 
 <div class="col">
 
@@ -56,6 +111,8 @@ Academic data has no fees and is not the ETFs you can actually buy. So I put the
 
 With the real funds, 50/50 returned 10.7% a year. A global ETF returned 11.7%. It trailed in 6 years out of 10, five of them in a row, from 2016 to 2020, at the end of which you had 12.9% less money. Over the same ten years, the academic data shows an edge of 0.8 points a year.
 
+I cannot calculate months below a high or the Ulcer Index for the real funds, because I only have their returns for full years. So the recovery edge has the same problem as the return edge: it is there in the academic reconstruction and is not confirmed by the ETFs you can actually buy.
+
 </div>
 
 <FundCheck lang="en" />
@@ -64,14 +121,20 @@ With the real funds, 50/50 returned 10.7% a year. A global ETF returned 11.7%. I
 
 ## What I do with this
 
-The "you lose less in crashes" argument does not hold. What remains is the promise of a higher long-run return, which is there in the historical data but has not yet shown up in the real funds. To collect it, you have to sit through years below the market without changing course halfway. If you are not sure you can, VWCE is the safer choice, because it is the one you will not abandon.
+Value + Quality is not insurance against crashes. In 2008 and in 2020 it fell further than the market, and that can happen again.
+
+The historical reconstruction shows something else: 50/50 spent fewer months below its previous highs and had a lower Ulcer Index, meaning losses that, taken together, were less deep and lasted less. So its possible edge is not just the long-run return, but also recoveries that were, historically, easier to live with. Not in every crisis, and by a small margin since the ETFs have existed.
+
+Neither edge has shown up in the real funds yet, and neither is guaranteed from here on. To have a chance of collecting them, you have to sit through years below the market without changing course halfway. If you are not sure you can, VWCE is the safer choice, because it is the one you will not abandon.
 
 <details>
 <summary>How I calculated this</summary>
 
 **Data.** All charts come from the Kenneth R. French Data Library, September 2026 edition. The market is all stocks, weighted by market value. Value is the large firms with the highest book-to-market ratio ("Big HiBM"). Quality is the large firms with the highest operating profitability ("Big HiOP"). I use the US for 1970 - June 1990 and developed markets from July 1990 to September 2026. 50/50 is rebalanced once a year. The EUR view uses the monthly exchange rate published by FRED.
 
-**Limits.** The academic portfolios are not the ETFs: they have no costs, exclude emerging markets and pick firms differently from the indices that IS3S and IS3Q track. The table of real funds shows how much that matters. Before 1990 everything is US only. Lows are month-end closes, so milder than daily ones. Returns are nominal, before taxes.
+**Months below a high and recoveries.** Everything is measured on month-end values. A month is "below a high" when the value is under the highest value reached so far in that period. The percentage is out of 681 months in USD (January 1970 - September 2026) and 332 in EUR (February 1999 - September 2026); the "USD · 1999-2026" row of the table uses the same 332 months, so that it can be compared with EUR. A recovery is counted from the month of the high to the first month in which the value is at least equal to it. The Ulcer Index is the square root of the mean of the squared falls from the high, in percent, month by month. In the recovery chart, an episode is a stretch in which the market stayed below its all-time high and fell by at least the chosen threshold. For 50/50 I take its own stretch below a high that contains the month of the market low, and compare the calendar month of the recovery. That is why the episodes differ from those in the crisis table, which measures each fall from its local peak: 2011 appears there separately, although the market had not yet regained its 2007 high. An episode not yet recovered at the end of the data is reported separately and is not counted as a recovery.
+
+**Limits.** The series in the charts are not VWCE, IS3S and IS3Q. "The market" is the academic series of all stocks, used as a stand-in for VWCE, not the history of the fund, which only exists since 2019. The Value and Quality portfolios pick firms differently from the MSCI indices that IS3S and IS3Q track. The academic data has no fees, taxes or trading costs and excludes emerging markets, which are part of VWCE. Before July 1990 everything is US only. The table of real funds shows how much these differences matter. Values are month-end, so falls and recoveries within a month are not visible, and lows are milder than daily ones. Results depend on the currency you measure in, as the difference between USD and EUR shows. Returns are nominal: getting back to a high in money terms does not mean you have recovered your purchasing power. Past performance guarantees nothing about the future.
 
 The code and data are in [the site's repo](https://github.com/vladGriguta/vladgriguta.com/tree/main/analysis). I am not a financial adviser and this is not a recommendation.
 

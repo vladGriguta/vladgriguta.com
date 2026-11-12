@@ -1,6 +1,6 @@
 ---
 title: "VWCE sau Value + Quality? Ce spun 56 de ani de crize"
-description: "Un portofoliu pe factori nu te ferește de crize. Pe hârtie câștigă pe termen lung; fondurile reale au rămas în urma pieței."
+description: "Un portofoliu pe factori nu cade mai puțin în orice criză, dar pe hârtie a stat mai puțin timp sub maximele anterioare. Fondurile reale au rămas deocamdată în urma pieței."
 date: 2026-11-09
 lang: ro
 disclaimer: true
@@ -11,6 +11,9 @@ import Recovery from '../../../components/charts/Recovery.astro';
 import Perf from '../../../components/charts/Perf.astro';
 import CrisisTable from '../../../components/charts/CrisisTable.astro';
 import FundCheck from '../../../components/charts/FundCheck.astro';
+import RiskTable from '../../../components/charts/RiskTable.astro';
+import Underwater from '../../../components/charts/Underwater.astro';
+import Durations from '../../../components/charts/Durations.astro';
 
 <div class="col">
 
@@ -25,16 +28,68 @@ ETF-urile există abia din 2014, așa că am reconstruit cele două portofolii d
 
 <div class="col">
 
-## În crizele mari, nu te ferește de nimic
+## În unele crize cade mai puțin, în altele mai mult
 
 Criza financiară din 2007-09: piața a pierdut 53,6%, 50/50 a pierdut 54,4%. Pandemia din 2020: 21,8% față de 24,9%. În amândouă, 50/50 a căzut mai mult.
 
-A scăzut vizibil mai puțin doar când s-au dezumflat acțiunile scumpe. În 1973-74 a pierdut 37,9%, față de 46,5%. După bula dot-com a pierdut 34,4% și a revenit la vârf în mai puțin de 4 ani; piața a pierdut 44,6% și a avut nevoie de peste 5.
+A scăzut vizibil mai puțin când s-au dezumflat acțiunile scumpe. În 1973-74 a pierdut 37,9%, față de 46,5%. După bula dot-com a pierdut 34,4% și a revenit la vârf în mai puțin de 4 ani; piața a pierdut 44,6% și a avut nevoie de peste 5.
+
+Din cele 10 crize de cel puțin 15%, 50/50 a scăzut mai puțin în 7. Nu e totuși o asigurare: nu știi dinainte dacă următoarea criză va semăna cu cea din 2000 sau cu cea din 2008.
 
 </div>
 
 <Recovery lang="ro" />
 <CrisisTable lang="ro" />
+
+<div class="col">
+
+## Cât timp rămâi sub apă contează la fel de mult ca adâncimea
+
+Pierderea maximă e o singură cifră: cât de jos ai ajuns în cea mai proastă lună. Nu spune cât ai stat acolo. Dacă investești pe 20-30 de ani, a doua întrebare contează cel puțin la fel de mult: câți ani te uiți la un cont care valorează mai puțin decât a valorat deja?
+
+Asta se poate măsura în trei feluri:
+
+- **Luni sub maxim.** În câte luni din total portofoliul valora mai puțin decât un maxim pe care îl atinsese deja.
+- **Timpul de revenire.** Câte luni trec de la un maxim până când portofoliul ajunge din nou la el.
+- **Ulcer Index.** Le pune împreună: ia fiecare lună sub maxim și dă mai multă greutate lunilor adânci. O scădere de 40% din care ieși într-un an dă un număr mic. Aceeași scădere întinsă pe cinci ani dă unul mult mai mare.
+
+Din 1970 încoace, în USD, piața a fost sub un maxim anterior în 71,1% din luni, iar 50/50 în 65,9%. Ulcer Index: 13,34 față de 11,03. Că amândouă stau sub maxim în două luni din trei nu e o greșeală de calcul: așa arată acțiunile. Pierderea maximă și cea mai lungă revenire sunt în schimb aproape egale și vin amândouă din 2007: 66 de luni pentru piață, 67 pentru 50/50.
+
+</div>
+
+<RiskTable lang="ro" />
+
+<div class="col">
+
+Diferența cea mai mare apare în EUR, din 1999. Piața a atins un maxim în august 2000 și a revenit la el abia în februarie 2013: 150 de luni, adică doisprezece ani și jumătate. 50/50 a atins maximul în octombrie 2000 și a revenit la el în octombrie 2006: 72 de luni.
+
+Cifra asta trebuie citită cu grijă. 50/50 nu a scăpat de criza din 2008: din mai 2007 a intrat din nou sub maxim și a ieșit tot în februarie 2013, după alte 69 de luni. Dacă număr lunile sub maxim din toată perioada august 2000 - februarie 2013, sunt 149 pentru piață și 143 pentru 50/50. Aproape la fel. Diferența e că 50/50 a apucat să iasă la suprafață între cele două crize, cu 13,9% peste maximul lui din 2000, în timp ce piața s-a oprit la 2,5% sub al ei și a mai așteptat aproape șase ani. Și a stat mai puțin adânc, de unde Ulcer Index de 16,03 față de 19,09.
+
+Asta ține de perioadă și de monedă, nu e o proprietate a portofoliului. În USD, piața a revenit după dot-com înainte să vină 2008, iar cele mai lungi reveniri sunt de 66 și 67 de luni.
+
+</div>
+
+<Underwater lang="ro" />
+
+<div class="col">
+
+Criză cu criză, tabloul e amestecat. În USD, după 1973-74, 50/50 a revenit la maxim în 37 de luni, piața în 48. După dot-com, în 47 față de 65. După 2022, în 18 față de 24. În schimb, după 2007-09 a revenit cu o lună mai târziu, iar după pandemie cu trei luni mai târziu: 11 față de 8.
+
+Dacă număr scăderile pieței de cel puțin 15% față de maximul ei istoric, sunt 9 episoade: 50/50 a revenit primul în 5, piața în 2, iar în 2 au revenit în aceeași lună. Dacă cobor pragul la 10%, sunt 15 episoade: 6, 3 și 6. Deci nu a câștigat în majoritatea crizelor. Avantajul vine din câteva episoade lungi, nu din toate.
+
+</div>
+
+<Durations lang="ro" />
+
+<div class="col">
+
+Două lucruri țin avantajul ăsta în frâu.
+
+Primul: o parte din el este chiar randamentul mai mare, văzut din alt unghi. Un portofoliu care crește mai repede ajunge mai repede înapoi la maxim. Dacă îi scad lui 50/50 exact randamentul în plus, ca să termine în același punct cu piața, lunile sub maxim urcă de la 65,9% la 69,3%, iar Ulcer Index de la 11,03 la 12,06. Rămâne sub piață, care are 71,1% și 13,34, dar cu mai puțin.
+
+Al doilea: avantajul s-a subțiat. În datele din SUA de până în 1990, 50/50 a fost sub maxim în 63,4% din luni, față de 72,4% pentru piață. De când există ETF-urile, din octombrie 2014, diferența e de 58,0% față de 59,4% în USD, iar în EUR Ulcer Index-ul lui 50/50 e chiar puțin mai mare decât al pieței: 5,05 față de 4,97.
+
+</div>
 
 <div class="col">
 
@@ -56,6 +111,8 @@ Datele academice nu au comisioane și nu sunt ETF-urile pe care le poți cumpăr
 
 Cu fondurile reale, 50/50 a adus 10,7% pe an. Un ETF global a adus 11,7%. A rămas în urmă în 6 ani din 10, dintre care cinci la rând, din 2016 până în 2020, la capătul cărora aveai cu 12,9% mai puțini bani. Pe aceiași zece ani, datele academice arată un avantaj de 0,8 puncte pe an.
 
+Lunile sub maxim și Ulcer Index nu le pot calcula pentru fondurile reale, pentru că am doar randamentele lor pe ani întregi. Avantajul la reveniri are deci aceeași problemă ca avantajul la randament: există în reconstrucția academică și nu e confirmat de ETF-urile pe care le poți cumpăra.
+
 </div>
 
 <FundCheck lang="ro" />
@@ -64,14 +121,20 @@ Cu fondurile reale, 50/50 a adus 10,7% pe an. Un ETF global a adus 11,7%. A răm
 
 ## Ce fac eu cu asta
 
-Argumentul „pierzi mai puțin în crize” nu stă în picioare. Rămâne promisiunea unui randament mai mare pe termen lung, care există în datele istorice, dar nu s-a văzut încă în fondurile reale. Ca s-o încasezi, trebuie să accepți ani în șir sub piață fără să schimbi strategia la mijloc. Dacă nu ești sigur că poți, VWCE e alegerea mai sigură, pentru că e singura pe care n-o vei abandona.
+Value + Quality nu e o asigurare împotriva crizelor. În 2008 și în 2020 a căzut mai mult decât piața și se poate întâmpla din nou.
+
+Reconstrucția istorică arată altceva: 50/50 a petrecut mai puține luni sub maximele anterioare și a avut un Ulcer Index mai mic, adică pierderi care, luate împreună, au fost mai puțin adânci și au ținut mai puțin. Avantajul lui posibil nu e deci doar randamentul pe termen lung, ci și reveniri care au fost, istoric, mai ușor de dus. Nu în fiecare criză, și cu o diferență mică de când există ETF-urile.
+
+Niciunul dintre aceste avantaje nu s-a văzut încă în fondurile reale și niciunul nu e garantat de acum înainte. Ca să ai o șansă să le încasezi, trebuie să accepți ani în șir sub piață fără să schimbi strategia la mijloc. Dacă nu ești sigur că poți, VWCE e alegerea mai sigură, pentru că e singura pe care n-o vei abandona.
 
 <details>
 <summary>Cum am calculat</summary>
 
 **Datele.** Toate graficele vin din Kenneth R. French Data Library, ediția septembrie 2026. Piața înseamnă toate acțiunile, ponderate după capitalizare. Value înseamnă firmele mari cu cel mai mare raport între valoarea contabilă și preț („Big HiBM”). Quality înseamnă firmele mari cu cea mai mare profitabilitate operațională („Big HiOP”). Folosesc SUA pentru 1970 - iunie 1990 și piețele dezvoltate din iulie 1990 până în septembrie 2026. 50/50 este reechilibrat o dată pe an. Vederea în EUR folosește cursul lunar publicat de FRED.
 
-**Limite.** Portofoliile academice nu sunt ETF-urile: nu au costuri, nu includ piețe emergente și aleg firmele altfel decât indicii urmăriți de IS3S și IS3Q. Tabelul cu fondurile reale arată cât contează diferența. Înainte de 1990 totul este doar SUA. Minimele sunt pe închideri lunare, deci mai blânde decât cele zilnice. Randamentele sunt nominale, înainte de impozite.
+**Lunile sub maxim și revenirile.** Totul e măsurat pe valori de sfârșit de lună. O lună e „sub maxim” când valoarea e sub cea mai mare valoare de până atunci din perioada respectivă. Procentul e din 681 de luni în USD (ianuarie 1970 - septembrie 2026) și din 332 în EUR (februarie 1999 - septembrie 2026); rândul „USD · 1999-2026” din tabel folosește aceleași 332 de luni, ca să poată fi comparat cu EUR. Revenirea se numără de la luna maximului până la prima lună în care valoarea e cel puțin egală cu el. Ulcer Index este rădăcina pătrată a mediei pătratelor scăderilor față de maxim, în procente, lună de lună. În graficul revenirilor, un episod este o perioadă în care piața a stat sub maximul ei istoric și a scăzut cu cel puțin pragul ales. Pentru 50/50 iau perioada lui sub maxim care conține luna minimului pieței și compar luna calendaristică a revenirii. De aceea episoadele diferă de cele din tabelul crizelor, care măsoară fiecare scădere de la vârful ei local: 2011 apare acolo separat, deși piața nu revenise încă la maximul din 2007. Un episod nerecuperat la sfârșitul datelor este raportat separat și nu este numărat ca revenire.
+
+**Limite.** Seriile din grafice nu sunt VWCE, IS3S și IS3Q. „Piața” este seria academică a tuturor acțiunilor, folosită ca aproximare pentru VWCE, nu istoricul fondului, care există abia din 2019. Portofoliile Value și Quality aleg firmele altfel decât indicii MSCI urmăriți de IS3S și IS3Q. Datele academice nu au comisioane, impozite sau costuri de tranzacționare și nu includ piețele emergente, care fac parte din VWCE. Înainte de iulie 1990 totul este doar SUA. Tabelul cu fondurile reale arată cât contează diferențele astea. Valorile sunt de sfârșit de lună, deci scăderile și revenirile din interiorul unei luni nu se văd, iar minimele sunt mai blânde decât cele zilnice. Rezultatele depind de moneda în care măsori, cum se vede din diferența dintre USD și EUR. Randamentele sunt nominale: o revenire la maxim în bani nu înseamnă că ai recuperat și puterea de cumpărare. Performanța din trecut nu garantează nimic pentru viitor.
 
 Codul și datele sunt în [repo-ul site-ului](https://github.com/vladGriguta/vladgriguta.com/tree/main/analysis). Nu sunt consultant financiar și asta nu e o recomandare.
 
